@@ -5,7 +5,7 @@ module.exports = {
     siteUrl: `https://novela.narative.co`,
     description: `This is my description that will be used in the meta tags and important for search results`,
     hero: {
-      heading: `Welcome to Novela, the simplest way to start publishing with Gatsby.`,
+      heading: `重剑无锋，大巧不工。`,
       maxWidth: 652,
     },
     social: [
