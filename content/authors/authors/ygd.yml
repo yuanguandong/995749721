@@ -1,0 +1,11 @@
+name: ygd
+bio: |
+  Do what you love, love what you do
+avatar: ./avatars/ygd.png
+social:
+  - url: https://unsplash.com
+  - url: https://stackoverflow.com
+  - url: https://github.com
+  - url: https://github.com
+  - url: https://github.com
+featured: true
