@@ -32,6 +32,13 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: build
         run: npm run build
+
+      - name: Commit report
+        run: |
+          git config --global user.name 'yuanguandong'
+          git config --global user.email '995749721@qq.com'
+          git commit -am "Automated report"
+          git push
         
       # 部署到github pages
       - name: Deploy to gh-pages
