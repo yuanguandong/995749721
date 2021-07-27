@@ -59,7 +59,18 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-netlify-cms`,
+      options: {},
+    },
+    {
+      resolve: "gatsby-plugin-antd",
+      // options: {
+      //   style: true,
+      // },
+    },
+    {
+      resolve: `gatsby-plugin-less`,
       options: {
+        // strictMath: true,
       },
     },
   ],

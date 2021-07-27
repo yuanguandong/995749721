@@ -12,11 +12,17 @@
   },
   "dependencies": {
     "@narative/gatsby-theme-novela": "^0.*",
+    "antd": "^4.16.8",
     "gatsby": "^2.13.41",
+    "gatsby-plugin-antd": "^2.2.0",
+    "gatsby-plugin-less": "^5.10.0",
     "gatsby-plugin-manifest": "^2.2.4",
     "gatsby-plugin-netlify-cms": "^4.1.40",
+    "gatsby-plugin-react-css-modules": "^3.10.0",
+    "less": "^4.1.1",
     "netlify-cms-app": "^2.11.23",
     "netlify-cms-proxy-server": "^1.1.4",
+    "postcss-less": "^5.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }

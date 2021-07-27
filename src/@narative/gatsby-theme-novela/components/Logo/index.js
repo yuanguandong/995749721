@@ -21,9 +21,8 @@ export default function Logo(props) {
         width="323px"
         height="70px"
         viewBox="0 0 323 70"
-        enable-background="new 0 0 323 70"
+        enableBackground="new 0 0 323 70"
       >
-        {" "}
         <image
           id="image0"
           width="323"
@@ -119,7 +118,7 @@ MF1Mnt8WAAAAAElFTkSuQmCC"
       width="323px"
       height="70px"
       viewBox="0 0 323 70"
-      enable-background="new 0 0 323 70"
+      enableBackground="new 0 0 323 70"
     >
       {" "}
       <image

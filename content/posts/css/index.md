@@ -2,7 +2,7 @@
 title: CSS
 author: ygd
 date: 2019-04-30
-hero: http://unsplash.it/1600/900?random
+hero: ./hero.webp
 excerpt: With the growing community interest in Gatsby, we hope to create more resources that make it easier for anyone to grasp the power of this incredible tool.
 ---
 
