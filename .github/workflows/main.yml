@@ -32,9 +32,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: build
         run: npm run build
-
-      - name: postbuild
-        run: npm run postbuild
         
       # 部署到github pages
       - name: Deploy to gh-pages
