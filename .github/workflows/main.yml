@@ -37,7 +37,8 @@ jobs:
         run: |
           git config --global user.name 'yuanguandong'
           git config --global user.email '995749721@qq.com'
-          git commit -am "Automated report"
+          git add .
+          git commit -m "Automated build docs"
           git push
         
       # 部署到github pages
