@@ -39,7 +39,7 @@ jobs:
           git config --global user.email '995749721@qq.com'
           git add .
           git commit -m "Automated build docs"
-          git push
+          git push origin master
         
       # 部署到github pages
       - name: Deploy to gh-pages
