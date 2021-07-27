@@ -44,7 +44,6 @@ export const globalStyles = css`
   }
 
   body {
-    background:#f00;
     font-family: "-apple-system", "BlinkMacSystemFont", "San Francisco",
       "Helvetica Neue", "Helvetica", "Ubuntu", "Roboto", "Noto", "Segoe UI",
       "Arial", sans-serif;
@@ -145,5 +144,29 @@ export const globalStyles = css`
   }
   .prism-code{
     max-width:680px!important;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.5);
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background-color: rgba(128, 128, 128, 0.5);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+  }
+  
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: black;
+    -webkit-transition: all 300ms ease-in-out;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(128, 128, 128, 0.2);
   }
 `;

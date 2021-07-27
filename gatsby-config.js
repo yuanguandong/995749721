@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Favori`,
-    name: `Favori's blog`,
+    title: `Favori 重剑的博客`,
+    name: `Favori 重剑`,
     siteUrl: `https://favori.netlify.app/`,
     description: `Favori's blog , 重剑的个人博客`,
     hero: {
