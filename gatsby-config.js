@@ -14,7 +14,6 @@ module.exports = {
         url: `https://github.com/yuanguandong`,
       },
       {
-        name: `url`,
         url: `https://favori.zcool.com.cn/`,
       },
       {
