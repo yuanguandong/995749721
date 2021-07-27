@@ -6,9 +6,9 @@ hero: ./hero.webp
 excerpt: 如何自己实现promiseA+规范，手写一个promise实现
 ---
 
-# 一步步实现一个 Promise
+## 1、使用class
 
-## 1.  平常用 promise 的时候, 是通过 new 关键字来 new Promise(), 所以咱们应该用构造函数或者 class 来实现. 都 2021 年了, 咱们就用 class 来实现一下吧.
+平常用 promise 的时候, 是通过 new 关键字来 new Promise(), 所以咱们应该用构造函数或者 class 来实现. 都 2021 年了, 咱们就用 class 来实现一下吧.
 
 ```js
 class MPromise {
@@ -39,8 +39,8 @@ class MPromise {
 
 ## 4. resolve 和 reject 方法
 
-### 4.1. 根据A+的规范, 这两个方法是要更改 status 的, 从 pending 改到 fulfilled/rejected.
-### 4.2. 注意两个函数的入参分别是 value 和 reason.
+4.1. 根据A+的规范, 这两个方法是要更改 status 的, 从 pending 改到 fulfilled/rejected.
+4.2. 注意两个函数的入参分别是 value 和 reason.
 
 ```js
 class MPromise {
@@ -67,10 +67,10 @@ class MPromise {
 }
 ```
 
-## 5. 是不是发现咱们的 promise 少了入参, 咱们来加一下
+## 5. promise入参
 
-### 5.1. 入参是一个函数, 函数接收 resolve 和 reject 两个参数.
-### 5.2. 注意在初始化 promise 的时候, 就要执行这个函数, 并且有任何报错都要通过 reject 抛出去
+5.1. 入参是一个函数, 函数接收 resolve 和 reject 两个参数.
+5.2. 注意在初始化 promise 的时候, 就要执行这个函数, 并且有任何报错都要通过 reject 抛出去
 
 ```js
 class MPromise {
@@ -103,15 +103,15 @@ class MPromise {
 }
 ```
 
-## 6. 接下来来实现一下关键的 then 方法
+## 6. then 方法
 
-### 6.1. then 接收两个参数, onFulfilled 和 onRejected
+6.1. then 接收两个参数, onFulfilled 和 onRejected
 
 ```js
 then(onFulfilled, onRejected) {}
 ```
 
-### 6.2. 检查并处理参数, 之前提到的如果不是 function, 就忽略. 这个忽略指的是原样返回 value 或者 reason.
+6.2. 检查并处理参数, 之前提到的如果不是 function, 就忽略. 这个忽略指的是原样返回 value 或者 reason.
 
 ```js
 isFunction(param) {
@@ -128,7 +128,7 @@ then(onFulfilled, onRejected) {
 }
 ```
 
-### 6.3. 要知道.then 的返回值整体是一个 promise, 所以咱们先用 promise 来包裹一下, 其他逻辑待会再实现.
+6.3. 要知道.then 的返回值整体是一个 promise, 所以咱们先用 promise 来包裹一下, 其他逻辑待会再实现.
 
 ```js
 then(onFulfilled, onRejected) {
@@ -144,7 +144,7 @@ then(onFulfilled, onRejected) {
 
 ```
 
-### 6.4. 根据当前 promise 的状态, 调用不同的函数
+6.4. 根据当前 promise 的状态, 调用不同的函数
 
 ```js
 then(onFulfilled, onRejected) {
@@ -171,9 +171,9 @@ then(onFulfilled, onRejected) {
 }
 ```
 
-### 6.5. 这样写, 是在 then 函数被调用的瞬间就会执行. 那这时候如果 status 还没变成 fulfilled 或者 rejected 怎么办, 很有可能还是 pending 的. 所以我们需要一个状态的监听机制, 当状态变成 fulfilled 或者 rejected 后, 再去执行 callback.
+6.5. 这样写, 是在 then 函数被调用的瞬间就会执行. 那这时候如果 status 还没变成 fulfilled 或者 rejected 怎么办, 很有可能还是 pending 的. 所以我们需要一个状态的监听机制, 当状态变成 fulfilled 或者 rejected 后, 再去执行 callback.
 
-#### 6.5.1. 那么我们首先要拿到所有的 callback, 然后才能在某个时机去执行他. 新建两个数组, 来分别存储成功和失败的回调, 调用 then 的时候, 如果还是 pending 就存入数组.
+#6.5.1. 那么我们首先要拿到所有的 callback, 然后才能在某个时机去执行他. 新建两个数组, 来分别存储成功和失败的回调, 调用 then 的时候, 如果还是 pending 就存入数组.
 
    ```js
    FULFILLED_CALLBACK_LIST = [];
@@ -207,7 +207,7 @@ then(onFulfilled, onRejected) {
    }
    ```
 
-#### 6.5.2. 在 status 发生变化的时候, 就执行所有的回调. 这里咱们用一下 es6 的 getter 和 setter. 这样更符合语义, 当 status 改变时, 去做什么事情. (当然也可以顺序执行, 在给 status 赋值后, 下面再加一行 forEach)
+#6.5.2. 在 status 发生变化的时候, 就执行所有的回调. 这里咱们用一下 es6 的 getter 和 setter. 这样更符合语义, 当 status 改变时, 去做什么事情. (当然也可以顺序执行, 在给 status 赋值后, 下面再加一行 forEach)
 
    ```js
    _status = PENDING;
@@ -238,7 +238,7 @@ then(onFulfilled, onRejected) {
 ## 7. then 的返回值
 上面只是简单说了下, then 的返回值是一个 Promise, 那么接下来具体讲一下返回 promise 的 value 和 reason 是什么.
 
-### 7.1. 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e。(这样的话, 我们就需要手动 catch 代码，遇到报错就 reject)
+7.1. 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e。(这样的话, 我们就需要手动 catch 代码，遇到报错就 reject)
 
 ```js
 then(onFulfilled, onRejected) {
@@ -283,9 +283,9 @@ then(onFulfilled, onRejected) {
 }
 ```
 
-### 7.2 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值
+7.2 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值
 
-### 7.3 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因。
+7.3 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因。
 
 需要注意的是，如果 promise1 的 onRejected 执行成功了，promise2 应该被 resolve
 
@@ -304,7 +304,7 @@ const realOnRejected = this.isFunction(onRejected)
     };
 ```
 
-### 7.4 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行 resolvePromise 方法
+7.4 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行 resolvePromise 方法
 
 ```js
 then(onFulfilled, onRejected) {
@@ -468,7 +468,6 @@ setTimeout(() => {
 }, 2000);
 ```
 
-    这个时候同学们会发现, 为什么我可以调用.then, 不可以调用.catch呢? 因为我们并没有在类里面声明catch方法
 
 ## 11. catch 方法
 
@@ -479,9 +478,8 @@ catch (onRejected) {
 ```
 
 ## 12. promise.resolve
-
-    将现有对象转为 Promise 对象，如果 Promise.resolve 方法的参数，不是具有 then 方法的对象（又称 thenable 对象），则返回一个新的 Promise 对象，且它的状态为 fulfilled。
-    注意这是一个静态方法, 因为咱们是通过 Promise.resolve 调用的, 而不是通过实例去调用的.
+将现有对象转为 Promise 对象，如果 Promise.resolve 方法的参数，不是具有 then 方法的对象（又称 thenable 对象），则返回一个新的 Promise 对象，且它的状态为 fulfilled。
+注意这是一个静态方法, 因为咱们是通过 Promise.resolve 调用的, 而不是通过实例去调用的.
 
 ```js
 static resolve(value) {
@@ -496,8 +494,7 @@ static resolve(value) {
 ```
 
 ## 13. promise.reject
-
-    返回一个新的 Promise 实例，该实例的状态为 rejected。Promise.reject 方法的参数 reason，会被传递给实例的回调函数。
+返回一个新的 Promise 实例，该实例的状态为 rejected。Promise.reject 方法的参数 reason，会被传递给实例的回调函数。
 
 ```js
 static reject(reason) {
@@ -508,11 +505,10 @@ static reject(reason) {
 ```
 
 ## 14. promise.race
+`const p = Promise.race([p1, p2, p3]);`
 
-    `const p = Promise.race([p1, p2, p3]);`
-
-    该方法是将多个 Promise 实例，包装成一个新的 Promise 实例。
-    只要 p1、p2、p3 之中有一个实例率先改变状态，p 的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给 p 的回调函数。
+该方法是将多个 Promise 实例，包装成一个新的 Promise 实例。
+只要 p1、p2、p3 之中有一个实例率先改变状态，p 的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给 p 的回调函数。
 
 ```js
 static race(promiseList) {
@@ -537,7 +533,7 @@ static race(promiseList) {
 }
 ```
 
-    写段测试代码
+写段测试代码
 
 ```js
 const test = new MPromise((resolve, reject) => {
