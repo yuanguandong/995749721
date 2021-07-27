@@ -8,7 +8,8 @@
     "dev": "gatsby develop",
     "start": "gatsby develop",
     "clean": "gatsby clean",
-    "proxy": "netlify-cms-proxy-server"
+    "proxy": "netlify-cms-proxy-server",
+    "postbuild": "mv public docs"
   },
   "dependencies": {
     "@narative/gatsby-theme-novela": "^0.*",
