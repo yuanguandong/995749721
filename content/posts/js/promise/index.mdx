@@ -39,7 +39,7 @@ class MPromise {
 
 ## 4. resolve 和 reject 方法
 
-### 4.1. 根据刚才的规范, 这两个方法是要更改 status 的, 从 pending 改到 fulfilled/rejected.
+### 4.1. 根据A+的规范, 这两个方法是要更改 status 的, 从 pending 改到 fulfilled/rejected.
 ### 4.2. 注意两个函数的入参分别是 value 和 reason.
 
 ```js
@@ -235,10 +235,10 @@ then(onFulfilled, onRejected) {
    }
    ```
 
-### 6.5. then 的返回值
-   上面只是简单说了下, then 的返回值是一个 Promise, 那么接下来具体讲一下返回 promise 的 value 和 reason 是什么.
+## 7. then 的返回值
+上面只是简单说了下, then 的返回值是一个 Promise, 那么接下来具体讲一下返回 promise 的 value 和 reason 是什么.
 
-### 6.7. 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e。(这样的话, 我们就需要手动 catch 代码，遇到报错就 reject)
+### 7.1. 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e。(这样的话, 我们就需要手动 catch 代码，遇到报错就 reject)
 
 ```js
 then(onFulfilled, onRejected) {
@@ -282,7 +282,7 @@ then(onFulfilled, onRejected) {
     return promise2
 }
 ```
-## 7. resolvePromise
+
 ### 7.2 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值
 
 ### 7.3 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因。
