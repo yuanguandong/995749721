@@ -1,11 +1,3 @@
-<<<<<<< HEAD:docs/app-bb1eb362d77595a63235.js.LICENSE.txt
-/*!
- * domready (c) Dustin Diaz 2014 - License MIT
- * ie10 fix - Mikael Kristiansson 2019
- */
-
-=======
->>>>>>> cbb30f3b9df59b1dbebd00c874bd1d4cec8ebb27:docs/framework-beda7bde9d7dca0755ce.js.LICENSE.txt
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
@@ -15,8 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-<<<<<<< HEAD:docs/app-bb1eb362d77595a63235.js.LICENSE.txt
-=======
 /** @license React v16.14.0
  * react-dom.production.min.js
  *
@@ -26,7 +16,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
->>>>>>> cbb30f3b9df59b1dbebd00c874bd1d4cec8ebb27:docs/framework-beda7bde9d7dca0755ce.js.LICENSE.txt
 /** @license React v16.14.0
  * react.production.min.js
  *
