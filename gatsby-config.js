@@ -20,6 +20,9 @@ module.exports = {
         name: `dribbble`,
         url: `https://dribbble.com/yuanguandong`,
       },
+      {
+        url:'https://codepen.io/favori'
+      }
     ],
   },
   plugins: [
