@@ -183,5 +183,7 @@ export const globalStyles = css`
     max-width: 680px;
     margin:0 auto;
   }
+  [class*="-limitToTwoLines"]{word-break: break-all!important;}
+  [class*="-HeroHeading"]{word-break: break-all!important;}
   
 `;
