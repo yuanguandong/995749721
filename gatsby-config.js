@@ -44,17 +44,25 @@ module.exports = {
       options: {
         name: `Favori`,
         short_name: `Favori`,
+        description: `Favori 重剑的个人博客`,
+        lang: `zh-CN`,
         start_url: `/`,
-        background_color: `#fff`,
-        theme_color: `#fff`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/assets/favicon.png`,
       },
     },
     {
-      resolve: `gatsby-plugin-netlify-cms`,
-      options: {},
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        // precachePages: [`/about-us/`, `/projects/*`],
+      },
     },
+    // {
+    //   resolve: `gatsby-plugin-netlify-cms`,
+    //   options: {},
+    // },
     {
       resolve: "gatsby-plugin-antd",
       // options: {
