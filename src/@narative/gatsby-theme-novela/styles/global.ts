@@ -169,4 +169,13 @@ export const globalStyles = css`
   ::-webkit-scrollbar-track {
     background-color: rgba(128, 128, 128, 0.2);
   }
+  article{padding-top:20px!important;}
+  .img-desc{
+    width: 100%;
+    max-width: 744px;
+    margin:0 auto;
+    margin-bottom:50px;
+    color:rgba(128, 128, 128, 0.5);
+    text-align:center;
+  }
 `;
