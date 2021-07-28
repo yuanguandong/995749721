@@ -5,7 +5,7 @@ date: 2020-05-30
 hero: ./hero.webp
 excerpt: AMD、CMD、CJS、ESM
 ---
-图：Nguyen Nhut
+<div className={'img-desc'}>图：Nguyen Nhut</div>
 
 
 # AMD
@@ -14,7 +14,7 @@ AMD 的代表肯定就是大名鼎鼎的 RequireJS
 
 James Burke 觉得 CMJ 很好，但是在浏览器里玩不转，所以自己提出了一个 AMD 规范
 
-## AMD Usage
+### AMD Usage
 
 ```js
 define(id?, depencies?, factory);
@@ -27,7 +27,7 @@ define('foo', ['utils', 'bar'], function(utils, bar) {
 })
 ```
 
-## 实现一个符合 AMD 的 rj.js
+### 实现一个符合 AMD 的 rj.js
 
 只是核心能力作为实现，具体：https://requirejs.org/docs/api.html
 
@@ -58,7 +58,7 @@ rj('moduleA', [], function() {
 })
 ```
 
-## 行为
+### 行为
 
 ```js
 // RequireJS
@@ -101,7 +101,7 @@ lodash -> https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js
 
 代表人物玉伯，代表技术实现 Seajs
 
-## Usage
+### Usage
 
 ```js
 // sea.js
@@ -138,7 +138,7 @@ seajs.use('main')
 
 一个引入一个导出，就构成了通信的基本结构
 
-## 需要注意的两个问题
+### 需要注意的两个问题
 
 1. 缓存，require 会缓存一下，所以
 
