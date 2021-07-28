@@ -1,0 +1,228 @@
+---
+title: Ajax实现
+author: ygd
+date: 2020-05-30
+hero: ./hero.webp
+excerpt: AMD、CMD、CJS、ESM
+---
+
+
+
+# AMD
+
+AMD 的代表肯定就是大名鼎鼎的 RequireJS
+
+James Burke 觉得 CMJ 很好，但是在浏览器里玩不转，所以自己提出了一个 AMD 规范
+
+## AMD Usage
+
+```js
+define(id?, depencies?, factory);
+
+define('foo', ['utils', 'bar'], function(utils, bar) {
+  utils.add(1, 2);
+  return {
+    name: 'foo'
+  }
+})
+```
+
+## 实现一个符合 AMD 的 rj.js
+
+只是核心能力作为实现，具体：https://requirejs.org/docs/api.html
+
+1. 可以直接配置依赖路径
+
+```js
+rj.config({ paths: {
+  'jquery': 'https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js'
+} });
+
+rj(['jquery'], function(jquery) {
+  // ....
+})
+```
+
+2. 加载模块
+
+```js
+// RequestJs('')
+rj(['moduleA'], function(moduleA) {});
+```
+
+3. 定义模块
+
+```js
+rj('moduleA', [], function() {
+  return 'hello zhuawa!';
+})
+```
+
+## 行为
+
+```js
+// RequireJS
+define('a', function () {
+  console.log('a load')
+  return {
+    run: function () { console.log('a run') }
+  }
+})
+
+define('b', function () {
+  console.log('b load')
+  return {
+    run: function () { console.log('b run') }
+  }
+})
+
+require(['a', 'b'], function (a, b) {
+  console.log('main run') // 🔥
+  a.run()
+  b.run()
+})
+
+// a load
+// b load
+// main run
+// a run
+// b run
+```
+
+记录一下：
+1. require 的时候加载了依赖的模块
+
+一些可以用来测试的 CDN 地址
+systemjs -> https://cdn.bootcdn.net/ajax/libs/systemjs/6.8.3/system.min.js
+lodash -> https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js
+
+
+# CMD
+
+代表人物玉伯，代表技术实现 Seajs
+
+## Usage
+
+```js
+// sea.js
+define('a', function (require, exports, module) {
+  console.log('a load')
+  exports.run = function () { console.log('a run') }
+})
+
+define('b', function (require, exports, module) {
+  console.log('b load')
+  exports.run = function () { console.log('b run') }
+})
+
+define('main', function (require, exports, module) {
+  console.log('main run')
+  var a = require('a')
+  a.run()
+  var b = require('b')
+  b.run()
+})
+
+seajs.use('main')
+
+// main run
+// a load
+// a run
+// b load
+// b run
+```
+
+# COMMONJS
+
+文件是一个模块，私有。内置两个变量 module require (exports = module.exports)
+
+一个引入一个导出，就构成了通信的基本结构
+
+## 需要注意的两个问题
+
+1. 缓存，require 会缓存一下，所以
+
+```js
+// a.js
+var name = 'morrain'
+var age = 18
+exports.name = name
+exports.getAge = function(){
+    return age
+}
+// b.js
+var a = require('a.js')
+console.log(a.name) // 'morrain'
+a.name = 'rename'
+var b = require('a.js')
+console.log(b.name) // 'rename'
+```
+
+2. 引用拷贝还是值拷贝的问题(CMJ 是值拷贝)
+
+```js
+// a.js
+var name = 'morrain'
+var age = 18
+exports.name = name
+exports.age = age
+exports.setAge = function(a){
+    age = a
+}
+// b.js
+var a = require('a.js')
+console.log(a.age) // 18
+a.setAge(19)
+console.log(a.age) // 18
+```
+
+3. 运行时加载 / 编译时加载（多阶段，异步）ESM
+
+
+# ESM
+我们所说的esModule其实就是es6推出的javascript模块规范。在这之前由于没有规范所以社区推出了CommonJS规范、require.js等。esModule的语法是静态的、导出是绑定的
+
+什么是静态？
+静态的语法意味着可以在编译时确定导入和导出，更加快速的查找依赖，可以使用lint工具对模块依赖进行检查，可以对导入导出加上类型信息进行静态的类型检查
+
+什么是导出绑定？
+由于使用import导入的模块是运行在严格模式下的，且均为只读的(即无法被赋值。但是可以更改属性),且均为引用传递，无关类型，均是与原变量的引用。
+
+
+导出 export
+```js
+// ep.js
+// 最常用的大概就是声明命名导出了
+export const name = 'bababa' // var let const function class 均可
+// 默认导出
+export default constant
+export default function() {}
+export { constant as default } // 重命名默认导出
+// 命名导出
+export { ep1, ep2, ep3 }
+export { ep1 as _ep1, ep2 as _ep2, ep3 as _ep3 } // 重命名导出
+// 重定向导出
+export * from 'action' // 重定向导出(导出不包含模块内的default的所有)，重定向的命名并不能在本模块使用，只是搭建一个桥梁。
+// 下面是几个错误范例
+export 1
+const $ep = 1
+export $ep
+```
+导入 import
+```js
+// 命名导入
+import { ep1, ep2, ep3 } from './ep'
+// 重命名导入
+import { ep1 as _ep1, ep2 as _ep2, ep3 as _ep3 } from './ep'
+// 混合导入
+import * as ep from './ep'
+import default,  { ep1, ep2, ep3 as $ep3 } from './ep'
+// effect 执行  多次引入也只会执行一次，有点像php里的include_once
+import './ep'
+// 动态导入
+import('./ep').then()
+
+// 下面是几个错误范例
+import { 'ep1' + 'ep2' } from './ep' // import是编译阶段，所以不能动态加载
+```
+ -->

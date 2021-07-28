@@ -39,8 +39,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Novela by Narative`,
-        short_name: `Novela`,
+        name: `Favori`,
+        short_name: `Favori`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#fff`,
