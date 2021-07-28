@@ -1,0 +1,160 @@
+---
+title: TypeScript基础
+author: ygd
+date: 2019-04-30
+hero: ./hero.webp
+excerpt: With the growing community interest in Gatsby, we hope to create more resources that make it easier for anyone to grasp the power of this incredible tool.
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+
+
+## 基础类型
+number string boolean array object
+
+## enum: 枚举
+
+## type, interface
+
+## 联合类型 | 
+联合类型一次只能一种类型；而交叉类型每次都是多个类型的合并类型。
+
+## 交叉类型 & 
+联合类型一次只能一种类型；而交叉类型每次都是多个类型的合并类型。
+
+## typeof
+
+typeof 操作符可以用来获取一个变量声明或对象的类型。
+
+```ts
+function toArray(x: number): Array<number> {
+  return [x];
+}
+
+type Func = typeof toArray; // -> (x: number) => number[]
+```
+
+## typeof
+
+typeof 操作符可以用来获取一个变量声明或对象的类型。
+
+```ts
+function toArray(x: number): Array<number> {
+  return [x];
+}
+
+type Func = typeof toArray; // -> (x: number) => number[]
+```
+
+## keyof 
+
+keyof 操作符可以用来一个对象中的所有 key 值：
+
+```ts
+interface Person {
+    name: string;
+    age: number;
+}
+type K1 = keyof Person; // "name" | "age"
+```
+
+
+## in
+
+in 用来遍历枚举类型：
+
+```ts
+type Keys = "a" | "b" | "c"
+
+type Obj =  {
+  [p in Keys]: any
+} // -> { a: any, b: any, c: any }
+
+```
+
+## extends 
+
+有时候我们定义的泛型不想过于灵活或者说想继承某些类等，可以通过 extends 关键字添加泛型约束。
+
+```ts
+interface ILengthwise {
+  length: number;
+}
+
+function loggingIdentity<T extends ILengthwise>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+
+loggingIdentity(3);
+loggingIdentity({length: 10, value: 3});
+```
+
+## Paritial
+
+`Partial<T> 的作用就是将某个类型里的属性全部变为可选项 ?`。
+
+## Reuqired
+
+`Required<T> 的作用就是将某个类型里的属性全部变为必选项`。
+
+## Readonly 
+
+`Readonly<T> 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。`
+
+## Record 
+
+`Record<K extends keyof any, T> 的作用是将 K 中所有的属性的值转化为 T 类型。`
+
+```ts
+interface PageInfo {
+  title: string;
+}
+
+type Page = "home" | "about" | "contact";
+
+const x: Record<Page, PageInfo> = {
+  about: { title: "about" },
+  contact: { title: "contact" },
+  home: { title: "home" }
+};
+```
+
+## Exclude
+
+`Exclude<T, U> 的作用是将某个类型中属于另一个的类型移除掉。`
+
+```ts
+type T0 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
+type T1 = Exclude<"a" | "b" | "c", "a" | "b">; // "c"
+```
+
+## Extract
+
+`Extract<T, U> 的作用是从 T 中提取出 U。`
+
+```ts
+type T0 = Extract<"a" | "b" | "c", "a" | "f">; // "a"
+type T1 = Extract<string | number | (() => void), Function>; // () => void
+
+```
+
+## Pick
+选择、摘取interface
+
+## omit
+省略 interface
+
+
+### TS的好处
+1、超集，是js的加强版，只多不少
+2、面向对象
+3、静态检查
+4、可读性强
+
+
+### type和interface的区别
+1、type是用于生命类型的，interface用于描述数据结构
+2、type和interface都可以被相互继承和拓展
+3、type 可以声明基本类型的别名，联合类型和元组，interface不行
+
