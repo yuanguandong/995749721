@@ -50,7 +50,18 @@ module.exports = {
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-        icon: `src/assets/favicon.png`,
+        icons: [
+          {
+            src: `src/assets/favicon.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `src/assets/favicon.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
+        ]
       },
     },
     {
