@@ -1,14 +1,14 @@
 ---
-title: call、apply、bind极简实现
+title: call apply bind极简实现
 author: ygd
 date: 2019-6-3
 hero: ./hero.jpg
-excerpt: 使用各symbol实现call、apply、bind
+excerpt: 使用symbol实现call、apply、bind
 ---
 
 <div className={"img-desc"}>图：Nguyen Nhut</div>
 
-## 实现
+## Call
 
 ```js
 Function.prototype.call = function (context, args) {
@@ -17,14 +17,21 @@ Function.prototype.call = function (context, args) {
   context[symbolFn](args);
   delete context[symbolFn];
 };
+```
+## Apply
 
+```js
 Function.prototype.apply = function (context, args) {
   let symbolFn = Symbol("fn");
   symbolFn = this;
   context[symbolFn](...args);
   delete context[symbolFn];
 };
+```
 
+## Bind
+
+```js
 Function.prototype.bind = function (context) {
   let symbolFn = Symbol("fn");
   symbolFn = this;
