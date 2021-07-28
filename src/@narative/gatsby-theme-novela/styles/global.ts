@@ -178,4 +178,10 @@ export const globalStyles = css`
     color:rgba(128, 128, 128, 0.5);
     text-align:center;
   }
+  .art-container {
+    width: 100%;
+    max-width: 680px;
+    margin:0 auto;
+  }
+  
 `;
