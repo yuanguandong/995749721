@@ -285,7 +285,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   justify-content: center;
   transition: opacity 0.3s ease;
   margin-left: 30px;
-
+  color:${(p) => p.theme.colors.primary};
   &:hover {
     opacity: 1;
   }
