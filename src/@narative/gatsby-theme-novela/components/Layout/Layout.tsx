@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Global } from '@emotion/core';
-import styled from '@emotion/styled';
-import { useColorMode } from 'theme-ui';
-
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
+import { Global } from '@emotion/core';
+import styled from '@emotion/styled';
+import { globalStyles } from '@styles';
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useColorMode } from 'theme-ui';
 import ArticlesContextProvider from '../../sections/articles/Articles.List.Context';
 
-import { globalStyles } from '@styles';
 
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
@@ -22,6 +22,10 @@ const Layout: React.FC<{}> = ({ children }) => {
   }, [colorMode]);
 
   return (
+    <>
+    <Helmet>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+    </Helmet>
     <ArticlesContextProvider>
       <Container>
         <Global styles={globalStyles} />
@@ -30,6 +34,7 @@ const Layout: React.FC<{}> = ({ children }) => {
         <NavigationFooter />
       </Container>
     </ArticlesContextProvider>
+    </>
   );
 }
 
