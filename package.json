@@ -15,6 +15,7 @@
     "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^3.0.2",
     "@narative/gatsby-theme-novela": "^0.*",
     "@types/styled-components": "^5.1.11",
+    "ahooks": "^2.10.9",
     "antd": "^4.16.8",
     "gatsby": "^2.13.41",
     "gatsby-plugin-antd": "^2.2.0",

@@ -3,12 +3,12 @@ import NavigationHeader from "@components/Navigation/Navigation.Header";
 import { Global } from "@emotion/core";
 import styled from "@emotion/styled";
 import { globalStyles } from "@styles";
-import React, { useEffect, useState } from "react";
+import { useLocalStorageState } from 'ahooks';
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useColorMode } from "theme-ui";
 import ArticlesContextProvider from "../../sections/articles/Articles.List.Context";
 import { SideMenu } from "../sidemenu";
-
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
  * and the main structure of each page. Within Layout we have the <Container />
@@ -17,7 +17,7 @@ import { SideMenu } from "../sidemenu";
 const Layout: React.FC<{}> = (props) => {
   const { children } = props
   const [colorMode] = useColorMode();
-  const [showMenu, setShowMenu] = useState<boolean>(true);
+  const [showMenu, setShowMenu] = useLocalStorageState<boolean>('menu-show',false);
 
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, "*");
