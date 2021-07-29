@@ -51,7 +51,7 @@ module.exports = {
         lang: `zh-CN`,
         start_url: `/`,
         background_color: `#000`,
-        theme_color: `#f00`,
+        theme_color: `#000`,
         display: `standalone`,
         icon: "src/assets/favicon.png"
       },
