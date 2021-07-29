@@ -13,12 +13,12 @@ const breakpoints = [
   ['desktop_large', 1440],
 ];
 
-const fonts = {
-  serif: "'Merriweather', Georgia, Serif",
-  sansSerif:
-    "'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Helvetica Neue', 'Helvetica', 'Ubuntu', 'Roboto', 'Noto', 'Segoe UI', 'Arial', sans-serif",
-  monospace: `"Operator Mono", Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
-};
+// const fonts = {
+//   serif: "'Merriweather', Georgia, Serif",
+//   sansSerif:
+//     "'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Helvetica Neue', 'Helvetica', 'Ubuntu', 'Roboto', 'Noto', 'Segoe UI', 'Arial', sans-serif",
+//   monospace: `"Operator Mono", Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
+// };
 
 const colorModeTransition =
   'background 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad)';

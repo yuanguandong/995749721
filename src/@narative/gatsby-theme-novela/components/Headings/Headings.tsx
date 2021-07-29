@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
 import { css } from "@emotion/core";
-
+import styled from "@emotion/styled";
 import mediaqueries from "@styles/media";
+import theme from '../../gatsby-plugin-theme-ui';
+
 
 /**
  * Example:
@@ -11,7 +12,7 @@ import mediaqueries from "@styles/media";
 const commonStyles = p => css`
   font-weight: bold;
   color: ${p.theme.colors.primary};
-  font-family: ${p.theme.fonts.serif};
+  font-family: ${theme.fonts.serif}!important;
 `;
 
 const h1 = styled.h1`
