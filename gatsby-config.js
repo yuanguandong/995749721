@@ -50,8 +50,8 @@ module.exports = {
         description: `Favori 重剑的个人博客`,
         lang: `zh-CN`,
         start_url: `/`,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
+        background_color: `#000`,
+        theme_color: `#f00`,
         display: `standalone`,
         icon: "src/assets/favicon.png"
       },
