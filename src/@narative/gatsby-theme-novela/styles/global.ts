@@ -187,5 +187,5 @@ export const globalStyles = css`
   h2{word-break: break-all!important;}
   h3{word-break: break-all!important;}
   h4{word-break: break-all!important;}
-  
+  img{border-radius:10px;}
 `;

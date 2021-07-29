@@ -129,7 +129,7 @@ export const SideMenuContainer = styled.div`
 `;
 
 const Close = styled.div`
-  font-size: 20px;
+  font-size: 25px;
   position: absolute;
   right: 20px;
   top: 20px;
