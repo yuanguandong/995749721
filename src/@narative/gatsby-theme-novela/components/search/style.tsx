@@ -37,14 +37,42 @@ export const SearchBox = styled.div<{ readonly open: boolean }>`
   }
 `;
 
-export const SearchInput = styled.input`
+export const SearchInputWrap = styled.div`
   background-color: #fff;
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  overflow: hidden;
+`;
+
+export const SearchInput = styled.input`
   display: block;
   width: 100%;
   border: 0;
   padding: 15px;
   outline: none;
-  border-radius: 5px;
+  flex: 1;
+`;
+
+export const SearchClose = styled.div`
+  width: 48px;
+  height: 48px;
+  color: rgba(128, 128, 128, 0.65);
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:all 0.3s;
+  cursor:pointer;
+  &:hover{
+    transition:all 0.3s;
+    background:rgba(128,128,128,0.1);
+  }
+  &:active{
+    transition:all 0.3s;
+    background:rgba(128,128,128,0.2);
+  }
 `;
 
 export const ResultsTitle = styled.h5`

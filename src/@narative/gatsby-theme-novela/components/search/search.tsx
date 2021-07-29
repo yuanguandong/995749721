@@ -1,17 +1,14 @@
 import { navigate } from "gatsby";
-import _ from 'lodash';
+import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useColorMode } from 'theme-ui';
+import { FaSearch, FaWindowClose } from "react-icons/fa";
+import { useColorMode } from "theme-ui";
+import { NavMenuItem, ToggleSearchButton } from "../searchcontainer/style";
 import {
-  NavMenuItem, ToggleSearchButton
-} from "../searchcontainer/style";
-import {
-  ResultLink, ResultsTitle,
+  ResultLink,
+  ResultsTitle,
   ResultTitle,
-  SearchBox,
-  SearchInput,
-  SearchResult,
+  SearchBox, SearchClose, SearchInput, SearchInputWrap, SearchResult,
   SearchResults
 } from "./style";
 interface SearchResult {
@@ -68,8 +65,6 @@ export const Search = (props: any) => {
   //   setQuery(input);
   // };
 
-
-
   // const getOrCreateIndex = () => (index ? index : Index.load(searchIndex));
 
   // const search = (event) => {
@@ -103,7 +98,7 @@ export const Search = (props: any) => {
     const results = [];
 
     searchIndex.forEach((item) => {
-      let obj:any = item.frontmatter;
+      let obj: any = item.frontmatter;
       for (let [key, val] of Object.entries(obj)) {
         if (val && val.includes(query)) {
           results.push(obj);
@@ -196,15 +191,22 @@ export const Search = (props: any) => {
 
       {isOpen && (
         <SearchBox open={isOpen} ref={searchRef}>
-          <SearchInput
-            placeholder={`搜索`}
-            autoFocus={true}
-            ref={inputRef}
-            value={query}
-            onChange={search}
-            onKeyDown={handleKey}
-          />
-          {!_.isEmpty(results) && <ResultsTitle>文章 ({results.length})</ResultsTitle>}
+          <SearchInputWrap>
+            <SearchInput
+              placeholder={`搜索`}
+              autoFocus={true}
+              ref={inputRef}
+              value={query}
+              onChange={search}
+              onKeyDown={handleKey}
+            />
+            <SearchClose onClick={()=>{setIsOpen(false)}}>
+              <FaWindowClose />
+            </SearchClose>
+          </SearchInputWrap>
+          {!_.isEmpty(results) && (
+            <ResultsTitle>文章 ({results.length})</ResultsTitle>
+          )}
           <SearchResults ref={resultListRef}>
             {results.map((item, index) => (
               <SearchResult
@@ -220,8 +222,8 @@ export const Search = (props: any) => {
                 <ResultLink to={item.slug ? item.slug : "/"}>
                   {/* {item.tags && <small>{item.tags.join(", ")}</small>} */}
                   <ResultTitle>{item.title}</ResultTitle>
-                   {item.excerpt}
-                </ResultLink> 
+                  {item.excerpt}
+                </ResultLink>
               </SearchResult>
             ))}
           </SearchResults>
