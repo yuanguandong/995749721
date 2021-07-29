@@ -25,6 +25,8 @@ const Layout: React.FC<{}> = ({ children }) => {
     <>
     <Helmet>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="white"/>
+      <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="black"/>
     </Helmet>
     <ArticlesContextProvider>
       <Container>
