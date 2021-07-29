@@ -6,7 +6,7 @@ import mediaqueries from "@styles/media";
 import {
   copyToClipboard,
   getBreakpointFromTheme,
-  getWindowDimensions,
+  getWindowDimensions
 } from "@utils";
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
@@ -141,7 +141,7 @@ const NavigationHeader: React.FC<{}> = () => {
                   <Search />
                 </NavMenu>
               </SearchContainer>
-              <SharePageButton />
+              {/* <SharePageButton /> */}
               <DarkModeToggle />
             </>
           )}

@@ -1,4 +1,5 @@
 import { navigate } from "gatsby";
+import _ from 'lodash';
 import React, { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import {
@@ -17,7 +18,7 @@ interface SearchResult {
   content: string;
   tags: string[];
   excerpt: string;
-  path: string;
+  slug: string;
 }
 
 export const Search = (props: any) => {
@@ -66,7 +67,7 @@ export const Search = (props: any) => {
   //   setQuery(input);
   // };
 
-  console.log("searchIndex", searchIndex);
+
 
   // const getOrCreateIndex = () => (index ? index : Index.load(searchIndex));
 
@@ -101,7 +102,7 @@ export const Search = (props: any) => {
     const results = [];
 
     searchIndex.forEach((item) => {
-      let obj = item.frontmatter;
+      let obj:any = item.frontmatter;
       for (let [key, val] of Object.entries(obj)) {
         if (val && val.includes(query)) {
           results.push(obj);
@@ -171,14 +172,14 @@ export const Search = (props: any) => {
       case "Enter":
         event.preventDefault();
         setIsOpen(false);
-        navigate(`/${currentSelection.path}`);
+        navigate(`/${currentSelection.slug}`);
         return;
     }
   };
 
   // Toggles the search dialog
   const toggleSearch = () => setIsOpen(!isOpen);
-  console.log("results", results);
+
   return (
     <>
       <NavMenuItem>
@@ -201,7 +202,7 @@ export const Search = (props: any) => {
             onChange={search}
             onKeyDown={handleKey}
           />
-          <ResultsTitle>文章 ({results.length})</ResultsTitle>
+          {!_.isEmpty(results) && <ResultsTitle>文章 ({results.length})</ResultsTitle>}
           <SearchResults ref={resultListRef}>
             {results.map((item, index) => (
               <SearchResult

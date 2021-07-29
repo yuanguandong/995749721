@@ -1,4 +1,3 @@
-import Theme from "@narative/gatsby-theme-novela/src/gatsby-plugin-theme-ui";
 import { Link } from "gatsby";
 import styled from "styled-components";
 
@@ -8,30 +7,33 @@ export const SearchBox = styled.div<{ readonly open: boolean }>`
   position: absolute;
   width: 400px;
   background-color: #fff;
-  left: -338px;
-  top: 40px;
+  left: -370px;
+  top: -10px;
   border-radius: 5px;
   box-shadow: 0 0 3px rgba(0, 0, 0, .03), 0 3px 46px rgba(0, 0, 0, .1);
 
-  &::before {
-    content: " ";
-    display: block;
-    width: 16px;
-    height: 16px;
-    background-color: #fff;
-    position: absolute;
-    top: -8px;
-    right: 38px;
-    transform: rotate(45deg);
+  // &::before {
+  //   content: " ";
+  //   display: block;
+  //   width: 16px;
+  //   height: 16px;
+  //   background-color: #fff;
+  //   position: absolute;
+  //   top: -8px;
+  //   right: 38px;
+  //   transform: rotate(45deg);
 
-    @media (max-width: ${Theme.breakpoints.sm}) {
-      right: 17px;
-    }
-  }
+  //   @media (max-width: 735px) {
+  //     right: 17px;
+  //   }
+  // }
 
-  @media (max-width: ${Theme.breakpoints.sm}) {
-    width: 300px;
-    left: -260px;
+  @media (max-width: 735px) {
+    width: 100%;
+    position:fixed;
+    left: 0px;
+    top:0;
+    z-index:10;
   }
 `;
 
@@ -72,6 +74,7 @@ export const SearchResult = styled.li<{ selected: boolean }>`
 export const ResultLink = styled(Link)`
   display: block;
   padding: 15px;
+  color:#000;
 `;
 export const ResultTitle = styled.h4`
   margin: 0;
