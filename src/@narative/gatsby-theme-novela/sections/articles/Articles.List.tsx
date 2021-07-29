@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
-import { Link } from 'gatsby';
-
 import Headings from '@components/Headings';
 import Image, { ImagePlaceholder } from '@components/Image';
-
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
-
+import { Link } from 'gatsby';
+import React, { useContext, useEffect } from 'react';
 import { GridLayoutContext } from './Articles.List.Context';
+
+
+
 
 /**
  * Tiles

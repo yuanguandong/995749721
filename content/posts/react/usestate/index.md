@@ -1,7 +1,7 @@
 ---
 slug: usestate
 title: 手写useState实现 
-author: ygd
+author: 袁官东
 date: 2019-04-30
 hero: ./hero.webp
 path: usestate

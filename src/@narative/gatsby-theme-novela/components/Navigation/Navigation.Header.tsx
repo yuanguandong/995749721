@@ -10,6 +10,7 @@ import {
 } from "@utils";
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
+import { FaArrowLeft, FaBars } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Search from "../search";
 import { NavMenu, SearchContainer } from "../searchcontainer/style";
@@ -24,6 +25,25 @@ const siteQuery = graphql`
     }
   }
 `;
+
+const MenuToggle: React.FC<{}> = (props) => {
+  const {useMenu}=props
+  const [show, setShow] = useMenu;
+  const [colorMode, setColorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+
+  // const [show, setShow] = useState<boolean>(showMenu);
+  console.log('props',props)
+  function toggleMenu() {
+    setShow(!show);
+  }
+
+  return (
+    <IconWrapper onClick={toggleMenu} isDark={isDark} style={{fontSize:25}}>
+      {show ? <FaArrowLeft /> : <FaBars />}
+    </IconWrapper>
+  );
+};
 
 const DarkModeToggle: React.FC<{}> = () => {
   const [colorMode, setColorMode] = useColorMode();
@@ -81,7 +101,7 @@ const SharePageButton: React.FC<{}> = () => {
   );
 };
 
-const NavigationHeader: React.FC<{}> = () => {
+const NavigationHeader: React.FC<{}> = (props) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
   const { sitePlugin } = useStaticQuery(siteQuery);
@@ -142,7 +162,9 @@ const NavigationHeader: React.FC<{}> = () => {
                 </NavMenu>
               </SearchContainer>
               {/* <SharePageButton /> */}
+              
               <DarkModeToggle />
+              <MenuToggle {...props}/>
             </>
           )}
         </NavControls>

@@ -26,7 +26,6 @@ const Header = () => (
       }
     `}
     render={(data) => {
-      console.log("data", data);
       return (
         <Search
           searchIndex={data.allMdx.nodes}

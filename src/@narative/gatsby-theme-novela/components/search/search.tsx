@@ -222,7 +222,7 @@ export const Search = (props: any) => {
                 <ResultLink to={item.slug ? item.slug : "/"}>
                   {/* {item.tags && <small>{item.tags.join(", ")}</small>} */}
                   <ResultTitle>{item.title}</ResultTitle>
-                  {item.excerpt}
+                  <div style={{fontSize:14,color:'rgba(0,0,0,0.65)'}}>{item.excerpt}</div>
                 </ResultLink>
               </SearchResult>
             ))}
