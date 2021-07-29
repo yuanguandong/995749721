@@ -1,16 +1,15 @@
 import { Link } from "gatsby";
 import styled from "styled-components";
 
-
 export const SearchBox = styled.div<{ readonly open: boolean }>`
-  display: ${props => props.open ? 'block' : 'none'};
+  display: ${(props) => (props.open ? "block" : "none")};
   position: absolute;
   width: 400px;
   background-color: #fff;
   left: -370px;
   top: -10px;
   border-radius: 5px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, .03), 0 3px 46px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.03), 0 3px 46px rgba(0, 0, 0, 0.1);
 
   // &::before {
   //   content: " ";
@@ -29,11 +28,12 @@ export const SearchBox = styled.div<{ readonly open: boolean }>`
   // }
 
   @media (max-width: 735px) {
-    width: 100%;
-    position:fixed;
-    left: 0px;
-    top:0;
-    z-index:10;
+    width: calc(100vw - 20px);
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 10;
+    box-shadow: rgb(0 0 0 / 90%) 0px 0px 1px 2000px;
   }
 `;
 
@@ -66,7 +66,9 @@ export const SearchResults = styled.ul`
 export const SearchResult = styled.li<{ selected: boolean }>`
   line-height: 1.4em;
 
-  ${props => props.selected && `
+  ${(props) =>
+    props.selected &&
+    `
     background-color: #f2f2f2;
   `};
 `;
@@ -74,7 +76,7 @@ export const SearchResult = styled.li<{ selected: boolean }>`
 export const ResultLink = styled(Link)`
   display: block;
   padding: 15px;
-  color:#000;
+  color: #000;
 `;
 export const ResultTitle = styled.h4`
   margin: 0;

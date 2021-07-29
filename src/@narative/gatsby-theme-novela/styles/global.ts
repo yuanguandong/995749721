@@ -183,7 +183,9 @@ export const globalStyles = css`
     max-width: 680px;
     margin:0 auto;
   }
-  h2{word-break: break-all!important;}
   h1{word-break: break-all!important;}
+  h2{word-break: break-all!important;}
+  h3{word-break: break-all!important;}
+  h4{word-break: break-all!important;}
   
 `;
