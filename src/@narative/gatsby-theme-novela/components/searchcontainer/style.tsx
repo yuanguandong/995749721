@@ -2,10 +2,11 @@ import Theme from "@narative/gatsby-theme-novela/src/gatsby-plugin-theme-ui";
 import { Link } from "gatsby";
 import styled from "styled-components";
 import { Container } from "./common";
-
-export const NavContainer = styled.div<{ dark?: boolean}>`
+export const NavContainer = styled.div<{ dark?: boolean }>`
   z-index: 1000;
-  ${props => props.dark && `
+  ${(props) =>
+    props.dark &&
+    `
     background-color: #20232a;
     position: sticky;
     top: 0;
@@ -34,7 +35,9 @@ export const NavMenu = styled.ul<{ mobile?: boolean }>`
   list-style-type: none;
   margin: 0;
   padding: 0;
-  ${props => props.mobile && `
+  ${(props) =>
+    props.mobile &&
+    `
     @media (max-width: ${Theme.breakpoints.sm}) {
       width: 80%;
       overflow-x: auto;
@@ -55,10 +58,10 @@ export const NavMenuItem = styled.li`
 
 export const NavLink = styled(Link)`
   color: #fff;
-  opacity: .5;
-  font-size:16px;
+  opacity: 0.5;
+  font-size: 16px;
   padding: 16px;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   &:hover {
     opacity: 1;
   }
@@ -69,15 +72,21 @@ export const SearchContainer = styled.div`
   position: relative;
 `;
 
-export const ToggleSearchButton = styled.button`
+export const ToggleSearchButton = styled.button<{ colorMode?: boolean }>`
   cursor: pointer;
-  color: #fff;
-  font-size:20px;
-  opacity: .5;
+  color:#000;
+  ${(props) =>
+    props.colorMode ==='dark' &&
+    `
+    color: #fff;
+  `};
+
+  font-size: 20px;
+  opacity: 0.5;
   background: none;
   outline: none;
   border: 0;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   &:hover {
     opacity: 1;
   }

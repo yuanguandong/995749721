@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from '@emotion/styled';
-
 import Headings from '@components/Headings';
 import Image, { ImagePlaceholder } from '@components/Image';
-
+import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import { IArticle, IAuthor } from '@types';
-
+import React from 'react';
 import ArticleAuthors from './Article.Authors';
+
+
+
 
 interface ArticleHeroProps {
   article: IArticle;
@@ -47,29 +47,29 @@ export default ArticleHero;
 
 const Hero = styled.div`
   ${p => mediaqueries.phablet`
-    &::before {
-      content: "";
-      width: 100%;
-      height: 20px;
-      background: ${p.theme.colors.primary};
-      position: absolute;
-      left: 0;
-      top: 0;
-      transition: ${p.theme.colorModeTransition};
-    }
+    // &::before {
+    //   content: "";
+    //   width: 100%;
+    //   height: 20px;
+    //   background: ${p.theme.colors.primary};
+    //   position: absolute;
+    //   left: 0;
+    //   top: 0;
+    //   transition: ${p.theme.colorModeTransition};
+    // }
 
-    &::after {
-      content: "";
-      width: 100%;
-      height: 10px;
-      background: ${p.theme.colors.background};
-      position: absolute;
-      left: 0;
-      top: 10px;
-      border-top-left-radius: 25px;
-      border-top-right-radius: 25px;
-      transition: ${p.theme.colorModeTransition};
-    }
+    // &::after {
+    //   content: "";
+    //   width: 100%;
+    //   height: 10px;
+    //   background: ${p.theme.colors.background};
+    //   position: absolute;
+    //   left: 0;
+    //   top: 10px;
+    //   border-top-left-radius: 25px;
+    //   border-top-right-radius: 25px;
+    //   transition: ${p.theme.colorModeTransition};
+    // }
   `}
 `;
 
@@ -101,7 +101,7 @@ const Header = styled.header`
   `}
 
   ${mediaqueries.phablet`
-    margin: 170px auto 180px;
+    margin: 50px auto 50px;
     padding: 0 40px;
   `}
 

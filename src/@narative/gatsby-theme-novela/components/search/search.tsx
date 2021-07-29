@@ -2,6 +2,7 @@ import { navigate } from "gatsby";
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useColorMode } from 'theme-ui';
 import {
   NavMenuItem, ToggleSearchButton
 } from "../searchcontainer/style";
@@ -31,7 +32,7 @@ export const Search = (props: any) => {
   const resultListRef = useRef<HTMLUListElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const resultRefs: HTMLElement[] = [];
-
+  const [colorMode] = useColorMode();
   const [index, setIndex] = useState<any>();
 
   // Responsible for closing the search dialog when clicked outside the search dialog
@@ -187,6 +188,7 @@ export const Search = (props: any) => {
           role={`button`}
           aria-label={`Toggle search`}
           onClick={toggleSearch}
+          colorMode={colorMode}
         >
           <FaSearch />
         </ToggleSearchButton>
