@@ -1,4 +1,5 @@
 ---
+slug: promisea+
 title: 手写PromiseA+实现
 author: ygd
 date: 2021-04-30
@@ -175,7 +176,7 @@ then(onFulfilled, onRejected) {
 
 6.5. 这样写, 是在 then 函数被调用的瞬间就会执行. 那这时候如果 status 还没变成 fulfilled 或者 rejected 怎么办, 很有可能还是 pending 的. 所以我们需要一个状态的监听机制, 当状态变成 fulfilled 或者 rejected 后, 再去执行 callback.
 
-#6.5.1. 那么我们首先要拿到所有的 callback, 然后才能在某个时机去执行他. 新建两个数组, 来分别存储成功和失败的回调, 调用 then 的时候, 如果还是 pending 就存入数组.
+6.5.1. 那么我们首先要拿到所有的 callback, 然后才能在某个时机去执行他. 新建两个数组, 来分别存储成功和失败的回调, 调用 then 的时候, 如果还是 pending 就存入数组.
 
    ```js
    FULFILLED_CALLBACK_LIST = [];
@@ -209,7 +210,7 @@ then(onFulfilled, onRejected) {
    }
    ```
 
-#6.5.2. 在 status 发生变化的时候, 就执行所有的回调. 这里咱们用一下 es6 的 getter 和 setter. 这样更符合语义, 当 status 改变时, 去做什么事情. (当然也可以顺序执行, 在给 status 赋值后, 下面再加一行 forEach)
+6.5.2. 在 status 发生变化的时候, 就执行所有的回调. 这里咱们用一下 es6 的 getter 和 setter. 这样更符合语义, 当 status 改变时, 去做什么事情. (当然也可以顺序执行, 在给 status 赋值后, 下面再加一行 forEach)
 
    ```js
    _status = PENDING;

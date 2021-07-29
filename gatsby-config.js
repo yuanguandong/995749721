@@ -21,8 +21,8 @@ module.exports = {
         url: `https://dribbble.com/yuanguandong`,
       },
       {
-        url:'https://codepen.io/favori'
-      }
+        url: "https://codepen.io/favori",
+      },
     ],
   },
   plugins: [
@@ -61,7 +61,7 @@ module.exports = {
             sizes: `512x512`,
             type: `image/png`,
           },
-        ]
+        ],
       },
     },
     {
@@ -86,5 +86,77 @@ module.exports = {
         // strictMath: true,
       },
     },
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-styled-components`,
+    // {
+    //   resolve: `gatsby-plugin-lunr`,
+    //   options: {
+    //     languages: [
+    //       {
+    //         name: 'en'
+    //       }
+    //     ],
+    //     fields: [
+    //       { name: 'title', store: true, attributes: { boost: 20 } },
+    //       { name: 'content', store: true },
+    //       { name: 'tags', store: true },
+    //       { name: 'excerpt', store: true },
+    //       { name: 'path', store: true }
+    //     ],
+    //     resolvers: {
+    //       MarkdownRemark: {
+    //         title: node => node.frontmatter.title,
+    //         content: node => node.html,
+    //         tags: node => node.frontmatter.tags,
+    //         excerpt: node => node.frontmatter.excerpt,
+    //         path: node => node.frontmatter.path
+    //       }
+    //     }
+    //   }
+    // },
+    // {
+    //   resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+    //   options: {
+    //     // Fields to index
+    //     fields: ["title", "keywords", 'excerpt', 'content'],
+    //     // How to resolve each field's value for a supported node type
+    //     resolvers: {
+    //       // For any node of type MarkdownRemark, list how to resolve the fields' values
+    //       MarkdownRemark: {
+    //         title: (node) => node.frontmatter.title,
+    //         keywords: (node) => node.frontmatter.keywords,
+    //         content: node => node.html,
+    //         tags: node => node.frontmatter.tags,
+    //         excerpt: node => node.frontmatter.excerpt,
+    //         path: node => node.frontmatter.path,
+    //         date: node => node.frontmatter.date,
+    //       },
+    //     },
+    //   },
+    // },
+    // {
+    //   resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+    //   options: {
+    //     // Fields to index
+    //     fields: ["title", "excerpt"],
+    //     // How to resolve each field`s value for a supported node type
+    //     resolvers: {
+    //       // For any node of type MarkdownRemark, list how to resolve the fields` values
+    //       MarkdownRemark: {
+    //         title: (node) => node.frontmatter.title,
+    //         // keywords: (node) => node.frontmatter.keywords,
+    //         // content: (node) => node.html,
+    //         // tags: (node) => node.frontmatter.tags,
+    //         excerpt: (node) => node.frontmatter.excerpt,
+    //         // path: (node) => node.frontmatter.path,
+    //         date: (node) => node.frontmatter.date,
+    //       },
+    //     },
+    //     // Optional filter to limit indexed nodes
+    //     // filter: (node, getNode) => {
+    //     //   return node.frontmatter.title !== "exempt";
+    //     // },
+    //   },
+    // },
   ],
 };

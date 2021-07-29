@@ -1,4 +1,5 @@
 ---
+slug: fiber
 title: fiber
 author: ygd
 date: 2019-04-30
