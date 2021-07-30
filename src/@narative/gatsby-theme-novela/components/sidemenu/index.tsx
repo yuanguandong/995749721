@@ -25,6 +25,12 @@ const authorQuery = graphql`
           excerpt
           hero {
             publicURL
+            full: childImageSharp {
+              fluid(maxWidth: 150, quality: 100) {
+                src
+                sizes
+              }
+            }
           }
           slug
           title

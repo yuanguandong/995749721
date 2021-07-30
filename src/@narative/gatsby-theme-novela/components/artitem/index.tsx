@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
 import { Link } from 'gatsby';
+import _ from 'lodash';
 import React from 'react';
-
 
 
 
@@ -24,7 +24,7 @@ export const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) =
 
 
   const hasOverflow = narrow && article.title.length > 35;
-  const imageSource = article.hero.publicURL
+  const imageSource = _.get(article,'hero.full.fluid.src')
 
   return (
     <ArticleLink to={article.slug} data-a11y="false">
