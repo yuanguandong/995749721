@@ -3,8 +3,7 @@ import NavigationHeader from "@components/Navigation/Navigation.Header";
 import { Global } from "@emotion/core";
 import styled from "@emotion/styled";
 import { globalStyles } from "@styles";
-import { useLocalStorageState } from 'ahooks';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useColorMode } from "theme-ui";
 import ArticlesContextProvider from "../../sections/articles/Articles.List.Context";
@@ -15,9 +14,10 @@ import { SideMenu } from "../sidemenu";
  * which hides a lot of the mess we need to create our Desktop and Mobile experiences.
  */
 const Layout: React.FC<{}> = (props) => {
-  const { children } = props
+  const { children } = props;
   const [colorMode] = useColorMode();
-  const [showMenu, setShowMenu] = useLocalStorageState<boolean>('menu-show',false);
+
+  const [showMenu, setShowMenu] = useState<boolean>(window.innerWidth > 680);
 
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, "*");
@@ -43,10 +43,10 @@ const Layout: React.FC<{}> = (props) => {
       </Helmet>
       <ArticlesContextProvider>
         <Container>
-          <SideMenu useMenu={[showMenu, setShowMenu]}/>
+          <SideMenu useMenu={[showMenu, setShowMenu]} />
           <Main>
             <Global styles={globalStyles} />
-            <NavigationHeader useMenu={[showMenu, setShowMenu]}/>
+            <NavigationHeader useMenu={[showMenu, setShowMenu]} />
             {children}
             <NavigationFooter />
           </Main>
@@ -58,24 +58,19 @@ const Layout: React.FC<{}> = (props) => {
 
 export default Layout;
 
-
 const Container = styled.div`
-  display:flex;
+  display: flex;
   min-height: 100vh;
   transition: ${(p) => p.theme.colorModeTransition};
 `;
 
 const Main = styled.div`
-  position:relative;
-  flex:18;
+  position: relative;
+  flex: 18;
   background: ${(p) => p.theme.colors.background};
   transition: ${(p) => p.theme.colorModeTransition};
   min-height: 100vh;
   @media (max-width: 680px) {
-
-    width:100%;
-
+    width: 100%;
   }
 `;
-
-
