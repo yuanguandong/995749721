@@ -58,7 +58,7 @@ export const Image = styled.div`
   background-size:cover;
   background-repeat:no-repeat;
   background-position:center center;
-  border-radius:3px;
+  border-radius:6px;
   @media (max-width: 1300px) {
     display:none;
     
