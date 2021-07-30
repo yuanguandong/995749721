@@ -3,6 +3,7 @@ import NavigationHeader from "@components/Navigation/Navigation.Header";
 import { Global } from "@emotion/core";
 import styled from "@emotion/styled";
 import { globalStyles } from "@styles";
+import { isBrowser } from '@utils';
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useColorMode } from "theme-ui";
@@ -16,8 +17,8 @@ import { SideMenu } from "../sidemenu";
 const Layout: React.FC<{}> = (props) => {
   const { children } = props;
   const [colorMode] = useColorMode();
-
-  const [showMenu, setShowMenu] = useState<boolean>(window.innerWidth > 680);
+  const initialMenuShow = isBrowser() ? (window.innerWidth > 680) : true
+  const [showMenu, setShowMenu] = useState<boolean>(initialMenuShow);
 
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, "*");

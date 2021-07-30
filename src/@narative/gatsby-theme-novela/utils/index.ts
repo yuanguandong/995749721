@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
-
+import { useEffect, useState } from "react";
 import theme from "../gatsby-plugin-theme-ui";
+
 
 /**
  * Clamp a number between min and max
@@ -329,3 +329,6 @@ export function copyToClipboard(toCopy: string) {
   document.execCommand(`copy`);
   document.body.removeChild(el);
 }
+
+
+export const isBrowser = () => typeof window !== "undefined"
