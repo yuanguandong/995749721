@@ -105,7 +105,7 @@ export const Search = (props: any) => {
     searchIndex.forEach((item) => {
       let obj: any = item.frontmatter;
       for (let [key, val] of Object.entries(obj)) {
-        if (val && val.includes(query)) {
+        if (val && val.toLowerCase().includes(query.toLowerCase())) {
           results.push(obj);
           break;
         }

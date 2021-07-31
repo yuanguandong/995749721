@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { useLocalStorageState } from 'ahooks';
+import { useLocalStorageState } from "ahooks";
 import { Avatar } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import _ from 'lodash';
+import _ from "lodash";
 import React, { useLayoutEffect, useRef } from "react";
 // import { SideMenuContainer } from "./style";
 import { FaArrowLeft } from "react-icons/fa";
@@ -47,7 +47,7 @@ export const SideMenu = (props) => {
   const { useMenu } = props;
   const [show, setShow] = useMenu;
   const [colorMode] = useColorMode();
-  const ref = useRef()
+  const ref = useRef();
   const [scrollPosition, setScrollPosition] = useLocalStorageState<string>(
     "scrollPosition",
     "0"
@@ -71,31 +71,32 @@ export const SideMenu = (props) => {
     setShow(false);
   };
 
-  const syncPosition=_.debounce((e)=>{
-    const position = _.get(ref,'current.scrollTop')
-    if(!position){return}
-    console.log('position',position)
-    setScrollPosition(String(position))
-  },20)
+  const syncPosition = _.debounce((e) => {
+    const position = _.get(ref, "current.scrollTop");
+    if (!position) {
+      setScrollPosition(String(0));
+      return;
+    }
+    setScrollPosition(String(position));
+  }, 20);
 
   useLayoutEffect(() => {
-    const instance = ref.current
-    if(instance){
-      instance.addEventListener("scroll",syncPosition)
+    const instance = ref.current;
+    if (instance) {
+      instance.addEventListener("scroll", syncPosition);
     }
-    return ()=>{
-      instance.removeEventListener("scroll",syncPosition)
-    }
-  },[])
+    return () => {
+      instance.removeEventListener("scroll", syncPosition);
+    };
+  }, []);
 
-  useLayoutEffect(()=>{
-    const instance = ref.current
-    console.log('scrollPosition',scrollPosition)
-    if(instance){
-      instance.scrollTo(0,parseInt(scrollPosition))
+  useLayoutEffect(() => {
+    const instance = ref.current;
+    console.log("scrollPosition", scrollPosition);
+    if (instance) {
+      instance.scrollTo(0, parseInt(scrollPosition));
     }
-  },[])
-
+  }, []);
 
   return (
     <>
