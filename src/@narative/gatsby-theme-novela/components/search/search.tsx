@@ -229,7 +229,7 @@ export const Search = (props: any) => {
                 }}
                 selected={index === selected}
               >
-                <ResultLink to={item.slug ? item.slug : "/"}>
+                <ResultLink replace to={item.slug ? '/'+item.slug : "/"}>
                   {/* {item.tags && <small>{item.tags.join(", ")}</small>} */}
                   <ResultTitle>{item.title}</ResultTitle>
                   <div style={{ fontSize: 14, color: "rgba(0,0,0,0.65)" }}>
