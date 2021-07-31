@@ -1,9 +1,9 @@
-import React from 'react';
 import styled from '@emotion/styled';
-
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
-
+import React from 'react';
+import { FaCodepen, FaQq } from 'react-icons/fa';
+import { RiMailLine, RiWechat2Line, RiZcoolFill } from "react-icons/ri";
 interface SocialLinksProps {
   links: {
     name: string;
@@ -32,11 +32,16 @@ const icons = {
   tripadvisor: Icons.TripAdvisor,
   buymeacoffee: Icons.Buymeacoffee,
   mailto: Icons.Mailto,
-  url: Icons.Url
+  favorizcool: RiZcoolFill,
+  url: Icons.Url,
+  codepenio: FaCodepen,
+  wechat:RiWechat2Line,
+  tencent:FaQq,
+  email:RiMailLine
 };
 
 const getHostname = url => {
-  return new URL(url.toLowerCase()).hostname.replace(/www|com|net|\.so|org|[.-]/g, '').split('.')[0];
+  return new URL(url.toLowerCase()).hostname.replace(/www|com|net|cn|\.so|org|[.-]/g, '').split('.')[0];
 };
 
 const getServicename = url => {
@@ -53,6 +58,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     <>
       {links.map(option => {
         const name = option.name || getHostname(option.url) || getServicename(option.url);
+        console.log('name',name)
+        console.log('icons',icons)
         const Icon = icons[name] ? icons[name] : icons['url'];
         if (!Icon) {
           throw new Error(
