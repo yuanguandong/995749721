@@ -6,8 +6,8 @@ export const SearchBox = styled.div<{ readonly open: boolean }>`
   position: absolute;
   width: 400px;
   background-color: #fff;
-  left: -370px;
-  top: -10px;
+  left: -325px;
+  top: -7px;
   border-radius: 5px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.03), 0 3px 46px rgba(0, 0, 0, 0.1);
 
@@ -63,15 +63,15 @@ export const SearchClose = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition:all 0.3s;
-  cursor:pointer;
-  &:hover{
-    transition:all 0.3s;
-    background:rgba(128,128,128,0.2);
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    background: rgba(128, 128, 128, 0.2);
   }
-  &:active{
-    transition:all 0.3s;
-    background:rgba(128,128,128,0.5);
+  &:active {
+    transition: all 0.3s;
+    background: rgba(128, 128, 128, 0.5);
   }
 `;
 

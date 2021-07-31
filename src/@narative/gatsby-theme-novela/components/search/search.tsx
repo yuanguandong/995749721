@@ -3,14 +3,19 @@ import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
-import { NavMenuItem, ToggleSearchButton } from "../searchcontainer/style";
+import { IconWrapper } from "../Navigation/Navigation.Header";
 import {
   ResultLink,
   ResultsTitle,
   ResultTitle,
-  SearchBox, SearchClose, SearchInput, SearchInputWrap, SearchResult,
+  SearchBox,
+  SearchClose,
+  SearchInput,
+  SearchInputWrap,
+  SearchResult,
   SearchResults
 } from "./style";
+
 interface SearchResult {
   title: string;
   content: string;
@@ -178,16 +183,17 @@ export const Search = (props: any) => {
 
   return (
     <>
-      <NavMenuItem>
-        <ToggleSearchButton
-          role={`button`}
-          aria-label={`Toggle search`}
-          onClick={toggleSearch}
-          colorMode={colorMode}
-        >
-          <FaSearch />
-        </ToggleSearchButton>
-      </NavMenuItem>
+      {/* <NavMenuItem> */}
+      <IconWrapper
+        role={`button`}
+        aria-label={`Toggle search`}
+        onClick={toggleSearch}
+        isDark={colorMode === "dark"}
+        style={{ fontSize: 25 }}
+      >
+        <FaSearch />
+      </IconWrapper>
+      {/* </NavMenuItem> */}
 
       {isOpen && (
         <SearchBox open={isOpen} ref={searchRef}>
@@ -200,7 +206,11 @@ export const Search = (props: any) => {
               onChange={search}
               onKeyDown={handleKey}
             />
-            <SearchClose onClick={()=>{setIsOpen(false)}}>
+            <SearchClose
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
               <FaWindowClose />
             </SearchClose>
           </SearchInputWrap>
@@ -222,7 +232,9 @@ export const Search = (props: any) => {
                 <ResultLink to={item.slug ? item.slug : "/"}>
                   {/* {item.tags && <small>{item.tags.join(", ")}</small>} */}
                   <ResultTitle>{item.title}</ResultTitle>
-                  <div style={{fontSize:14,color:'rgba(0,0,0,0.65)'}}>{item.excerpt}</div>
+                  <div style={{ fontSize: 14, color: "rgba(0,0,0,0.65)" }}>
+                    {item.excerpt}
+                  </div>
                 </ResultLink>
               </SearchResult>
             ))}

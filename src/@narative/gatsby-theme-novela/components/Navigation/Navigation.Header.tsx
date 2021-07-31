@@ -10,10 +10,15 @@ import {
 } from "@utils";
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft, FaBars, FaHandPointUp, FaMousePointer, FaRegCircle } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaBars,
+  FaHandPointUp,
+  FaMousePointer,
+  FaRegCircle
+} from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Search from "../search";
-import { NavMenu, SearchContainer } from "../searchcontainer/style";
 
 const siteQuery = graphql`
   {
@@ -27,9 +32,9 @@ const siteQuery = graphql`
 `;
 
 //菜单开关
-const MenuToggle: React.FC<{}> = (props:any) => {
-  const {useMenu,useCursor}=props
-  const [cursorType, toggleCursor] = useCursor
+const MenuToggle: React.FC<{}> = (props: any) => {
+  const { useMenu, useCursor } = props;
+  const [cursorType, toggleCursor] = useCursor;
   const [show, setShow] = useMenu;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
@@ -37,7 +42,7 @@ const MenuToggle: React.FC<{}> = (props:any) => {
     setShow(!show);
   }
   return (
-    <IconWrapper onClick={toggleMenu} isDark={isDark} style={{fontSize:25}}>
+    <IconWrapper onClick={toggleMenu} isDark={isDark} style={{ fontSize: 25 }}>
       {show ? <FaArrowLeft /> : <FaBars />}
     </IconWrapper>
   );
@@ -66,16 +71,20 @@ const DarkModeToggle: React.FC<{}> = () => {
 };
 
 //鼠标指针
-const CursorToggle: React.FC<{}> = (props:any) => {
-  const {useCursor}=props
-  const [cursorType, toggleCursor] = useCursor
+const CursorToggle: React.FC<{}> = (props: any) => {
+  const { useCursor } = props;
+  const [cursorType, toggleCursor] = useCursor;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   return (
-    <IconWrapper onClick={toggleCursor} isDark={isDark} style={{fontSize:25}}>
-      {cursorType==='dot' && <FaRegCircle />}
-      {cursorType==='zhua' && <FaHandPointUp />}
-      {cursorType==='default' && <FaMousePointer />}
+    <IconWrapper
+      onClick={toggleCursor}
+      isDark={isDark}
+      style={{ fontSize: 25 }}
+    >
+      {cursorType === "dot" && <FaRegCircle />}
+      {cursorType === "zhua" && <FaHandPointUp />}
+      {cursorType === "default" && <FaMousePointer />}
     </IconWrapper>
   );
 };
@@ -117,7 +126,7 @@ const NavigationHeader: React.FC<{}> = (props) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
   const { sitePlugin } = useStaticQuery(siteQuery);
-
+  const { isPC } = props;
   const [colorMode] = useColorMode();
   const fill = colorMode === "dark" ? "#fff" : "#000";
   const { rootPath, basePath } = sitePlugin.pluginOptions;
@@ -145,8 +154,8 @@ const NavigationHeader: React.FC<{}> = (props) => {
         <LogoLink
           to={rootPath || basePath}
           data-a11y="false"
-          title="Navigate back to the homepage"
-          aria-label="Navigate back to the homepage"
+          title="回到首页"
+          aria-label="回到首页"
           back={showBackArrow ? "true" : "false"}
         >
           {showBackArrow && (
@@ -155,29 +164,23 @@ const NavigationHeader: React.FC<{}> = (props) => {
             </BackArrowIconContainer>
           )}
           <Logo fill={fill} />
-          <Hidden>Navigate back to the homepage</Hidden>
+          <Hidden>回到首页</Hidden>
         </LogoLink>
         <NavControls>
           {showBackArrow ? (
             <button
               onClick={() => navigate(previousPath)}
-              title="Navigate back to the homepage"
-              aria-label="Navigate back to the homepage"
+              title="回到首页"
+              aria-label="回到首页"
             >
               <Icons.Ex fill={fill} />
             </button>
           ) : (
             <>
-              <SearchContainer>
-                <NavMenu>
-                  <Search />
-                </NavMenu>
-              </SearchContainer>
-              {/* <SharePageButton /> */}
-              
+              <Search />
               <DarkModeToggle />
-              <CursorToggle {...props}/>
-              <MenuToggle {...props}/>
+              {isPC && <CursorToggle {...props} />}
+              <MenuToggle {...props} />
             </>
           )}
         </NavControls>
@@ -187,19 +190,6 @@ const NavigationHeader: React.FC<{}> = (props) => {
 };
 
 export default NavigationHeader;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const BackArrowIconContainer = styled.div`
   transition: 0.2s transform var(--ease-out-quad);
@@ -300,7 +290,7 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   }
 `;
 
-const IconWrapper = styled.button<{ isDark: boolean }>`
+export const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
   position: relative;
   border-radius: 5px;
@@ -311,7 +301,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   justify-content: center;
   transition: opacity 0.3s ease;
   margin-left: 30px;
-  color:${(p) => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
   &:hover {
     opacity: 1;
   }

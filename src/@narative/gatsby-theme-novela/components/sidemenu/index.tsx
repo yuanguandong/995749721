@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
+import { useLocalStorageState } from 'ahooks';
 import { Avatar } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
-import React from "react";
+import _ from 'lodash';
+import React, { useLayoutEffect, useRef } from "react";
 // import { SideMenuContainer } from "./style";
 import { FaArrowLeft } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
@@ -18,7 +20,7 @@ const authorQuery = graphql`
         }
       }
     }
-    allArticle {
+    allArticle(sort: { fields: [date, title], order: DESC }, limit: 1000) {
       edges {
         node {
           date(formatString: "yyyy-MM-DD")
@@ -42,10 +44,14 @@ const authorQuery = graphql`
 `;
 
 export const SideMenu = (props) => {
-  const {useMenu}=props
+  const { useMenu } = props;
   const [show, setShow] = useMenu;
   const [colorMode] = useColorMode();
-
+  const ref = useRef()
+  const [scrollPosition, setScrollPosition] = useLocalStorageState<string>(
+    "scrollPosition",
+    "0"
+  );
   //作者
   const results = useStaticQuery(authorQuery);
   const {
@@ -60,16 +66,41 @@ export const SideMenu = (props) => {
   } = nodes[0];
 
   console.log("edges", edges);
-  
+
   const handleClose = () => {
     setShow(false);
   };
 
+  const syncPosition=_.debounce((e)=>{
+    const position = _.get(ref,'current.scrollTop')
+    if(!position){return}
+    console.log('position',position)
+    setScrollPosition(String(position))
+  },20)
+
+  useLayoutEffect(() => {
+    const instance = ref.current
+    if(instance){
+      instance.addEventListener("scroll",syncPosition)
+    }
+    return ()=>{
+      instance.removeEventListener("scroll",syncPosition)
+    }
+  },[])
+
+  useLayoutEffect(()=>{
+    const instance = ref.current
+    console.log('scrollPosition',scrollPosition)
+    if(instance){
+      instance.scrollTo(0,parseInt(scrollPosition))
+    }
+  },[])
+
+
   return (
     <>
       {show && (
-        <SideMenuContainer>
-          
+        <SideMenuContainer ref={ref}>
           <AvatarContainer colorMode={colorMode}>
             <Link to={slug}>
               <Avatar size={100} src={publicURL} />
@@ -139,6 +170,6 @@ const Close = styled.div`
   position: absolute;
   right: 20px;
   top: 20px;
-  cursor:pointer;
+  cursor: pointer;
   color: ${(p) => p.theme.colors.primary};
 `;

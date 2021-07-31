@@ -4,6 +4,7 @@ import { Global } from "@emotion/core";
 import styled from "@emotion/styled";
 import { globalStyles } from "@styles";
 import { isBrowser } from "@utils";
+import { useLocalStorageState } from "ahooks";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useColorMode } from "theme-ui";
@@ -19,9 +20,12 @@ import "./index.less";
 const Layout: React.FC<{}> = (props) => {
   const { children } = props;
   const [colorMode] = useColorMode();
-  const initialMenuShow = isBrowser() ? window.innerWidth > 680 : true;
-  const [showMenu, setShowMenu] = useState<boolean>(initialMenuShow);
-  const [cursorType, setCursorType] = useState<string>("zhua");
+  const isPC = isBrowser() ? window.innerWidth > 680 : true;
+  const [showMenu, setShowMenu] = useState<boolean>(isPC);
+  const [cursorType, setCursorType] = useLocalStorageState<string>(
+    "curType",
+    "zhua"
+  );
 
   const toggleCursor = () => {
     switch (cursorType) {
@@ -69,6 +73,7 @@ const Layout: React.FC<{}> = (props) => {
             <NavigationHeader
               useMenu={[showMenu, setShowMenu]}
               useCursor={[cursorType, toggleCursor]}
+              isPC={isPC}
             />
             {children}
             <NavigationFooter />
