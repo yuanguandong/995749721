@@ -10,7 +10,7 @@ import {
 } from "@utils";
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft, FaBars } from "react-icons/fa";
+import { FaArrowLeft, FaBars, FaHandPointUp, FaMousePointer, FaRegCircle } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Search from "../search";
 import { NavMenu, SearchContainer } from "../searchcontainer/style";
@@ -26,18 +26,16 @@ const siteQuery = graphql`
   }
 `;
 
-const MenuToggle: React.FC<{}> = (props) => {
-  const {useMenu}=props
+//菜单开关
+const MenuToggle: React.FC<{}> = (props:any) => {
+  const {useMenu,useCursor}=props
+  const [cursorType, toggleCursor] = useCursor
   const [show, setShow] = useMenu;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
-
-  // const [show, setShow] = useState<boolean>(showMenu);
-  console.log('props',props)
   function toggleMenu() {
     setShow(!show);
   }
-
   return (
     <IconWrapper onClick={toggleMenu} isDark={isDark} style={{fontSize:25}}>
       {show ? <FaArrowLeft /> : <FaBars />}
@@ -45,15 +43,14 @@ const MenuToggle: React.FC<{}> = (props) => {
   );
 };
 
+//切换主题
 const DarkModeToggle: React.FC<{}> = () => {
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
-
   function toggleColorMode(event) {
     event.preventDefault();
     setColorMode(isDark ? `light` : `dark`);
   }
-
   return (
     <IconWrapper
       isDark={isDark}
@@ -62,12 +59,28 @@ const DarkModeToggle: React.FC<{}> = () => {
       aria-label={isDark ? "Activate light mode" : "Activate dark mode"}
       title={isDark ? "Activate light mode" : "Activate dark mode"}
     >
-      <MoonOrSun isDark={isDark} />
-      <MoonMask isDark={isDark} />
+      <MoonOrSun isDark={!isDark} />
+      <MoonMask isDark={!isDark} />
     </IconWrapper>
   );
 };
 
+//鼠标指针
+const CursorToggle: React.FC<{}> = (props:any) => {
+  const {useCursor}=props
+  const [cursorType, toggleCursor] = useCursor
+  const [colorMode, setColorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  return (
+    <IconWrapper onClick={toggleCursor} isDark={isDark} style={{fontSize:25}}>
+      {cursorType==='dot' && <FaRegCircle />}
+      {cursorType==='zhua' && <FaHandPointUp />}
+      {cursorType==='default' && <FaMousePointer />}
+    </IconWrapper>
+  );
+};
+
+//分享按钮
 const SharePageButton: React.FC<{}> = () => {
   const [hasCopied, setHasCopied] = useState<boolean>(false);
   const [colorMode] = useColorMode();
@@ -84,7 +97,6 @@ const SharePageButton: React.FC<{}> = () => {
       setHasCopied(false);
     }, 1000);
   }
-
   return (
     <IconWrapper
       isDark={isDark}
@@ -164,6 +176,7 @@ const NavigationHeader: React.FC<{}> = (props) => {
               {/* <SharePageButton /> */}
               
               <DarkModeToggle />
+              <CursorToggle {...props}/>
               <MenuToggle {...props}/>
             </>
           )}
@@ -174,6 +187,19 @@ const NavigationHeader: React.FC<{}> = (props) => {
 };
 
 export default NavigationHeader;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const BackArrowIconContainer = styled.div`
   transition: 0.2s transform var(--ease-out-quad);

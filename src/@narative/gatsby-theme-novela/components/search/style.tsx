@@ -56,8 +56,8 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchClose = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 55px;
+  height: 55px;
   color: rgba(128, 128, 128, 0.65);
   font-size: 20px;
   display: flex;
@@ -67,11 +67,11 @@ export const SearchClose = styled.div`
   cursor:pointer;
   &:hover{
     transition:all 0.3s;
-    background:rgba(128,128,128,0.1);
+    background:rgba(128,128,128,0.2);
   }
   &:active{
     transition:all 0.3s;
-    background:rgba(128,128,128,0.2);
+    background:rgba(128,128,128,0.5);
   }
 `;
 
