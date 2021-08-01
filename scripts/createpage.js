@@ -27,7 +27,7 @@ slug: ${slug}
 title: ${slug}
 author: 袁官东
 date: ${moment(new Date()).format('YYYY-MM-DD')}
-hero: ./hero.jpg
+hero: ./hero.webp
 excerpt: ${slug}
 ---
 <div className={'img-desc'}>图：</div>

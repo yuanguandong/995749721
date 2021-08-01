@@ -1,0 +1,85 @@
+---
+slug: nodejs-cjs-implementation
+title: Commonjs简易版实现
+author: 袁官东
+date: 2021-08-01
+hero: ./hero.webp
+excerpt: Commonjs我们经常用，如何实现一个简易版的commonjs呢？
+---
+<div className={'img-desc'}>图：Mako Tsereteli</div>
+
+
+## 逻辑
+借助nodejs的虚拟机vm模块，通过nodejs读取文件，字符串包裹文件内容一层函数，实现自定义模块参数注入
+
+## 代码
+需要创建3个文件来验证
+- index.js 入口文件
+- module.js 模块文件
+- require.js 逻辑实现文件
+
+### index.js
+```js
+require('./require.js')
+
+const result = myRequire('./module.js')
+console.log('result',result)
+
+
+```
+
+### module.js
+```js
+myExports.default = { name: "John" };
+console.log('Author',Author) 
+
+```
+
+### require.js
+```js
+const vm = require("vm");
+const path = require("path");
+const fs = require("fs");
+
+function myRequire(filename) {
+  const pathToFile = path.resolve(__dirname, filename);
+  const content = fs.readFileSync(pathToFile, "utf-8");
+  const wrapper = [
+    "(function(myRequire,myModule,myExports,__dirname,__filename,Author){",
+    "})",
+  ];
+  const wrapperContent = wrapper[0] + content + wrapper[1];
+  const script = new vm.Script(wrapperContent, {
+    filename,
+  });
+  const myModule = {
+    myExports: {},
+  };
+  const result = script.runInThisContext();
+  result(
+    myRequire,
+    myModule,
+    myModule.myExports,
+    pathToFile,
+    filename,
+    "Favori"
+  );
+  return myModule.myExports;
+}
+
+global.myRequire = myRequire;
+
+
+```
+
+## 验证
+在命令行工具里执行 node index.js，输出如下结果
+```bash
+[Running] node "/Volumes/mac/github/code/nodejs/commonjs/index.js"
+Author Favori
+result { default: { name: 'John' } }
+
+[Done] exited with code=0 in 0.051 seconds
+```
+
+到此我们就用最简易的方式实现了一个自定义模块加载器，觉得不错的收藏一下吧！
