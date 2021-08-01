@@ -10,9 +10,8 @@ excerpt: 关于ES6里的class, 我们有什么不知道的事？
 <div className={"img-desc"}>图：Mako Tsereteli</div>
 
 ## Class 助力 js 更加面向对象了
-
+### 传统对象 - function构造函数
 ```js
-//传统对象 - function
 function Course(teacher, course) {
   this.teacher = teacher;
   this.course = course;
@@ -22,8 +21,10 @@ Course.prototype.getCourse = function () {
 };
 
 const course = new Course("YY", "ES6");
+```
 
-// ES6
+### ES6
+```js
 class Course {
   constructor(teacher, course) {
     this.teacher = teacher;

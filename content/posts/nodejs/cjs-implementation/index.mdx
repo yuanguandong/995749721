@@ -1,10 +1,10 @@
 ---
 slug: nodejs-cjs-implementation
-title: Commonjs简易版实现
+title: CommonJS简易版实现
 author: 袁官东
 date: 2021-08-01
 hero: ./hero.webp
-excerpt: Commonjs我们经常用，如何实现一个简易版的commonjs呢？
+excerpt: CommonJS我们经常用，如何实现一个简易版的commonJS呢？
 ---
 <div className={'img-desc'}>图：Mako Tsereteli</div>
 
@@ -62,7 +62,7 @@ function myRequire(filename) {
     myModule.myExports,
     pathToFile,
     filename,
-    "Favori"
+    "Favori"//自定义全局变量注入
   );
   return myModule.myExports;
 }
@@ -75,7 +75,7 @@ global.myRequire = myRequire;
 ## 验证
 在命令行工具里执行 node index.js，输出如下结果
 ```bash
-[Running] node "/Volumes/mac/github/code/nodejs/commonjs/index.js"
+[Running] node "./index.js"
 Author Favori
 result { default: { name: 'John' } }
 
