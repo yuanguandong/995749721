@@ -148,9 +148,11 @@ export const globalStyles = css`
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    
   }
   
   ::-webkit-scrollbar-thumb {
+    border-radius:1px;
     background-color: rgba(128, 128, 128, 0.5);
   }
   ::-webkit-scrollbar-thumb:window-inactive {

@@ -1,0 +1,24 @@
+---
+slug: nodejs-aspect-oriented
+title: nodejs里面向切面编程的一种范式
+author: 袁官东
+date: 2021-08-01
+hero: ./hero.webp
+excerpt: 在一些场景下我们可能需要一种面向切面的编程方式
+---
+
+<div className={"img-desc"}>图：Mako Tsereteli</div>
+
+## 例子
+比如我们可以在module js解析器的前面或者后面增加一些逻辑
+```js
+const Module = require("module");
+const prevFunc = Module._extensions["js"];
+
+Module._extensions["js"] = function (...args) {
+  console.log("do something pre");
+  prevFunc.apply(prevFunc, args);
+  console.log("do something post");
+};
+```
+诸如此类操作
