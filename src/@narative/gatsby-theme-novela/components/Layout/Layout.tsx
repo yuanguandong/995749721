@@ -21,7 +21,6 @@ import "./index.less";
 const Layout: React.FC<{}> = (props) => {
   const { children } = props;
   const [colorMode] = useColorMode();
-  console.log('window.innerWidth',isBrowser()&&window.innerWidth)
   const isPC = isBrowser() ? window.innerWidth > 680 : false;
   const [showMenu, setShowMenu] = useState<boolean>(isPC);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
@@ -48,15 +47,6 @@ const Layout: React.FC<{}> = (props) => {
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, "*");
   }, [colorMode]);
-
-  console.log('layout show',showMenu)
-  console.log('layout isPC',isPC)
-
-  // useLayoutEffect(()=>{
-  //   if(window.innerWidth > 680){
-
-  //   }
-  // },[])
 
   return (
     <>

@@ -58,7 +58,7 @@ export const Search = (props: any) => {
   //     return setResults([]);
   //   }
   //   const lunrIndex = (window as any).__LUNR__["en"]; // tslint:disable-line
-  //   console.log('lunrIndex',lunrIndex)
+
   //   setResults(
   //     lunrIndex.index.search(input + "*").map(({ ref }) => {
   //       return lunrIndex.store[ref]; // tslint:disable-line
@@ -80,7 +80,7 @@ export const Search = (props: any) => {
   //   }
   //   const index = getOrCreateIndex()
   //   setIndex(index);
-  //   console.log('index',index)
+
 
   //   const results = index
   //     .search(query, {})

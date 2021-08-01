@@ -95,8 +95,7 @@ export const SideMenu = (props) => {
     }
   }, []);
 
-  console.log("menu show", show);
-  console.log("menu isPC", isPC);
+
   return (
     <>
       <SideMenuContainer ref={ref} show={show}>
@@ -152,7 +151,6 @@ export const SideMenuContainer = styled.div<{ show }>`
   flex: ${(p) => (p.show ? "6" : "0")};
   min-width: ${(p) => (p.show ? "200px" : "0")};
   opacity: ${(p) => {
-    console.log("p", p);
     return p.show ? "1" : "0";
   }};
 

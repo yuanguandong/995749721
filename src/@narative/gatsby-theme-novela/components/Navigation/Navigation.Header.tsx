@@ -40,7 +40,7 @@ const MenuToggle: React.FC<{}> = (props: any) => {
   function toggleMenu() {
     setShow(!show);
   }
-  console.log('MenuToggle show',show)
+
   return (
     <IconWrapper onClick={toggleMenu} isDark={isDark} style={{ fontSize: 25 }}>
       {show ? <FaArrowLeft /> : <FaBars />}
@@ -76,7 +76,6 @@ const CursorToggle: React.FC<{}> = (props: any) => {
   const [cursorType, toggleCursor] = useCursor;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
-  console.log('header isPC',isPC)
   if(!isPC){return null}
   return (
     <IconWrapper
@@ -150,8 +149,6 @@ const NavigationHeader: React.FC<{}> = (props) => {
     setPreviousPath(prev);
   }, []);
 
-  // console.log("header show", show);
-  console.log("header isPC", isPC);
   return (
     <Section>
       <NavContainer>

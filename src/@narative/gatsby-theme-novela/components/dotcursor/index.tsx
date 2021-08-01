@@ -74,7 +74,6 @@ const Cursor = () => {
 
     useLayoutEffect(() => {
       document.body.style.cursor ='none!important'
-      console.log('document.body.style.cursor',document.body.style.cursor)
       return ()=>{
         document.body.style.cursor ='cursor: url("/zhua.cur"), default;'
       }

@@ -25,11 +25,11 @@ mkdirs(`${__dirname}/../content/posts/${createPath}`,() => {
   fs.writeFile(`${__dirname}/../content/posts/${createPath}/index.mdx`, 
   `---
 slug: ${slug}
-title: 
+title: slug
 author: 袁官东
 date: ${moment(new Date()).format('YYYY-MM-DD')}
 hero: ./hero.jpg
-excerpt: 
+excerpt: slug
 ---
 <div className={'img-desc'}>图：xxx</div>
 
