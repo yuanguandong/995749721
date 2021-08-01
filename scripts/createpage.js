@@ -9,8 +9,7 @@ function mkdirs(dirname, callback) {
       callback();  
   } else {  
       mkdirs(path.dirname(dirname), function () {  
-          fs.mkdir(dirname, callback);  
-          console.log('在' + path.dirname(dirname) + '目录创建好' + dirname  +'目录');
+          fs.mkdir(dirname, callback);
       });  
   }  
 }  
@@ -25,13 +24,13 @@ mkdirs(`${__dirname}/../content/posts/${createPath}`,() => {
   fs.writeFile(`${__dirname}/../content/posts/${createPath}/index.mdx`, 
   `---
 slug: ${slug}
-title: slug
+title: ${slug}
 author: 袁官东
 date: ${moment(new Date()).format('YYYY-MM-DD')}
 hero: ./hero.jpg
-excerpt: slug
+excerpt: ${slug}
 ---
-<div className={'img-desc'}>图：xxx</div>
+<div className={'img-desc'}>图：</div>
 
 
 ## 
@@ -40,7 +39,7 @@ excerpt: slug
     if(err) {
         return console.log(err);
     }
-    console.log("The file was saved!");
+    console.log("Success!");
 });
 })
 
