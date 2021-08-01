@@ -4,7 +4,6 @@ import { Avatar } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
 import React, { useLayoutEffect, useRef } from "react";
-// import { SideMenuContainer } from "./style";
 import { FaArrowLeft } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import { List, ListItem } from "../artitem";
@@ -13,6 +12,7 @@ const authorQuery = graphql`
   query MyQuery {
     allAuthor {
       nodes {
+        id
         name
         slug
         avatar {
@@ -44,7 +44,7 @@ const authorQuery = graphql`
 `;
 
 export const SideMenu = (props) => {
-  const { useMenu } = props;
+  const { useMenu, isPC } = props;
   const [show, setShow] = useMenu;
   const [colorMode] = useColorMode();
   const ref = useRef();
@@ -65,8 +65,6 @@ export const SideMenu = (props) => {
     avatar: { publicURL },
   } = nodes[0];
 
-  console.log("edges", edges);
-
   const handleClose = () => {
     setShow(false);
   };
@@ -82,7 +80,7 @@ export const SideMenu = (props) => {
 
   useLayoutEffect(() => {
     const instance = ref.current;
-    if (instance) {
+    if (instance && isPC) {
       instance.addEventListener("scroll", syncPosition);
     }
     return () => {
@@ -92,32 +90,32 @@ export const SideMenu = (props) => {
 
   useLayoutEffect(() => {
     const instance = ref.current;
-    console.log("scrollPosition", scrollPosition);
-    if (instance) {
+    if (instance && isPC) {
       instance.scrollTo(0, parseInt(scrollPosition));
     }
   }, []);
 
+  console.log("menu show", show);
+  console.log("menu isPC", isPC);
   return (
     <>
-      {show && (
-        <SideMenuContainer ref={ref}>
-          <AvatarContainer colorMode={colorMode}>
-            <Link to={slug}>
-              <Avatar size={100} src={publicURL} />
-              <Name>{name}</Name>
-            </Link>
-          </AvatarContainer>
-          <List reverse={false} gridLayout={"row"} hasOnlyOneArticle={false}>
-            {edges.map((item) => (
-              <ListItem article={item.node} narrow={false} />
-            ))}
-          </List>
-          <Close onClick={handleClose}>
-            <FaArrowLeft />
-          </Close>
-        </SideMenuContainer>
-      )}
+      <SideMenuContainer ref={ref} show={show}>
+        <AvatarContainer colorMode={colorMode}>
+          <Link to={slug}>
+            <Avatar size={100} src={publicURL} />
+            <Name>{name}</Name>
+          </Link>
+        </AvatarContainer>
+        <List reverse={false} gridLayout={"row"} hasOnlyOneArticle={false}>
+          {edges.map((item) => (
+            <ListItem article={item.node} narrow={false} key={item.node.slug} />
+          ))}
+        </List>
+        <Footer>Stay hungry & Stay foolish</Footer>
+        <Close onClick={handleClose}>
+          <FaArrowLeft />
+        </Close>
+      </SideMenuContainer>
     </>
   );
 };
@@ -141,36 +139,50 @@ const Name = styled.div`
   color: ${(p) => p.theme.colors.primary};
 `;
 
-export const SideMenuContainer = styled.div`
-  flex: 6;
+export const SideMenuContainer = styled.div<{ show }>`
   min-width: 200px;
-
   height: 100vh;
   position: sticky;
   top: 0;
   border-right: 1px solid rgba(128, 128, 128, 0.2);
   overflow-y: auto;
   background: ${(p) => p.theme.colors.background};
-  transition: ${(p) => p.theme.colorModeTransition};
+  transition: all 0.2s;
+
+  flex: ${(p) => (p.show ? "6" : "0")};
+  min-width: ${(p) => (p.show ? "200px" : "0")};
+  opacity: ${(p) => {
+    console.log("p", p);
+    return p.show ? "1" : "0";
+  }};
 
   &::-webkit-scrollbar {
     width: 0px;
     height: 0px;
   }
 
-  @media (max-width: 680px) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9000;
-  }
-`;
 
+`;
+  // @media (max-width: 680px) {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   display: ${(p) => (p.show ? "block" : "none")};
+  //   z-index: 9000;
+  // }
 const Close = styled.div`
   font-size: 25px;
   position: absolute;
   right: 20px;
   top: 20px;
   cursor: pointer;
+  color: ${(p) => p.theme.colors.primary};
+`;
+
+const Footer = styled.div`
+  font-size: 14px;
+  padding: 50px;
+  text-align: center;
+  opacity: 0.5;
   color: ${(p) => p.theme.colors.primary};
 `;

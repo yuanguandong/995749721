@@ -332,3 +332,8 @@ export function copyToClipboard(toCopy: string) {
 
 
 export const isBrowser = () => typeof window !== "undefined"
+
+export const isMobile = () => {
+  const ua = navigator.userAgent;
+  return /Android|Mobi/i.test(ua);
+};

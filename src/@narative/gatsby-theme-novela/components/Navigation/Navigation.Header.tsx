@@ -34,13 +34,13 @@ const siteQuery = graphql`
 //菜单开关
 const MenuToggle: React.FC<{}> = (props: any) => {
   const { useMenu, useCursor } = props;
-  const [cursorType, toggleCursor] = useCursor;
   const [show, setShow] = useMenu;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   function toggleMenu() {
     setShow(!show);
   }
+  console.log('MenuToggle show',show)
   return (
     <IconWrapper onClick={toggleMenu} isDark={isDark} style={{ fontSize: 25 }}>
       {show ? <FaArrowLeft /> : <FaBars />}
@@ -72,10 +72,12 @@ const DarkModeToggle: React.FC<{}> = () => {
 
 //鼠标指针
 const CursorToggle: React.FC<{}> = (props: any) => {
-  const { useCursor } = props;
+  const { useCursor,isPC } = props;
   const [cursorType, toggleCursor] = useCursor;
   const [colorMode, setColorMode] = useColorMode();
   const isDark = colorMode === `dark`;
+  console.log('header isPC',isPC)
+  if(!isPC){return null}
   return (
     <IconWrapper
       onClick={toggleCursor}
@@ -148,6 +150,8 @@ const NavigationHeader: React.FC<{}> = (props) => {
     setPreviousPath(prev);
   }, []);
 
+  // console.log("header show", show);
+  console.log("header isPC", isPC);
   return (
     <Section>
       <NavContainer>

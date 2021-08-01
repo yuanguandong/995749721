@@ -12,6 +12,7 @@ import ArticlesContextProvider from "../../sections/articles/Articles.List.Conte
 import DotCursor from "../dotcursor";
 import { SideMenu } from "../sidemenu";
 import "./index.less";
+
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
  * and the main structure of each page. Within Layout we have the <Container />
@@ -24,7 +25,7 @@ const Layout: React.FC<{}> = (props) => {
   const [showMenu, setShowMenu] = useState<boolean>(isPC);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
     "curType",
-    "zhua"
+    isPC ? "zhua" : "default"
   );
 
   const toggleCursor = () => {
@@ -47,6 +48,9 @@ const Layout: React.FC<{}> = (props) => {
     parent.postMessage({ theme: colorMode }, "*");
   }, [colorMode]);
 
+  console.log('layout show',showMenu)
+  console.log('layout isPC',isPC)
+
   return (
     <>
       <Helmet>
@@ -67,7 +71,7 @@ const Layout: React.FC<{}> = (props) => {
       </Helmet>
       <ArticlesContextProvider>
         <Container cursorType={cursorType}>
-          <SideMenu useMenu={[showMenu, setShowMenu]} />
+          <SideMenu useMenu={[showMenu, setShowMenu]} isPC={isPC} />
           <Main>
             <Global styles={globalStyles} />
             <NavigationHeader
@@ -80,7 +84,7 @@ const Layout: React.FC<{}> = (props) => {
           </Main>
         </Container>
       </ArticlesContextProvider>
-      {cursorType === "dot" && <DotCursor />}
+      {cursorType === "dot" && isPC && <DotCursor />}
     </>
   );
 };

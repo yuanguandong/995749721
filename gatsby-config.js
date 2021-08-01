@@ -17,10 +17,6 @@ module.exports = {
         url: `https://favori.zcool.com.cn/`,
       },
       {
-        name: `dribbble`,
-        url: `https://dribbble.com/yuanguandong`,
-      },
-      {
         url: "https://codepen.io/favori",
       },
     ],

@@ -58,8 +58,6 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     <>
       {links.map(option => {
         const name = option.name || getHostname(option.url) || getServicename(option.url);
-        console.log('name',name)
-        console.log('icons',icons)
         const Icon = icons[name] ? icons[name] : icons['url'];
         if (!Icon) {
           throw new Error(
