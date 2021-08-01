@@ -10,7 +10,7 @@
     "clean": "gatsby clean",
     "proxy": "netlify-cms-proxy-server",
     "postbuild": "rm -rf docs && mv public docs",
-    "c":"node ./scripts/createpage.js"
+    "c": "node ./scripts/createpage.js"
   },
   "dependencies": {
     "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^3.0.2",
