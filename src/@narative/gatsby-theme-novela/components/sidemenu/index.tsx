@@ -165,7 +165,7 @@ export const SideMenuContainer = styled.div<{ show }>`
     top: 0;
     left: 0;
     display: ${(p) => (p.show ? "block" : "none")};
-    z-index: 9000;
+    z-index: 9999;
   }
 
 `;
