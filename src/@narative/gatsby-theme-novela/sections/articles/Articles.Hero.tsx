@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
-import styled from '@emotion/styled';
-
-import Section from '@components/Section';
-import Bio from '@components/Bio';
-import Icons from '@icons';
-import mediaqueries from '@styles/media';
-import { IAuthor } from '@types';
-
-import { GridLayoutContext } from './Articles.List.Context';
+import Bio from "@components/Bio";
+import Section from "@components/Section";
+import styled from "@emotion/styled";
+import Icons from "@icons";
+import mediaqueries from "@styles/media";
+import { IAuthor } from "@types";
+import { graphql, useStaticQuery } from "gatsby";
+import React, { useContext, useMemo } from "react";
+import { randomMotto } from "../../services";
+import { GridLayoutContext } from "./Articles.List.Context";
 
 const authorQuery = graphql`
   {
@@ -28,14 +27,16 @@ const authorQuery = graphql`
 `;
 
 const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
-  const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(
-    GridLayoutContext,
-  );
+  const {
+    gridLayout = "tiles",
+    hasSetGridLayout,
+    setGridLayout,
+  } = useContext(GridLayoutContext);
 
   const results = useStaticQuery(authorQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
-  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
-  const featuredAuthor = authors.find(author => author.featured);
+  const tilesIsActive = hasSetGridLayout && gridLayout === "tiles";
+  const featuredAuthor = authors.find((author) => author.featured);
 
   if (!featuredAuthor) {
     throw new Error(`
@@ -44,16 +45,24 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
   `);
   }
 
+  const motto = useMemo(()=>{
+    return randomMotto()
+  },[])
+
   return (
     <Section relative id="Articles__Hero">
-      <HeadingContainer style={{ maxWidth: `${hero.maxWidth}px` }}>
-        <HeroHeading dangerouslySetInnerHTML={{ __html: hero.heading }} />
+      <HeadingContainer
+        style={{
+          maxWidth: `${1000}px`,
+        }}
+      >
+        <HeroHeading dangerouslySetInnerHTML={{ __html: motto }} />
       </HeadingContainer>
       <SubheadingContainer>
         <Bio author={featuredAuthor} />
         <GridControlsContainer>
           <GridButton
-            onClick={() => setGridLayout('tiles')}
+            onClick={() => setGridLayout("tiles")}
             active={tilesIsActive}
             data-a11y="false"
             title="Show articles in Tile grid"
@@ -62,7 +71,7 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
             <Icons.Tiles />
           </GridButton>
           <GridButton
-            onClick={() => setGridLayout('rows')}
+            onClick={() => setGridLayout("rows")}
             active={!tilesIsActive}
             data-a11y="false"
             title="Show articles in Row grid"
@@ -108,7 +117,7 @@ const GridControlsContainer = styled.div`
 
 const HeadingContainer = styled.div`
   margin: 100px 0;
-
+  word-break: break-word!important;
   ${mediaqueries.desktop`
     width: 80%;
   `}
@@ -123,10 +132,10 @@ const HeroHeading = styled.h1`
   font-weight: 600;
   font-size: 52px;
   line-height: 1.15;
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
 
   a {
-    color: ${p => p.theme.colors.accent};
+    color: ${(p) => p.theme.colors.accent};
   }
 
   ${mediaqueries.desktop`
@@ -154,27 +163,27 @@ const GridButton = styled.button<{ active: boolean }>`
   }
 
   &:hover {
-    background: ${p => p.theme.colors.hover};
+    background: ${(p) => p.theme.colors.hover};
   }
 
-  &[data-a11y='true']:focus::after {
-    content: '';
+  &[data-a11y="true"]:focus::after {
+    content: "";
     position: absolute;
     left: -10%;
     top: -10%;
     width: 120%;
     height: 120%;
-    border: 2px solid ${p => p.theme.colors.accent};
+    border: 2px solid ${(p) => p.theme.colors.accent};
     background: rgba(255, 255, 255, 0.01);
     border-radius: 50%;
   }
 
   svg {
-    opacity: ${p => (p.active ? 1 : 0.25)};
+    opacity: ${(p) => (p.active ? 1 : 0.25)};
     transition: opacity 0.2s;
 
     path {
-      fill: ${p => p.theme.colors.primary};
+      fill: ${(p) => p.theme.colors.primary};
     }
   }
 `;
