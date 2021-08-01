@@ -160,16 +160,16 @@ export const SideMenuContainer = styled.div<{ show }>`
     width: 0px;
     height: 0px;
   }
-
+  @media (max-width: 680px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: ${(p) => (p.show ? "block" : "none")};
+    z-index: 9000;
+  }
 
 `;
-  // @media (max-width: 680px) {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   display: ${(p) => (p.show ? "block" : "none")};
-  //   z-index: 9000;
-  // }
+  
 const Close = styled.div`
   font-size: 25px;
   position: absolute;
