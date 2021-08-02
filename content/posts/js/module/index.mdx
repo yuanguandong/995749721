@@ -32,7 +32,7 @@ define('foo', ['utils', 'bar'], function(utils, bar) {
 
 只是核心能力作为实现，具体：https://requirejs.org/docs/api.html
 
-1. 可以直接配置依赖路径
+1.可以直接配置依赖路径
 
 ```js
 rj.config({ paths: {
@@ -44,14 +44,14 @@ rj(['jquery'], function(jquery) {
 })
 ```
 
-2. 加载模块
+2.加载模块
 
 ```js
 // RequestJs('')
 rj(['moduleA'], function(moduleA) {});
 ```
 
-3. 定义模块
+3.定义模块
 
 ```js
 rj('moduleA', [], function() {
@@ -91,11 +91,13 @@ require(['a', 'b'], function (a, b) {
 ```
 
 记录一下：
-1. require 的时候加载了依赖的模块
+1.require 的时候加载了依赖的模块
 
-一些可以用来测试的 CDN 地址
-systemjs -> https://cdn.bootcdn.net/ajax/libs/systemjs/6.8.3/system.min.js
-lodash -> https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js
+一些可以用来测试的 CDN 地址 
+
+systemjs： https://cdn.bootcdn.net/ajax/libs/systemjs/6.8.3/system.min.js 
+
+lodash： https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js
 
 
 # CMD
@@ -141,7 +143,7 @@ seajs.use('main')
 
 ### 需要注意的两个问题
 
-1. 缓存，require 会缓存一下，所以
+1.缓存，require 会缓存一下，所以
 
 ```js
 // a.js
@@ -159,7 +161,7 @@ var b = require('a.js')
 console.log(b.name) // 'rename'
 ```
 
-2. 引用拷贝还是值拷贝的问题(CMJ 是值拷贝)
+2.引用拷贝还是值拷贝的问题(CMJ 是值拷贝)
 
 ```js
 // a.js
@@ -177,7 +179,7 @@ a.setAge(19)
 console.log(a.age) // 18
 ```
 
-3. 运行时加载 / 编译时加载（多阶段，异步）ESM
+3.运行时加载
 
 
 # ESM
@@ -189,6 +191,7 @@ console.log(a.age) // 18
 什么是导出绑定？
 由于使用import导入的模块是运行在严格模式下的，且均为只读的(即无法被赋值。但是可以更改属性),且均为引用传递，无关类型，均是与原变量的引用。
 
+编译时加载（多阶段，异步）
 
 导出 export
 ```js
@@ -226,4 +229,4 @@ import('./ep').then()
 // 下面是几个错误范例
 import { 'ep1' + 'ep2' } from './ep' // import是编译阶段，所以不能动态加载
 ```
- -->
+
