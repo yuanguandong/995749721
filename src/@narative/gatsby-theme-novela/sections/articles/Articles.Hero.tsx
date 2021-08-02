@@ -5,7 +5,7 @@ import Icons from "@icons";
 import mediaqueries from "@styles/media";
 import { IAuthor } from "@types";
 import { graphql, useStaticQuery } from "gatsby";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { randomMotto } from "../../services";
 import { GridLayoutContext } from "./Articles.List.Context";
 
@@ -33,6 +33,7 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
     setGridLayout,
   } = useContext(GridLayoutContext);
 
+  const [count,setCount] = useState(1);
   const results = useStaticQuery(authorQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
   const tilesIsActive = hasSetGridLayout && gridLayout === "tiles";
@@ -47,7 +48,11 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
 
   const motto = useMemo(()=>{
     return randomMotto()
-  },[])
+  },[count])
+
+  const genMotto = () =>{
+    setCount(count+1)
+  }
 
   return (
     <Section relative id="Articles__Hero">
@@ -56,7 +61,7 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
           maxWidth: `${1000}px`,
         }}
       >
-        <HeroHeading dangerouslySetInnerHTML={{ __html: motto }} />
+        <HeroHeading dangerouslySetInnerHTML={{ __html: motto }} onClick={genMotto}/>
       </HeadingContainer>
       <SubheadingContainer>
         <Bio author={featuredAuthor} />
