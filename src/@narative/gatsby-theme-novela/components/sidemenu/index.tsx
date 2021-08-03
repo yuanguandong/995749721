@@ -101,6 +101,7 @@ export const SideMenu = (props) => {
     setScrollPosition(String(position));
   }, 20);
 
+  //监听滚动
   useLayoutEffect(() => {
     const instance = ref.current;
     if (instance && isPC) {
@@ -111,12 +112,21 @@ export const SideMenu = (props) => {
     };
   }, []);
 
+  //恢复现场
   useLayoutEffect(() => {
     const instance = ref.current;
     if (instance && isPC) {
       instance.scrollTo(0, parseInt(scrollPosition));
     }
   }, []);
+
+  useLayoutEffect(() => {
+    if (!isPC && show) {
+      document.body.style.overflow='hidden'
+    }else{
+      document.body.style.overflow=''
+    }
+  }, [show,isPC]);
 
   console.log("category", category);
 
@@ -206,6 +216,7 @@ export const SideMenuContainer = styled.div<{ show }>`
   @media (max-width: 680px) {
     position: fixed;
     top: 0;
+    width:100%;
     left: 0;
     display: ${(p) => (p.show ? "block" : "none")};
     z-index: 9999;
