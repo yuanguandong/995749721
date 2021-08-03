@@ -46,7 +46,7 @@ const authorQuery = graphql`
 `;
 
 const getCategory = (edges) => {
-  let res = [];
+  let res = [{key:'all',value:'全部'}];
   edges.forEach((item) => {
     const art = item.node;
     const {
@@ -131,6 +131,7 @@ export const SideMenu = (props) => {
   console.log("category", category);
 
   const menuData = useMemo(()=>{
+    if(activeCat ==='all'){return edges}
     let res = edges.filter((item)=>{
       return _.get(item,'node.cat') === activeCat
     })
