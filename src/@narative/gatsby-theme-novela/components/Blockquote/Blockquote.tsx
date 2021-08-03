@@ -14,22 +14,24 @@ const Blockquote = styled.blockquote`
 
   & > p {
     font-family: ${p => p.theme.fonts.serif};
-    max-width: 880px !important;
+    max-width: 680px !important;
     padding-right: 100px;
     padding-bottom: 0;
     width: 100%;
     margin: 0 auto;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 1.32;
     font-weight: bold;
-
+    border-left: 3px solid rgba(128,128,128,1);
+    padding-left: 20px;
+    color: rgba(128,128,128,1);
     ${mediaqueries.tablet`
       font-size: 26px;
       padding: 0 180px;
     `};
 
     ${mediaqueries.phablet`
-      font-size: 36px;
+      font-size: 24px;
       padding: 0 20px 0 40px;
     `};
   }
