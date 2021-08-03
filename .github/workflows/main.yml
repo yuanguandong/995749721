@@ -37,6 +37,7 @@ jobs:
         run: |
           git config --global user.name 'yuanguandong'
           git config --global user.email '995749721@qq.com'
+          git pull
           git add .
           git commit -m "Automated build docs"
           git push origin master
