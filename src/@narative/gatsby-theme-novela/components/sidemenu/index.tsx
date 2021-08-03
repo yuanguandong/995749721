@@ -144,7 +144,7 @@ export const SideMenu = (props) => {
           onChange={handleTabChange}
           size="large"
           activeKey={activeCat}
-          style={{borderTop:'1px solid rgba(128,128,128,0.2)', transform: "translateY(10px)" }}
+          style={{borderTop:'1px solid rgba(128,128,128,0.3)' }}
         >
           {category.map((item) => (
             <TabPane tab={item["value"]} key={item["key"]}></TabPane>

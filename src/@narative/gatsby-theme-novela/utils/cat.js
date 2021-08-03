@@ -6,4 +6,5 @@ export default {
   nodejs: "NodeJS_4",
   babel: "编译原理_5",
   other: "其他_6",
+  ['micro-frontend']:"微前端_7"
 };

@@ -134,7 +134,7 @@ const listItemRow = p => css`
   position: relative;
   margin: 10px;
   padding: 10px 10px 0 10px;
-  border-top:1px solid rgba(128,128,128,0.2);
+  border-bottom:1px solid rgba(128,128,128,0.2);
 
   ${mediaqueries.desktop`
     
