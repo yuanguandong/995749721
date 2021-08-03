@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 import { useLocalStorageState } from "ahooks";
-import { Avatar } from "antd";
+import { Avatar, Tabs } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useMemo, useRef } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
+import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
-
+const { TabPane } = Tabs;
 const authorQuery = graphql`
   query MyQuery {
     allAuthor {
@@ -26,6 +27,7 @@ const authorQuery = graphql`
           date(formatString: "yyyy-MM-DD")
           excerpt
           hero {
+            relativeDirectory
             publicURL
             full: childImageSharp {
               fluid(maxWidth: 150, quality: 100) {
@@ -43,10 +45,27 @@ const authorQuery = graphql`
   }
 `;
 
+const getCategory = (edges) => {
+  let res = [];
+  edges.forEach((item) => {
+    const art = item.node;
+    const {
+      hero: { relativeDirectory },
+    } = art;
+    const cat = relativeDirectory.split("/")[0];
+    art.cat = cat;
+    const index = Cats[cat].split("_")[1];
+    const value = Cats[cat].split("_")[0] || cat;
+    res[parseInt(index)] = { key: cat, value };
+  });
+  return res;
+};
+
 export const SideMenu = (props) => {
   const { useMenu, isPC } = props;
   const [show, setShow] = useMenu;
   const [colorMode] = useColorMode();
+  
   const ref = useRef();
   const [scrollPosition, setScrollPosition] = useLocalStorageState<string>(
     "scrollPosition",
@@ -64,6 +83,10 @@ export const SideMenu = (props) => {
     slug,
     avatar: { publicURL },
   } = nodes[0];
+
+  const category = getCategory(edges);
+
+  const [activeCat,setActiveCat] = useLocalStorageState('activeCat',category[0]['key'])
 
   const handleClose = () => {
     setShow(false);
@@ -95,7 +118,18 @@ export const SideMenu = (props) => {
     }
   }, []);
 
+  console.log("category", category);
 
+  const menuData = useMemo(()=>{
+    let res = edges.filter((item)=>{
+      return _.get(item,'node.cat') === activeCat
+    })
+    return res
+  },[activeCat])
+
+  const handleTabChange = (key) => {
+    setActiveCat(key)
+  };
   return (
     <>
       <SideMenuContainer ref={ref} show={show}>
@@ -105,8 +139,19 @@ export const SideMenu = (props) => {
             <Name>{name}</Name>
           </Link>
         </AvatarContainer>
+        <Tabs
+          defaultActiveKey="1"
+          onChange={handleTabChange}
+          size="large"
+          activeKey={activeCat}
+          style={{borderTop:'1px solid rgba(128,128,128,0.2)', transform: "translateY(10px)" }}
+        >
+          {category.map((item) => (
+            <TabPane tab={item["value"]} key={item["key"]}></TabPane>
+          ))}
+        </Tabs>
         <List reverse={false} gridLayout={"row"} hasOnlyOneArticle={false}>
-          {edges.map((item) => (
+          {menuData.map((item) => (
             <ListItem article={item.node} narrow={false} key={item.node.slug} />
           ))}
         </List>
@@ -165,9 +210,8 @@ export const SideMenuContainer = styled.div<{ show }>`
     display: ${(p) => (p.show ? "block" : "none")};
     z-index: 9999;
   }
-
 `;
-  
+
 const Close = styled.div`
   font-size: 25px;
   position: absolute;
