@@ -105,6 +105,10 @@ export const globalStyles = css`
   pre,
   samp {
     font-family: monospace;
+    background: rgba(128,128,128,0.3);
+    padding: 2px 10px;
+    border-radius: 3px;
+    margin: 0 5px;
   }
 
   fieldset,
