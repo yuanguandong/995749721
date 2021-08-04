@@ -4,7 +4,7 @@ import { Avatar, Tabs } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
 import React, { useLayoutEffect, useMemo, useRef } from "react";
-import { FaOutdent } from "react-icons/fa";
+import { FaOutdent, FaTh } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
@@ -46,7 +46,7 @@ const authorQuery = graphql`
 `;
 
 const getCategory = (edges) => {
-  let res = [{key:'all',value:'全部'}];
+  let res = [{ key: "all", value: "全部", icon: <FaTh /> }];
   edges.forEach((item) => {
     const art = item.node;
     const {
@@ -54,9 +54,9 @@ const getCategory = (edges) => {
     } = art;
     const cat = relativeDirectory.split("/")[0];
     art.cat = cat;
-    const index = Cats[cat].split("_")[1];
-    const value = Cats[cat].split("_")[0] || cat;
-    res[parseInt(index)] = { key: cat, value };
+    const { order, name, icon } = Cats[cat];
+
+    res[order] = { key: cat, value: name, icon };
   });
   return res;
 };
@@ -65,7 +65,7 @@ export const SideMenu = (props) => {
   const { useMenu, isPC } = props;
   const [show, setShow] = useMenu;
   const [colorMode] = useColorMode();
-  
+
   const ref = useRef();
   const [scrollPosition, setScrollPosition] = useLocalStorageState<string>(
     "scrollPosition",
@@ -86,7 +86,10 @@ export const SideMenu = (props) => {
 
   const category = getCategory(edges);
 
-  const [activeCat,setActiveCat] = useLocalStorageState('activeCat',category[0]['key'])
+  const [activeCat, setActiveCat] = useLocalStorageState(
+    "activeCat",
+    category[0]["key"]
+  );
 
   const handleClose = () => {
     setShow(false);
@@ -122,24 +125,26 @@ export const SideMenu = (props) => {
 
   useLayoutEffect(() => {
     if (!isPC && show) {
-      document.body.style.overflow='hidden'
-    }else{
-      document.body.style.overflow=''
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  }, [show,isPC]);
+  }, [show, isPC]);
 
   console.log("category", category);
 
-  const menuData = useMemo(()=>{
-    if(activeCat ==='all'){return edges}
-    let res = edges.filter((item)=>{
-      return _.get(item,'node.cat') === activeCat
-    })
-    return res
-  },[activeCat])
+  const menuData = useMemo(() => {
+    if (activeCat === "all") {
+      return edges;
+    }
+    let res = edges.filter((item) => {
+      return _.get(item, "node.cat") === activeCat;
+    });
+    return res;
+  }, [activeCat]);
 
   const handleTabChange = (key) => {
-    setActiveCat(key)
+    setActiveCat(key);
   };
   return (
     <>
@@ -155,10 +160,10 @@ export const SideMenu = (props) => {
           onChange={handleTabChange}
           size="large"
           activeKey={activeCat}
-          style={{borderTop:'1px solid rgba(128,128,128,0.3)' }}
+          style={{ borderTop: "1px solid rgba(128,128,128,0.3)" }}
         >
           {category.map((item) => (
-            <TabPane tab={item["value"]} key={item["key"]}></TabPane>
+            <TabPane tab={<><span style={{fontSize:18,marginRight:3}}>{item['icon']}</span> {item["value"]}</>} key={item["key"]}></TabPane>
           ))}
         </Tabs>
         <List reverse={false} gridLayout={"row"} hasOnlyOneArticle={false}>
@@ -217,7 +222,7 @@ export const SideMenuContainer = styled.div<{ show }>`
   @media (max-width: 680px) {
     position: fixed;
     top: 0;
-    width:100%;
+    width: 100%;
     left: 0;
     display: ${(p) => (p.show ? "block" : "none")};
     z-index: 9999;
