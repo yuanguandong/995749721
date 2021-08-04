@@ -4,7 +4,7 @@ import { Avatar, Tabs } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
 import React, { useLayoutEffect, useMemo, useRef } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaOutdent } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
@@ -168,7 +168,7 @@ export const SideMenu = (props) => {
         </List>
         <Footer>Stay hungry & Stay foolish</Footer>
         <Close onClick={handleClose}>
-          <FaArrowLeft />
+          <FaOutdent />
         </Close>
       </SideMenuContainer>
     </>

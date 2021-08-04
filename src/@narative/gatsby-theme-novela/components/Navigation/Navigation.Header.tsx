@@ -11,10 +11,10 @@ import {
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
 import {
-  FaArrowLeft,
   FaBars,
   FaHandPointUp,
   FaMousePointer,
+  FaOutdent,
   FaRegCircle
 } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
@@ -43,7 +43,7 @@ const MenuToggle: React.FC<{}> = (props: any) => {
 
   return (
     <IconWrapper onClick={toggleMenu} isDark={isDark} style={{ fontSize: 25 }}>
-      {show ? <FaArrowLeft /> : <FaBars />}
+      {show ? <FaOutdent /> : <FaBars />}
     </IconWrapper>
   );
 };
@@ -72,11 +72,10 @@ const DarkModeToggle: React.FC<{}> = () => {
 
 //鼠标指针
 const CursorToggle: React.FC<{}> = (props: any) => {
-  const { useCursor,isPC } = props;
+  const { useCursor } = props;
   const [cursorType, toggleCursor] = useCursor;
-  const [colorMode, setColorMode] = useColorMode();
+  const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
-  if(!isPC){return null}
   return (
     <IconWrapper
       onClick={toggleCursor}
