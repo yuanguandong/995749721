@@ -131,8 +131,6 @@ export const SideMenu = (props) => {
     }
   }, [show, isPC]);
 
-  console.log("category", category);
-
   const menuData = useMemo(() => {
     if (activeCat === "all") {
       return edges;

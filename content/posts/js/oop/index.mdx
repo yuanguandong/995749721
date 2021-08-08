@@ -1,0 +1,240 @@
+---
+slug: js-oop
+title: OOP
+author: 袁官东
+date: 2016-05-08
+hero: ./hero.webp
+excerpt: 对象是什么？为什么要面向对象？
+---
+
+<div className={"img-desc"}>图：</div>
+
+## 对象是什么？为什么要面向对象？
+
+OOP(Object Oriented Programming) 
+
+逻辑迁移灵活，代码可复用性高，高度模块化
+
+### 对象的理解
+
+- 对象是对于单个物体的简单抽象
+- 对象是一个容器，封装了属性&方法
+
+`属性： 对象的状态`
+`方法： 对象的行为`
+
+```js
+// 简单对象
+const Course = {
+  teacher: "john",
+  leader: "tom",
+  startCourse: function (name) {
+    return "oop";
+  },
+};
+// 函数对象
+function Course() {
+  this.teacher = "john";
+  this.leader = "tom";
+  this.startCourse = function (name) {
+    return "oop";
+  };
+}
+```
+
+### 构造函数
+
+生成对象
+需要一个模板，表征了一类物体的共同特征，从而生成对象
+类即对象模板 
+
+js 本质不是基于类，而是基于构造函数+原型链
+(constructor + prototype)
+
+```js
+function Course() {
+  this.teacher = "john";
+  this.leader = "tom";
+}
+const course = new Course();
+```
+
+Course 本质就是构造函数
+
+- 函数体内是用的 this, 代表所要生成的实例
+- 生成对象通过 new 来实例化
+- 可以做初始化参数
+
+构造函数不初始化无法使用，如果需要使用，做如下兼容
+
+```js
+function Course() {
+  const _isClass = this instanceof Course;
+  if (!isClass) {
+    return new Course();
+  }
+  this.teacher = "john";
+  this.leader = "tom";
+}
+```
+
+### new 是什么？
+
+new 的原理？new 做了什么？手写 new?
+
+```js
+function Course() {}
+const course = new Course();
+```
+
+```js
+course.__proto__ === Course.prototype;
+```
+
+```js
+Course.prototype.__proto__ === Object.prototype;
+```
+
+```js
+course.constructor === Course;
+```
+
+- 创建了一个空对象，作为返回的对象实例
+- 将生成空对象的原型对象指向了构造函数的 prototype 属性
+- 将当前实例对象赋给了内部 this
+- 执行构造函数初始化代码
+
+### constructor 是什么
+
+```js
+function Course(teacher, leader) {
+  this.teacher = teacher;
+  this.leader = leader;
+}
+const course = new Course("john", "tom");
+```
+
+- 每个对象创建时会自动拥有一个构造函数属性 constructor
+- constructor 继承自原型对象，指向构造函数的引用
+
+使用构造函数的问题
+构造函数中的方法，会存在于每个生成的实例中
+
+### 原型对象
+
+```js
+function Course() {}
+const course1 = new Course();
+const course2 = new Course();
+```
+
+- 构造函数：用来初始化对象的函数 - Course
+  自动给构造函数赋予一个属性 prototype,该属性实际等于实例对象的原型对象
+
+- 实例对象：course1 就是实例对象，根据原型创建出来的实例
+  每个对象都有个**proto**
+  每个实例都有 constructor 属性
+  constructor 由继承而来，并指向当前构造函数
+
+- 原型对象： Course.prototype
+
+```js
+function Course() {
+  Course.prototype.teacher = "john";
+  const course1 = new Course();
+  const course2 = new Course();
+}
+```
+
+## 继承
+
+### 原型链继承
+
+在原型对象的所有属性和方法，都能被实例所共享
+
+- 子构造函数的原型是父构造函数的实例
+- 子构造函数的原型的构造函数是子构造函数
+
+```js
+function Game() {
+  this.name = "lol";
+}
+Game.prototype.getName = function () {
+  return this.name;
+};
+
+function LOL() {}
+LOL.prototype = new Game();
+LOL.prototype.constructor = LOL;
+const game = new LOL();
+```
+
+### 构造函数继承
+
+在子类构造函数内部调用父类构造函数
+
+```js
+function Game() {
+  this.name = "lol";
+  this.skin = ["s"];
+}
+Game.prototype.getName = function () {
+  return this.name;
+};
+
+function LOL(arg) {
+  Game.call(this, arg);
+}
+
+const game3 = new LOL();
+// 解决共享属性问题，传参问题
+```
+
+原型链上共享的方法无法被读取继承如何解决？
+
+### 组合继承
+
+```js
+function Game() {
+  this.name = "lol";
+  this.skin = ["s"];
+}
+Game.prototype.getName = function () {
+  return this.name;
+};
+
+function LOL(arg) {
+  Game.call(this, arg);
+}
+
+LOL.prototype = new Game();
+LOL.prototype.constructor = LOL;
+
+const game3 = new LOL();
+```
+无论何种场景都会调用两次父类构造函数，怎么办？
+
+1、初始化子类 
+
+2、子类构造函数内部call父类的时候
+
+### 寄生组合继承
+```js
+function Game() {
+  this.name = "lol";
+  this.skin = ["s"];
+}
+Game.prototype.getName = function () {
+  return this.name;
+};
+
+function LOL(arg) {
+  Game.call(this, arg);
+} 
+
+LOL.prototype = Object.create(Game.prototype);
+LOL.prototype.constructor = LOL;
+
+const game3 = new LOL();
+```
+
