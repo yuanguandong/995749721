@@ -30,7 +30,7 @@ date: ${moment(new Date()).format('YYYY-MM-DD')}
 hero: ./hero.webp
 excerpt: ${slug}
 ---
-<div className={'img-desc'}>图：</div>
+<div className={'img-desc'}>图：Nguyen Nhut</div>
 
 
 ## 
