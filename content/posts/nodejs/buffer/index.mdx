@@ -66,17 +66,21 @@ console.log(y[0]); // 21
 
 TypedArray: Unit8Array, Int32Array这些都是TypedArray, 那些 Uint32Array 也好，Int16Array 也好，都是给 ArrayBuffer 提供了一个 “View”，MDN上的原话叫做 “Multiple views on the same data”，对它们进行下标读写，最终都会反应到它所建立在的 ArrayBuffer 之上。
 
-ArrayBuffer 本身只是一个 0 和 1 存放在一行里面的一个集合，ArrayBuffer 不知道第一个和第二个元素在数组中该如何分配。
+ArrayBuffer 本身只是一个 0 和 1 存放在一行里面的一个集合，ArrayBuffer 不知道第一个和第二个元素在数组中该如何分配。 
 
-<img src="./array-buffer.png"/>
+
+<img src="./array-buffer.png"/> 
+
 
 为了能提供上下文，我们需要将其封装在一个叫做 View 的东西里面。这些在数据上的 View 可以被添加进确定类型的数组，而且我们有很多种确定类型的数据可以使用。
 
-3.1 例如，你可以使用一个 Int8 的确定类型数组来分离存放 8 位二进制字节。 
+3.1 例如，你可以使用一个 Int8 的确定类型数组来分离存放 8 位二进制字节。  
+
 
 <img src="./int8-array.png"/> 
 
-3.2 例如，你可以使用一个无符号的 Int16 数组来分离存放 16 位二进制字节。 
+3.2 例如，你可以使用一个无符号的 Int16 数组来分离存放 16 位二进制字节。  
+
 
 <img src="./unit16-array.png"/> 
 
