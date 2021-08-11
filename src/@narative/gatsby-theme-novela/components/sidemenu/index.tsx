@@ -196,7 +196,7 @@ export const SideMenu = (props) => {
           <FaMusic/>
         </ToggleMusic>
         <MusicBar show={showMusic}>
-          <Music/>
+          <Music hasList/>
         </MusicBar>
       </SideMenuContainer>
     </>

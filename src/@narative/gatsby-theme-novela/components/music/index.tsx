@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
 
 export default (props: any) => {
-  const { id = "29460377", auto = false } = props;
+  const { id = "29460377", auto = false, hasList = false } = props;
   const [idState, setIdState] = useState(id);
   const [autoState, setAutoState] = useState(auto);
   const [listShow, setListShow] = useState(false);
@@ -25,54 +25,56 @@ export default (props: any) => {
 
   return (
     <Music>
-      <MusicList show={listShow}>
-        <div
-          style={{
-            fontWeight: "bold",
-            margin: "0 5px 10px 5px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>
-            <FaMusic /> 战歌
-          </div>
-          <div>{list.length}</div>
-        </div>
-        {list.map((item) => (
+      {hasList && (
+        <MusicList show={listShow}>
           <div
-            key={item.id}
-            onClick={() => check(item.id)}
             style={{
-              cursor: "pointer",
-              margin: "5px",
+              fontWeight: "bold",
+              margin: "0 5px 10px 5px",
               display: "flex",
               justifyContent: "space-between",
             }}
           >
-            <div style={{ fontSize: 14 }}>
-              {item.id === idState && (
-                <div
-                  style={{
-                    display: "inline-block",
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background:
-                      "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
-                    marginRight: "5px",
-                    verticalAlign: "middle",
-                  }}
-                />
-              )}
-              {item.name}
+            <div>
+              <FaMusic /> 战歌
             </div>
-            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
-              {item.author}
-            </div>
+            <div>{list.length}</div>
           </div>
-        ))}
-      </MusicList>
+          {list.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => check(item.id)}
+              style={{
+                cursor: "pointer",
+                margin: "5px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ fontSize: 14 }}>
+                {item.id === idState && (
+                  <div
+                    style={{
+                      display: "inline-block",
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background:
+                        "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
+                      marginRight: "5px",
+                      verticalAlign: "middle",
+                    }}
+                  />
+                )}
+                {item.name}
+              </div>
+              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
+                {item.author}
+              </div>
+            </div>
+          ))}
+        </MusicList>
+      )}
 
       <div
         style={{
@@ -100,28 +102,30 @@ export default (props: any) => {
             autoState ? 1 : 0
           }&height=66`}
         />
-        <div
-          style={{
-            width: 30,
-            height: 30,
-            background: "#fff",
-            position: "absolute",
-            right: 5,
-            bottom: 30,
-            textAlign: "center",
-            lineHeight: "30px",
-            cursor: "pointer",
-          }}
-          onClick={toggleMusicList}
-        >
-          <FaBars />
-        </div>
+        {hasList && (
+          <div
+            style={{
+              width: 30,
+              height: 30,
+              background: "#fff",
+              position: "absolute",
+              right: 5,
+              bottom: 30,
+              textAlign: "center",
+              lineHeight: "30px",
+              cursor: "pointer",
+            }}
+            onClick={toggleMusicList}
+          >
+            <FaBars />
+          </div>
+        )}
       </div>
     </Music>
   );
 };
 
-const Music = styled.div<{ show }>`
+const Music = styled.div<{}>`
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
