@@ -4,7 +4,7 @@ import { Avatar, Tabs } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
 import React, { useLayoutEffect, useMemo, useRef } from "react";
-import { FaOutdent, FaTh } from "react-icons/fa";
+import { FaMusic, FaOutdent, FaTh } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
@@ -63,8 +63,9 @@ const getCategory = (edges) => {
 };
 
 export const SideMenu = (props) => {
-  const { useMenu, isPC } = props;
+  const { useMenu, isPC,useMusic } = props;
   const [show, setShow] = useMenu;
+  const [showMusic, setShowMusic] = useMusic;
   const [colorMode] = useColorMode();
 
   const ref = useRef();
@@ -145,6 +146,11 @@ export const SideMenu = (props) => {
   const handleTabChange = (key) => {
     setActiveCat(key);
   };
+
+  const handleToggleMusic = ()=>{
+    setShowMusic(!showMusic);
+  }
+
   return (
     <>
       <SideMenuContainer ref={ref} show={show}>
@@ -186,7 +192,10 @@ export const SideMenu = (props) => {
         <Close onClick={handleClose}>
           <FaOutdent />
         </Close>
-        <MusicBar className="111">
+        <ToggleMusic onClick={handleToggleMusic}>
+          <FaMusic/>
+        </ToggleMusic>
+        <MusicBar show={showMusic}>
           <Music/>
         </MusicBar>
       </SideMenuContainer>
@@ -252,6 +261,16 @@ const Close = styled.div`
   color: ${(p) => p.theme.colors.primary};
 `;
 
+const ToggleMusic = styled.div`
+  font-size: 25px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+  color: ${(p) => p.theme.colors.primary};
+`;
+
+
 const Footer = styled.div`
   font-size: 14px;
   padding: 50px;
@@ -260,10 +279,13 @@ const Footer = styled.div`
   color: ${(p) => p.theme.colors.primary};
 `;
 
-const MusicBar = styled.div`
+const MusicBar = styled.div<{show}>`
   position: sticky;
   z-index:10;
   width:100%;
-  bottom:0;
-  left:0; 
+  width: calc(100% - 20px);
+  bottom: 10px;
+  left: 10px;
+  transition:all 0.3s;
+  transform: ${(p) => (p.show ? "translateY(0)" : "translateY(1000px)")};
 `;

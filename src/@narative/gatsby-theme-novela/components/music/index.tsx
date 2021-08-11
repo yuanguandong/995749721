@@ -26,13 +26,13 @@ export default (props: any) => {
   return (
     <div
       style={{
-        borderRadius: "10px 10px 0 0",
+        borderRadius: "10px",
         overflow: "hidden",
         boxShadow: "0 0 20px rgba(0,0,0,0.3)",
       }}
     >
-      {listShow && (
-        <MusicList>
+
+        <MusicList show={listShow}>
           <div
             style={{
               fontWeight: "bold",
@@ -80,7 +80,7 @@ export default (props: any) => {
             </div>
           ))}
         </MusicList>
-      )}
+
       <div
         style={{
           width: "100%",
@@ -128,8 +128,7 @@ export default (props: any) => {
   );
 };
 
-const MusicList = styled.div`
-  max-height: 200px;
+const MusicList = styled.div<{ show }>`
   overflow-y: auto;
   background: linear-gradient(
     to right,
@@ -139,10 +138,14 @@ const MusicList = styled.div`
     #fe9a8b 100%
   );
   color: #fff;
-  padding: 10px;
-  boxshadow: inset 0 -3px 20px rgb(0, 0, 0, 0.1);
+  padding: ${(p) => (p.show ? "10px" : "0px")};
+  box-shadow: inset 0 -5px 5px rgb(238, 84, 75, 0.4);
   &::-webkit-scrollbar {
     width: 0px;
     height: 0px;
   }
+  user-select : none;
+  transition: all 0.2s;
+  max-height:${(p) => (p.show ? "200px" : "0px")};
+  height: ${(p) => (p.show ? "auto" : "0")};
 `;

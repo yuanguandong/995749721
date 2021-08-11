@@ -24,6 +24,7 @@ const Layout: React.FC<{}> = (props) => {
   const [colorMode] = useColorMode();
   const isPC = isBrowser() ? window.innerWidth > 680 : false;
   const [showMenu, setShowMenu] = useState<boolean>(isPC);
+  const [showMusic, setShowMusic] = useState<boolean>(true);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
     "curType",
     isPC ? "zhua" : "default"
@@ -69,7 +70,7 @@ const Layout: React.FC<{}> = (props) => {
       </Helmet>
       <ArticlesContextProvider>
         <Container cursorType={cursorType}>
-          <SideMenu useMenu={[showMenu, setShowMenu]} isPC={isPC} />
+          <SideMenu useMenu={[showMenu, setShowMenu]} isPC={isPC} useMusic={[showMusic, setShowMusic]}/>
           <Main>
             <Global styles={globalStyles} />
             <NavigationHeader
