@@ -188,6 +188,7 @@ export const globalStyles = css`
     width: 100%;
     max-width: 680px;
     margin:0 auto;
+    padding:10px;
   }
   h1{word-break: break-all!important;}
   h2{word-break: break-all!important;}
