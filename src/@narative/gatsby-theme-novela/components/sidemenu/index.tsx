@@ -8,6 +8,7 @@ import { FaOutdent, FaTh } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
+import Music from '../music';
 const { TabPane } = Tabs;
 const authorQuery = graphql`
   query MyQuery {
@@ -153,6 +154,7 @@ export const SideMenu = (props) => {
             <Name>{name}</Name>
           </Link>
         </AvatarContainer>
+        
         <Tabs
           defaultActiveKey="1"
           onChange={handleTabChange}
@@ -161,7 +163,17 @@ export const SideMenu = (props) => {
           style={{ borderTop: "1px solid rgba(128,128,128,0.3)" }}
         >
           {category.map((item) => (
-            <TabPane tab={<><span style={{fontSize:18,marginRight:3}}>{item['icon']}</span> {item["value"]}</>} key={item["key"]}></TabPane>
+            <TabPane
+              tab={
+                <>
+                  <span style={{ fontSize: 18, marginRight: 3 }}>
+                    {item["icon"]}
+                  </span>{" "}
+                  {item["value"]}
+                </>
+              }
+              key={item["key"]}
+            ></TabPane>
           ))}
         </Tabs>
         <List reverse={false} gridLayout={"row"} hasOnlyOneArticle={false}>
@@ -169,10 +181,14 @@ export const SideMenu = (props) => {
             <ListItem article={item.node} narrow={false} key={item.node.slug} />
           ))}
         </List>
+        
         <Footer>Stay hungry & Stay foolish</Footer>
         <Close onClick={handleClose}>
           <FaOutdent />
         </Close>
+        <MusicBar className="111">
+          <Music/>
+        </MusicBar>
       </SideMenuContainer>
     </>
   );
@@ -242,4 +258,12 @@ const Footer = styled.div`
   text-align: center;
   opacity: 0.5;
   color: ${(p) => p.theme.colors.primary};
+`;
+
+const MusicBar = styled.div`
+  position: sticky;
+  z-index:10;
+  width:100%;
+  bottom:0;
+  left:0; 
 `;

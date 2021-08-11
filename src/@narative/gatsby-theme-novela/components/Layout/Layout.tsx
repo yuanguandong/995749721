@@ -13,6 +13,7 @@ import DotCursor from "../dotcursor";
 import { SideMenu } from "../sidemenu";
 import "./index.less";
 
+
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
  * and the main structure of each page. Within Layout we have the <Container />
@@ -78,6 +79,7 @@ const Layout: React.FC<{}> = (props) => {
             />
             {children}
             <NavigationFooter />
+            
           </Main>
         </Container>
       </ArticlesContextProvider>
@@ -118,3 +120,4 @@ const Main = styled.div`
     width: 100%;
   }
 `;
+

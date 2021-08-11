@@ -78,6 +78,7 @@ export const List = styled.div<{
   hasOnlyOneArticle: boolean;
 }>`
   // padding:10px;
+  min-height: 60vh;
   display: block;
     box-sizing: border-box;
   ${listRow}
