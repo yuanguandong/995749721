@@ -24,62 +24,55 @@ export default (props: any) => {
   };
 
   return (
-    <div
-      style={{
-        borderRadius: "10px",
-        overflow: "hidden",
-        boxShadow: "0 0 20px rgba(0,0,0,0.3)",
-      }}
-    >
-
-        <MusicList show={listShow}>
+    <Music>
+      <MusicList show={listShow}>
+        <div
+          style={{
+            fontWeight: "bold",
+            margin: "0 5px 10px 5px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <FaMusic /> 战歌
+          </div>
+          <div>{list.length}</div>
+        </div>
+        {list.map((item) => (
           <div
+            key={item.id}
+            onClick={() => check(item.id)}
             style={{
-              fontWeight: "bold",
-              margin: "0 5px 10px 5px",
+              cursor: "pointer",
+              margin: "5px",
               display: "flex",
               justifyContent: "space-between",
             }}
           >
-            <div>
-              <FaMusic /> 战歌
+            <div style={{ fontSize: 14 }}>
+              {item.id === idState && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background:
+                      "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
+                    marginRight: "5px",
+                    verticalAlign: "middle",
+                  }}
+                />
+              )}
+              {item.name}
             </div>
-            <div>{list.length}</div>
+            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
+              {item.author}
+            </div>
           </div>
-          {list.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => check(item.id)}
-              style={{
-                cursor: "pointer",
-                margin: "5px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div style={{ fontSize: 12 }}>
-                {item.id === idState && (
-                  <div
-                    style={{
-                      display: "inline-block",
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background:
-                        "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
-                      marginRight: "5px",
-                      verticalAlign: "middle",
-                    }}
-                  />
-                )}
-                {item.name}
-              </div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
-                {item.author}
-              </div>
-            </div>
-          ))}
-        </MusicList>
+        ))}
+      </MusicList>
 
       <div
         style={{
@@ -124,12 +117,25 @@ export default (props: any) => {
           <FaBars />
         </div>
       </div>
-    </div>
+    </Music>
   );
 };
 
+const Music = styled.div<{ show }>`
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  @media (max-width: 680px) {
+    border-radius: 20px;
+  }
+`;
+
 const MusicList = styled.div<{ show }>`
   overflow-y: auto;
+  border-radius: 10px 10px 0 0;
+  @media (max-width: 680px) {
+    border-radius: 20px 20px 0 0;
+  }
   background: linear-gradient(
     to right,
     #f78ca0 0%,
@@ -144,8 +150,8 @@ const MusicList = styled.div<{ show }>`
     width: 0px;
     height: 0px;
   }
-  user-select : none;
+  user-select: none;
   transition: all 0.2s;
-  max-height:${(p) => (p.show ? "200px" : "0px")};
+  max-height: ${(p) => (p.show ? "50vh" : "0px")};
   height: ${(p) => (p.show ? "auto" : "0")};
 `;
