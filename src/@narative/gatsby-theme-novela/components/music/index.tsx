@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import list from "@utils/music";
 import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
@@ -31,18 +32,19 @@ export default (props: any) => {
       }}
     >
       {listShow && (
-        <div
-          style={{
-            maxHeight: 200,
-            overflowY: "auto",
-            background:
-              "linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%)",
-            color: "#fff",
-            padding: 10,
-          }}
-        >
-          <div style={{ fontWeight: "bold", margin: 5 }}>
-            <FaMusic /> 音乐
+        <MusicList>
+          <div
+            style={{
+              fontWeight: "bold",
+              margin: "0 5px 10px 5px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <FaMusic /> 战歌
+            </div>
+            <div>{list.length}</div>
           </div>
           {list.map((item) => (
             <div
@@ -77,7 +79,7 @@ export default (props: any) => {
               </div>
             </div>
           ))}
-        </div>
+        </MusicList>
       )}
       <div
         style={{
@@ -125,3 +127,22 @@ export default (props: any) => {
     </div>
   );
 };
+
+const MusicList = styled.div`
+  max-height: 200px;
+  overflow-y: auto;
+  background: linear-gradient(
+    to right,
+    #f78ca0 0%,
+    #f9748f 19%,
+    #fd868c 60%,
+    #fe9a8b 100%
+  );
+  color: #fff;
+  padding: 10px;
+  boxshadow: inset 0 -3px 20px rgb(0, 0, 0, 0.1);
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+`;
