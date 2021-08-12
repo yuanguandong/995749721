@@ -13,7 +13,7 @@ export const globalStyles = css`
     --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
     --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
   }
-
+  ::selection { background:#ff0844; }
   @font-face {
     font-family: "-apple-system", "BlinkMacSystemFont", "San Francisco",
       "Helvetica Neue", "Helvetica", "Ubuntu", "Roboto", "Noto", "Segoe UI",

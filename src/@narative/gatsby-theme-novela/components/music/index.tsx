@@ -134,19 +134,69 @@ const Music = styled.div<{}>`
   }
 `;
 
+const MusicContent = styled.div<{}>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: auto;
+`;
+
 const MusicList = styled.div<{ show }>`
   overflow-y: auto;
   border-radius: 10px 10px 0 0;
   @media (max-width: 680px) {
     border-radius: 20px 20px 0 0;
   }
-  background: linear-gradient(
-    to right,
-    #f78ca0 0%,
-    #f9748f 19%,
-    #fd868c 60%,
-    #fe9a8b 100%
-  );
+
+  position: relative;
+  // &:after {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   animation: change 10s alternate infinite;
+  //   background-image: linear-gradient(
+  //     to right,
+  //     #f78ca0 0%,
+  //     #f9748f 19%,
+  //     #fd868c 60%,
+  //     #fe9a8b 100%
+  //   );
+  //   z-index:-1;
+  // }
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: change1 10s alternate infinite;
+    background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+    z-index:-1;
+  }
+
+  @keyframes change {
+    from {
+      background-size:10%;
+    }
+    to {
+      background-size:400%;
+    }
+  }
+  @keyframes change1 {
+    from {
+      background-size:400%;
+    }
+    to {
+      background-size:100%;
+    }
+  }
   color: #fff;
   padding: ${(p) => (p.show ? "10px" : "0px")};
   box-shadow: inset 0 -5px 5px rgb(238, 84, 75, 0.4);
