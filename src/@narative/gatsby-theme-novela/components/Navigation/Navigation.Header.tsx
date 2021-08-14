@@ -8,17 +8,93 @@ import {
   getBreakpointFromTheme,
   getWindowDimensions
 } from "@utils";
+import { Popover, Typography } from "antd";
 import { graphql, Link, navigate, useStaticQuery } from "gatsby";
 import React, { useEffect, useState } from "react";
 import {
   FaBars,
   FaHandPointUp,
+  FaKeyboard,
   FaMousePointer,
   FaOutdent,
   FaRegCircle
 } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Search from "../search";
+const { Title, Paragraph, Text } = Typography;
+
+const shortcutList = () => {
+  return (
+    <div style={{ margin: "-10px" }}>
+      <ul style={{ padding: "0 10px" }}>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Esc</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"回到首页"}</Text>
+        </li>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Ctrl</Text>
+            <Text keyboard>B</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"边栏收缩"}</Text>
+        </li>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Meta</Text>
+            <Text keyboard>S</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"搜索"}</Text>
+        </li>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Alt</Text>
+            <Text keyboard>C</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"切换鼠标指针"}</Text>
+        </li>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Shift</Text>
+            <Text keyboard>T</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"切换主题"}</Text>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 const siteQuery = graphql`
   {
@@ -151,21 +227,37 @@ const NavigationHeader: React.FC<{}> = (props) => {
   return (
     <Section>
       <NavContainer>
-        <LogoLink
-          to={rootPath || basePath}
-          data-a11y="false"
-          title="回到首页"
-          aria-label="回到首页"
-          back={showBackArrow ? "true" : "false"}
+        <Popover
+          transitionName=""
+          placement="bottom"
+          getPopupContainer={() => document.body}
+          title={
+            <>
+              <FaKeyboard style={{ marginRight: 10 }} />
+              {"快捷键"}
+            </>
+          }
+          content={shortcutList()}
+          trigger="hover"
         >
-          {showBackArrow && (
-            <BackArrowIconContainer>
-              <Icons.ChevronLeft fill={fill} />
-            </BackArrowIconContainer>
-          )}
-          <Logo fill={fill} />
-          <Hidden>回到首页</Hidden>
-        </LogoLink>
+          <LogoLink
+            to={rootPath || basePath}
+            data-a11y="false"
+            title="回到首页"
+            aria-label="回到首页"
+            back={showBackArrow ? "true" : "false"}
+          >
+            {showBackArrow && (
+              <BackArrowIconContainer>
+                <Icons.ChevronLeft fill={fill} />
+              </BackArrowIconContainer>
+            )}
+
+            <Logo fill={fill} />
+
+            <Hidden>回到首页</Hidden>
+          </LogoLink>
+        </Popover>
         <NavControls>
           {showBackArrow ? (
             <button
@@ -177,7 +269,7 @@ const NavigationHeader: React.FC<{}> = (props) => {
             </button>
           ) : (
             <>
-              <Search />
+              <Search {...props} />
               <DarkModeToggle />
               {isPC && <CursorToggle {...props} />}
               <MenuToggle {...props} />

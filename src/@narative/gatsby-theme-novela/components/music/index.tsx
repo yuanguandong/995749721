@@ -24,7 +24,7 @@ export default (props: any) => {
   };
 
   return (
-    <Music>
+    <Music className="Music">
       {hasList && (
         <MusicList show={listShow}>
           <div

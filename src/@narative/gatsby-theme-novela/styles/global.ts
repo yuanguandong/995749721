@@ -188,7 +188,12 @@ export const globalStyles = css`
     width: 100%;
     max-width: 680px;
     margin:0 auto;
-    padding:10px;
+    // padding:10px;
+    @media (max-width:680px){
+      padding:0 20px;
+      .Music{border-radius:10px!important;}
+    }
+    
   }
   h1{word-break: break-all!important;}
   h2{word-break: break-all!important;}

@@ -2,7 +2,7 @@ import { graphql, StaticQuery } from "gatsby";
 import React from "react";
 import { Search } from "./search";
 
-const Header = () => (
+const Comp = (props) => (
   <StaticQuery
     // query={graphql`
     //   query SearchIndexQuery {
@@ -29,6 +29,7 @@ const Header = () => (
       return (
         <Search
           searchIndex={data.allMdx.nodes}
+          {...props}
           // searchIndex={data.siteSearchIndex.index}
         />
       );
@@ -36,4 +37,4 @@ const Header = () => (
   />
 );
 
-export default Header;
+export default Comp;

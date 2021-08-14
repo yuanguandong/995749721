@@ -25,8 +25,8 @@ interface SearchResult {
 }
 
 export const Search = (props: any) => {
-  const { searchIndex } = props;
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { searchIndex, searchOpen=false } = props;
+  const [isOpen, setIsOpen] = useState<boolean>(searchOpen);
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selected, setSelected] = useState<number>(0);
@@ -37,6 +37,7 @@ export const Search = (props: any) => {
   const [colorMode] = useColorMode();
   const [index, setIndex] = useState<any>();
 
+  
   // Responsible for closing the search dialog when clicked outside the search dialog
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -181,6 +182,10 @@ export const Search = (props: any) => {
   // Toggles the search dialog
   const toggleSearch = () => setIsOpen(!isOpen);
 
+  useEffect(()=>{
+    setIsOpen(searchOpen)
+  },[searchOpen])
+  
   return (
     <>
       {/* <NavMenuItem> */}

@@ -5,14 +5,15 @@ import styled from "@emotion/styled";
 import { globalStyles } from "@styles";
 import { isBrowser } from "@utils";
 import { useLocalStorageState } from "ahooks";
+import { navigate } from "gatsby";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import Keyevent from "react-keyevent";
 import { useColorMode } from "theme-ui";
 import ArticlesContextProvider from "../../sections/articles/Articles.List.Context";
 import DotCursor from "../dotcursor";
 import { SideMenu } from "../sidemenu";
 import "./index.less";
-
 
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
@@ -21,10 +22,11 @@ import "./index.less";
  */
 const Layout: React.FC<{}> = (props) => {
   const { children } = props;
-  const [colorMode] = useColorMode();
+  const [colorMode,setColorMode] = useColorMode();
   const isPC = isBrowser() ? window.innerWidth > 680 : false;
   const [showMenu, setShowMenu] = useState<boolean>(isPC);
   const [showMusic, setShowMusic] = useState<boolean>(true);
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
     "curType",
     isPC ? "zhua" : "default"
@@ -50,6 +52,30 @@ const Layout: React.FC<{}> = (props) => {
     parent.postMessage({ theme: colorMode }, "*");
   }, [colorMode]);
 
+  const onCtrlB = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const onMetaB = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const onMetaS = () => {
+    setSearchOpen(!searchOpen);
+  };
+
+  const onAltC = () => {
+    toggleCursor()
+  };
+
+  const onShiftT = () => {
+    setColorMode(colorMode==='dark'?'light':'dark')
+  };
+
+  const onEsc = ()=>{
+    navigate('/')
+  }
+
   return (
     <>
       <Helmet>
@@ -68,23 +94,38 @@ const Layout: React.FC<{}> = (props) => {
           content="black"
         />
       </Helmet>
-      <ArticlesContextProvider>
-        <Container cursorType={cursorType}>
-          <SideMenu useMenu={[showMenu, setShowMenu]} isPC={isPC} useMusic={[showMusic, setShowMusic]}/>
-          <Main>
-            <Global styles={globalStyles} />
-            <NavigationHeader
+      <Keyevent
+        events={{
+          onCtrlB,
+          onMetaB,
+          onMetaS,
+          onAltC,
+          onShiftT,
+          onEsc
+        }}
+      >
+        <ArticlesContextProvider>
+          <Container cursorType={cursorType}>
+            <SideMenu
               useMenu={[showMenu, setShowMenu]}
-              useCursor={[cursorType, toggleCursor]}
               isPC={isPC}
+              useMusic={[showMusic, setShowMusic]}
             />
-            {children}
-            <NavigationFooter />
-            
-          </Main>
-        </Container>
-      </ArticlesContextProvider>
-      {cursorType === "dot" && isPC && <DotCursor />}
+            <Main>
+              <Global styles={globalStyles} />
+              <NavigationHeader
+                useMenu={[showMenu, setShowMenu]}
+                useCursor={[cursorType, toggleCursor]}
+                isPC={isPC}
+                searchOpen={searchOpen}
+              />
+              {children}
+              <NavigationFooter />
+            </Main>
+          </Container>
+        </ArticlesContextProvider>
+        {cursorType === "dot" && isPC && <DotCursor />}
+      </Keyevent>
     </>
   );
 };
@@ -121,4 +162,3 @@ const Main = styled.div`
     width: 100%;
   }
 `;
-
