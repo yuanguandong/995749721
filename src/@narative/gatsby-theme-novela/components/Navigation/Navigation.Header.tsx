@@ -91,6 +91,18 @@ const shortcutList = () => {
           </Text>
           <Text style={{ textAlign: "right" }}>{"切换主题"}</Text>
         </li>
+        <li
+          style={{
+            margin: "10px 0",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>
+            <Text keyboard>Space</Text>
+          </Text>
+          <Text style={{ textAlign: "right" }}>{"播放音乐"}</Text>
+        </li>
       </ul>
     </div>
   );

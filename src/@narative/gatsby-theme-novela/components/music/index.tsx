@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import list from "@utils/music";
 import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
+import Keyevent from 'react-keyevent';
+import list from "../../../../../static/music";
 
 export default (props: any) => {
   const { id = "29460377", auto = false, hasList = false } = props;
@@ -22,6 +23,10 @@ export default (props: any) => {
   const toggleMusicList = () => {
     setListShow(!listShow);
   };
+
+  const onSpace = ()=>{
+    setAutoState(!autoState)
+  }
 
   return (
     <Music className="Music">
@@ -76,7 +81,10 @@ export default (props: any) => {
         </MusicList>
       )}
 
-      <div
+      <Keyevent
+        events={{
+          onSpace
+        }}
         style={{
           width: "100%",
           height: 66,
@@ -120,7 +128,7 @@ export default (props: any) => {
             <FaBars />
           </div>
         )}
-      </div>
+      </Keyevent>
     </Music>
   );
 };

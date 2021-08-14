@@ -36,8 +36,8 @@ export default [
   },
   {
     name: "He's a Pirate",
-    id: "480409496",
-    author: "Hans Zimmer",
+    id: "20110043",
+    author: "Martin Ermen",
   },
   {
     name: "Rise",
