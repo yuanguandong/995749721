@@ -24,8 +24,8 @@ const Layout: React.FC<{}> = (props) => {
   const { children } = props;
   const [colorMode,setColorMode] = useColorMode();
   const isPC = isBrowser() ? window.innerWidth > 680 : false;
-  const [showMenu, setShowMenu] = useLocalStorageState<boolean>('showMenu',isPC);
-  const [showMusic, setShowMusic] = useLocalStorageState<boolean>('showMusic',true);
+  const [showMenu, setShowMenu] = useState<boolean>(isPC);
+  const [showMusic, setShowMusic] = useState<boolean>(true);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
     "curType",
