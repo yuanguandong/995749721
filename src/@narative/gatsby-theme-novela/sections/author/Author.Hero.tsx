@@ -24,6 +24,7 @@ const AuthorHero: React.FC<AuthorHeroProps> = ({ author }) => {
       <Social>
         <SocialLinks links={author.social} />
       </Social>
+      
       <NpmList/>
     </Hero>
   );
