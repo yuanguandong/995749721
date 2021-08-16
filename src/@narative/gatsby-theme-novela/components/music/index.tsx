@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
-import Keyevent from 'react-keyevent';
+import { RiNeteaseCloudMusicLine } from "react-icons/ri";
+import Keyevent from "react-keyevent";
+import Background from 'smart-background';
 import list from "../../../../../static/music";
+// import Background from "./src";
 
 export default (props: any) => {
   const { id = "29460377", auto = false, hasList = false } = props;
@@ -24,14 +27,23 @@ export default (props: any) => {
     setListShow(!listShow);
   };
 
-  const onSpace = ()=>{
-    setAutoState(!autoState)
-  }
+  const onSpace = () => {
+    setAutoState(!autoState);
+  };
 
   return (
     <Music className="Music">
       {hasList && (
         <MusicList show={listShow}>
+          <Background
+            symbols={[<RiNeteaseCloudMusicLine />]}
+            exact
+            symbolSize={200}
+            symbolsStyle={{
+              top: "-20%",
+              left: "70%",
+            }}
+          />
           <div
             style={{
               fontWeight: "bold",
@@ -83,7 +95,7 @@ export default (props: any) => {
 
       <Keyevent
         events={{
-          onSpace
+          onSpace,
         }}
         style={{
           width: "100%",
@@ -185,24 +197,34 @@ const MusicList = styled.div<{ show }>`
     width: 100%;
     height: 100%;
     animation: change1 10s alternate infinite;
-    background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
-    z-index:-1;
+    // background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+    background-image: linear-gradient(
+      90deg,
+      #ff0844 0%,
+      #ffb199 100%
+    );
+    z-index: -1;
+    background-position: 0% 0%;
+    background-attachment: fixed;
   }
-
+  // #ff5858 70%,
+  // #f09819 100%
   @keyframes change {
     from {
-      background-size:10%;
+      background-position: 0% 0%;
+      // background-size:10%;
     }
     to {
-      background-size:400%;
+      background-position: 40% 0%;
+      // background-size:400%;
     }
   }
   @keyframes change1 {
     from {
-      background-size:400%;
+      background-size: 400%;
     }
     to {
-      background-size:100%;
+      background-size: 100%;
     }
   }
   color: #fff;

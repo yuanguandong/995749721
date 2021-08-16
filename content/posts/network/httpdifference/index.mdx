@@ -1,0 +1,38 @@
+---
+slug: network-httpdifference
+title: http1.1和http2.0有什么区别
+author: 袁官东
+date: 2016-06-14
+hero: ./hero.jpg
+excerpt: http1.1和http2.0有什么区别
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+
+## http1.1和http2.0有什么区别
+
+### http1.1
+
+引入了持久链接，即 TCP 默认不关闭，可以被多个请求复用
+
+引入管道机制，一个 TCP 连接，可以同时发送多个请求
+
+新增了一些缓存的字段
+
+新增了一些方法，PUT、DELETE、OPTIONS、PATCH 
+
+支持断点续传，通过请求头字段 Rang 来实现 
+
+### http2.0
+
+头部压缩
+
+多路复用
+
+二进制传输，头信息和数据体都是二进制
+
+请求优先级， 设置数据帧的优先级，让服务器优先处理
+
+服务器主动推送消息
+
+

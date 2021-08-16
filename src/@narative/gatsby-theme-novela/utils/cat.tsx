@@ -1,6 +1,12 @@
 import React from "react";
 import {
-  FaBuyNLarge, FaCss3Alt, FaEllipsisH, FaJira, FaJsSquare, FaNodeJs, FaReact, FaSlack
+  FaBuyNLarge,
+  FaCss3Alt,
+  FaEllipsisH, FaGlobe, FaJira,
+  FaJsSquare,
+  FaNodeJs,
+  FaReact,
+  FaSlack
 } from "react-icons/fa";
 
 export default {
@@ -39,9 +45,14 @@ export default {
     order: 7,
     icon: <FaSlack />,
   },
+  network: {
+    name: "网络",
+    order: 8,
+    icon: <FaGlobe />,
+  },
   other: {
     name: "其他",
-    order: 8,
+    order: 9,
     icon: <FaEllipsisH />,
   },
 };

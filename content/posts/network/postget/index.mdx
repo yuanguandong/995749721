@@ -1,0 +1,22 @@
+---
+slug: network-postget
+title: POST和GET区别
+author: 袁官东
+date: 2016-08-14
+hero: ./hero.webp
+excerpt: POST和GET区别是什么呢？
+---
+<div className={'img-desc'}>图：Kashish Arora</div>
+
+
+
+## 请求参数
+get 请求参数是通过 url 传递的，多个参数以&连接；POST 请求放在 request body 中。
+## 请求缓存
+get 请求会被缓存，而 post 请求不会，除非手动设置。
+## 相对的安全性
+get 是将参数通过 url 传递的，会被浏览器缓存，容易被他人获取，post 相对来说，比较安全。
+## 请求参数长度限制
+get 通过 url 传参，浏览器会限制 url 的长度(http不会)。
+## 编码方式
+GET 请求只能进行 url 编码，而 POST 支持多种编码方式。
