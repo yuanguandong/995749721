@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useLocalStorageState } from "ahooks";
+import { useCreation, useLocalStorageState } from "ahooks";
 import { Avatar, Tabs } from "antd";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import _ from "lodash";
@@ -8,7 +8,7 @@ import { FaMusic, FaOutdent, FaTh } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import Cats from "../../utils/cat";
 import { List, ListItem } from "../artitem";
-import Music from '../music';
+import Music from "../music";
 const { TabPane } = Tabs;
 const authorQuery = graphql`
   query MyQuery {
@@ -63,7 +63,7 @@ const getCategory = (edges) => {
 };
 
 export const SideMenu = (props) => {
-  const { useMenu, isPC,useMusic } = props;
+  const { useMenu, isPC, useMusic } = props;
   const [show, setShow] = useMenu;
   const [showMusic, setShowMusic] = useMusic;
   const [colorMode] = useColorMode();
@@ -147,9 +147,17 @@ export const SideMenu = (props) => {
     setActiveCat(key);
   };
 
-  const handleToggleMusic = ()=>{
+  const handleToggleMusic = () => {
     setShowMusic(!showMusic);
-  }
+  };
+
+  const MusicMemo = useCreation(() => {
+    return (
+      <MusicBar show={showMusic}>
+        <Music hasList />
+      </MusicBar>
+    );
+  }, [showMusic]);
 
   return (
     <>
@@ -160,7 +168,7 @@ export const SideMenu = (props) => {
             <Name>{name}</Name>
           </Link>
         </AvatarContainer>
-        
+
         <Tabs
           defaultActiveKey="1"
           onChange={handleTabChange}
@@ -187,17 +195,15 @@ export const SideMenu = (props) => {
             <ListItem article={item.node} narrow={false} key={item.node.slug} />
           ))}
         </List>
-        
+
         <Footer>Stay hungry & Stay foolish</Footer>
         <Close onClick={handleClose}>
           <FaOutdent />
         </Close>
         <ToggleMusic onClick={handleToggleMusic}>
-          <FaMusic/>
+          <FaMusic />
         </ToggleMusic>
-        <MusicBar show={showMusic}>
-          <Music hasList/>
-        </MusicBar>
+        {MusicMemo}
       </SideMenuContainer>
     </>
   );
@@ -206,7 +212,7 @@ export const SideMenu = (props) => {
 const AvatarContainer = styled.div`
   width: 120px;
   min-height: 200px;
-  height: 30vh;
+  height: 20vh;
   padding: 20px;
   text-align: center;
   color: ${(p) => p.theme.colors.primary};
@@ -270,7 +276,6 @@ const ToggleMusic = styled.div`
   color: ${(p) => p.theme.colors.primary};
 `;
 
-
 const Footer = styled.div`
   font-size: 14px;
   padding: 50px;
@@ -279,13 +284,13 @@ const Footer = styled.div`
   color: ${(p) => p.theme.colors.primary};
 `;
 
-const MusicBar = styled.div<{show}>`
+const MusicBar = styled.div<{ show }>`
   position: sticky;
-  z-index:10;
-  width:100%;
+  z-index: 10;
+  width: 100%;
   width: calc(100% - 20px);
   bottom: 10px;
   left: 10px;
-  transition:all 0.3s;
+  transition: all 0.3s;
   transform: ${(p) => (p.show ? "translateY(0)" : "translateY(1000px)")};
 `;

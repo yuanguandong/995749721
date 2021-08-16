@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useLocalStorageState } from 'ahooks';
 import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
 import { RiNeteaseCloudMusicLine } from "react-icons/ri";
@@ -11,7 +12,7 @@ export default (props: any) => {
   const { id = "29460377", auto = false, hasList = false } = props;
   const [idState, setIdState] = useState(id);
   const [autoState, setAutoState] = useState(auto);
-  const [listShow, setListShow] = useState(false);
+  const [listShow, setListShow] = useLocalStorageState('musicListShow',false);
 
   const check = (id) => {
     setIdState(id);
