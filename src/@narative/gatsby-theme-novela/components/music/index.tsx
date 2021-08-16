@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
 import { RiNeteaseCloudMusicLine } from "react-icons/ri";
 import Keyevent from "react-keyevent";
-import Background from 'smart-background';
+// import Background from 'smart-background';
 import list from "../../../../../static/music";
-// import Background from "./src";
+import Background from "./src";
 
 export default (props: any) => {
   const { id = "29460377", auto = false, hasList = false } = props;
@@ -44,7 +44,11 @@ export default (props: any) => {
               left: "50%",
               opacity:'0.1'
             }}
-          />
+            childrenWrapClassName={'hideScroller'}
+            childrenWrapStyle={{
+              padding:10
+            }}
+          >
           <div
             style={{
               fontWeight: "bold",
@@ -91,6 +95,7 @@ export default (props: any) => {
               </div>
             </div>
           ))}
+          </Background>
         </MusicList>
       )}
 
@@ -168,6 +173,7 @@ const MusicList = styled.div<{ show }>`
   border-radius: 10px 10px 0 0;
   @media (max-width: 680px) {
     border-radius: 20px 20px 0 0;
+    height: ${(p) => (p.show ? "25vh" : "0px")};
   }
 
   position: relative;
@@ -237,6 +243,6 @@ const MusicList = styled.div<{ show }>`
   }
   user-select: none;
   transition: all 0.2s;
-  max-height: ${(p) => (p.show ? "50vh" : "0px")};
-  height: ${(p) => (p.show ? "auto" : "0")};
+  height: ${(p) => (p.show ? "20vh" : "0px")};
+  // height: ${(p) => (p.show ? "auto" : "0")};
 `;

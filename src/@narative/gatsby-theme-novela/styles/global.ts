@@ -202,5 +202,10 @@ export const globalStyles = css`
   img{border-radius:10px;}
   .Image__Zoom{max-width:680px!important;}
   .gatsby-resp-image-wrapper{max-width:680px!important;}
-
+  .hideScroller{
+    &::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+    }
+  }
 `;
