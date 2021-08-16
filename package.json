@@ -40,6 +40,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^4.2.0",
     "react-keyevent": "^1.0.9",
+    "react-resize-detector": "^6.7.6",
     "smart-background": "^1.0.6",
     "styled-components": "^5.3.0"
   }
