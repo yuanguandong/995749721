@@ -212,12 +212,12 @@ const MusicList = styled.div<{ show }>`
   // #f09819 100%
   @keyframes change {
     from {
-      background-position: 0% 0%;
-      // background-size:10%;
+      // background-position: 0% 0%;
+      background-size:10%;
     }
     to {
       background-position: 40% 0%;
-      // background-size:400%;
+      background-size:400%;
     }
   }
   @keyframes change1 {
