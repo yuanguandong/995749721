@@ -38,10 +38,11 @@ export default (props: any) => {
           <Background
             symbols={[<RiNeteaseCloudMusicLine />]}
             exact
-            symbolSize={200}
+            symbolSize={300}
             symbolsStyle={{
-              top: "-20%",
-              left: "70%",
+              top: "-30%",
+              left: "50%",
+              opacity:'0.1'
             }}
           />
           <div
