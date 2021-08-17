@@ -1,25 +1,25 @@
-import React from 'react';
-
-import { MDXRenderer } from 'gatsby-plugin-mdx';
-import { MDXProvider } from '@mdx-js/react';
-
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
-import { useColorMode } from 'theme-ui';
-
+import * as shortcodes from '@blocks/kit';
 import Anchor from '@components/Anchor';
 import Blockquote from '@components/Blockquote';
 import Code from '@components/Code';
+import Figcaption from '@components/Figcaption';
 import Headings from '@components/Headings';
 import HorizontalRule from '@components/HorizontalRule';
+import { ImageZoom } from '@components/Image';
 import Lists from '@components/Lists';
 import Paragraph from '@components/Paragraph';
 import Tables from '@components/Tables';
-import { ImageZoom } from '@components/Image';
-import Figcaption from '@components/Figcaption';
-import * as shortcodes from '@blocks/kit';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
+import { MDXProvider } from '@mdx-js/react';
 import mediaqueries from '@styles/media';
 import { toKebabCase } from '@utils';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
+import React from 'react';
+import { useColorMode } from 'theme-ui';
+
+
+
 
 const components = {
   ...shortcodes,
@@ -294,7 +294,7 @@ const ImageCSS = css`
 
   div.Image__Large {
     position: relative;
-    left: -68px;
+    // left: -68px;
     width: ${IMAGE_WIDTHS.full};
     margin: 25px auto 60px;
     pointer-events: none;

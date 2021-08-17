@@ -84,9 +84,9 @@ const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
 const Header = styled.header`
   position: relative;
   z-index: 10;
-  margin:100px auto 120px;
-  padding-left: 68px;
-  max-width: 749px;
+  margin:100px auto 50px;
+  // padding-left: 68px;
+  max-width: 680px;
 
   ${mediaqueries.desktop`
     padding-left: 53px;
@@ -165,7 +165,7 @@ const HeroImage = styled.div`
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 944px;
+  max-width: 680px;
   overflow: hidden;
   margin: 0 auto;
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2),
