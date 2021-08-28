@@ -2,7 +2,7 @@
 slug: promisea+
 title: 手写PromiseA+实现
 author: 袁官东
-date: 2021-04-30
+date: 2020-04-30
 hero: ./hero.webp
 excerpt: 如何自己实现promiseA+规范，手写一个promise实现
 ---

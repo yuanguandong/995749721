@@ -5,15 +5,21 @@ import { useColorMode } from "theme-ui";
 
 const npms = [
   {
-    name: "React Keyevent",
-    homepage: "https://yuanguandong.github.io/react-keyevent",
-    img: "https://user-images.githubusercontent.com/13197560/125153789-c44b4080-e188-11eb-829e-307a738ad92b.png",
+    name: "React Dashboard Pro",
+    homepage: "https://yuanguandong.github.io/react-dashboard-pro",
+    img: "https://github.com/yuanguandong/react-dashboard-pro/raw/master/snapshot.png",
   },
   {
     name: "Smart Background",
     homepage: "https://yuanguandong.github.io/smart-background/",
     img: "https://github.com/yuanguandong/smart-background/raw/master/snapshot.png",
   },
+  {
+    name: "React Keyevent",
+    homepage: "https://yuanguandong.github.io/react-keyevent",
+    img: "https://user-images.githubusercontent.com/13197560/125153789-c44b4080-e188-11eb-829e-307a738ad92b.png",
+  }
+  
 ];
 
 export const NpmList = (props) => {
@@ -61,6 +67,7 @@ const Npm = styled.a<{ img: string }>`
   background-position: center;
   position: relative;
   overflow:hidden;
+  margin-bottom:10px;
   .npmname {
     display: flex;
     justify-content: center;
