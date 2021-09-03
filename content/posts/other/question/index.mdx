@@ -1,0 +1,39 @@
+---
+slug: other-question
+title: 前端答疑
+author: 袁官东
+date: 2020-09-02
+hero: ./hero.jpg
+excerpt: 一些比较常见的问题
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+
+## get 和 post 有什么区别？
+
+1. 形式
+2. 安全性
+3. 大小
+4. 编码方式
+5. 缓存
+
+## http1.0和http1.1和http2.0区别
+
+http1.1
+1. 持久链接
+2. 管道机制
+3. 新方法，PUT,DELETE,OPTIONS,PATCH
+4. 新增缓存字段
+5. 断点续传，通过Range字段来实现
+
+http2.0
+1. 多路复用
+2. 头部压缩
+3. 二进制传输
+4. 优先级
+5. 服务器可以主动推送消息
+
+
+## 200 状态码一定是服务器返回的吗？
+不是，命中强缓存的话，会直接从内存或者磁盘中读取资源，并返回一个 200 状态码
+
