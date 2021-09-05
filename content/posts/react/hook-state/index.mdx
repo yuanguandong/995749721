@@ -1,0 +1,147 @@
+---
+slug: react-hook-state
+title: Hook原理——状态Hook
+author: 袁官东
+date: 2021-09-05
+hero: ./hero.webp
+excerpt: react-hook-state
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 创建 Hook
+
+<div className="art-container">
+  <Draw name="hook-initial" />
+</div>
+
+在fiber初次构造阶段, useState对应源码mountState, useReducer对应源码mountReducer  
+
+mountState:
+
+```js
+function mountState<S>(
+  initialState: (() => S) | S,
+): [S, Dispatch<BasicStateAction<S>>] {
+  // 1. 创建hook
+  const hook = mountWorkInProgressHook();
+  if (typeof initialState === 'function') {
+    initialState = initialState();
+  }
+  // 2. 初始化hook的属性
+  // 2.1 设置 hook.memoizedState/hook.baseState
+  // 2.2 设置 hook.queue
+  hook.memoizedState = hook.baseState = initialState;
+  const queue = (hook.queue = {
+    pending: null,
+    dispatch: null,
+    // queue.lastRenderedReducer是内置函数
+    lastRenderedReducer: basicStateReducer,
+    lastRenderedState: (initialState: any),
+  });
+  // 2.3 设置 hook.dispatch
+  const dispatch: Dispatch<
+    BasicStateAction<S>,
+  > = (queue.dispatch = (dispatchAction.bind(
+    null,
+    currentlyRenderingFiber,
+    queue,
+  ): any));
+
+  // 3. 返回[当前状态, dispatch函数]
+  return [hook.memoizedState, dispatch];
+}
+```
+
+
+mountReducer:
+
+
+```js
+function mountReducer<S, I, A>(
+  reducer: (S, A) => S,
+  initialArg: I,
+  init?: I => S,
+): [S, Dispatch<A>] {
+  // 1. 创建hook
+  const hook = mountWorkInProgressHook();
+  let initialState;
+  if (init !== undefined) {
+    initialState = init(initialArg);
+  } else {
+    initialState = ((initialArg: any): S);
+  }
+  // 2. 初始化hook的属性
+  // 2.1 设置 hook.memoizedState/hook.baseState
+  hook.memoizedState = hook.baseState = initialState;
+  // 2.2 设置 hook.queue
+  const queue = (hook.queue = {
+    pending: null,
+    dispatch: null,
+    // queue.lastRenderedReducer是由外传入
+    lastRenderedReducer: reducer,
+    lastRenderedState: (initialState: any),
+  });
+  // 2.3 设置 hook.dispatch
+  const dispatch: Dispatch<A> = (queue.dispatch = (dispatchAction.bind(
+    null,
+    currentlyRenderingFiber,
+    queue,
+  ): any));
+
+  // 3. 返回[当前状态, dispatch函数]
+  return [hook.memoizedState, dispatch];
+}
+
+```
+
+
+mountState和mountReducer逻辑简单: 主要负责创建hook, 初始化hook的属性, 最后返回[当前状态, dispatch函数].
+
+唯一的不同点是hook.queue.lastRenderedReducer:
+
+
+* mountState使用的是内置的basicStateReducer
+
+```js
+function basicStateReducer<S>(state: S, action: BasicStateAction<S>): S {
+  return typeof action === 'function' ? action(state) : action;
+}
+```
+
+* mountReducer使用的是外部传入自定义reducer
+
+可见mountState是mountReducer的一种特殊情况, 即useState也是useReducer的一种特殊情况, 也是最简单的情况.
+
+useState可以转换成useReducer:
+
+
+```js
+
+const [state, dispatch] = useState({ count: 0 });
+
+// 等价于
+const [state, dispatch] = useReducer(
+  function basicStateReducer(state, action) {
+    return typeof action === 'function' ? action(state) : action;
+  },
+  { count: 0 },
+);
+
+// 当需要更新state时, 有2种方式
+dispatch({ count: 1 }); // 1.直接设置
+dispatch(state => ({ count: state.count + 1 })); // 2.通过回调函数设置
+
+```
+
+可见, useState就是对useReducer的基本封装, 内置了一个特殊的reducer(后文不再区分useState, useReducer, 都以useState为例).创建hook之后返回值[hook.memoizedState, dispatch]中的dispath实际上会调用reducer函数.
+
+## 状态初始化
+
+在useState(initialState)函数内部, 设置hook.memoizedState = hook.baseState = initialState;, 初始状态被同时保存到了hook.baseState,hook.memoizedState中.
+
+hook.memoizedState: 当前状态
+hook.baseState: 基础状态, 作为合并hook.baseQueue的初始值(下文介绍).
+最后返回[hook.memoizedState, dispatch], 所以在function中使用的是hook.memoizedState.
+

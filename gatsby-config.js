@@ -35,6 +35,7 @@ module.exports = {
         },
       },
     },
+    
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
@@ -49,21 +50,19 @@ module.exports = {
         background_color: `#000`,
         theme_color: `#000`,
         display: `standalone`,
-        icon: "src/assets/favicon.png"
+        icon: "src/assets/favicon.png",
       },
     },
     {
       resolve: `gatsby-plugin-offline`,
-      options: {
-      },
+      options: {},
     },
     {
       resolve: "gatsby-plugin-antd",
     },
     {
       resolve: `gatsby-plugin-less`,
-      options: {
-      },
+      options: {},
     },
   ],
 };

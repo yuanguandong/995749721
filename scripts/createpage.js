@@ -32,6 +32,7 @@ excerpt: ${slug}
 ---
 <div className={'img-desc'}>图：Nguyen Nhut</div>
 
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
 
 ## 
   `, 
