@@ -38,25 +38,25 @@ export default {
     order: 5,
     icon: <FaNodeJs />,
   },
-  babel: {
-    name: "编译原理",
+  "engin": {
+    name: "工程化",
     order: 6,
-    icon: <FaBuyNLarge />,
-  },
-  "micro-frontend": {
-    name: "微前端",
-    order: 7,
     icon: <FaSlack />,
   },
   algo: {
     name: "算法",
-    order: 8,
+    order: 7,
     icon: <FaCalculator />,
   },
   network: {
     name: "网络",
-    order: 9,
+    order: 8,
     icon: <FaGlobe />,
+  },
+  babel: {
+    name: "编译原理",
+    order: 9,
+    icon: <FaBuyNLarge />,
   },
   other: {
     name: "其他",
