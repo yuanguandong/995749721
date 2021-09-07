@@ -1,0 +1,70 @@
+---
+slug: algo-clonedeep
+title: cloneDeep 深克隆实现
+author: 袁官东
+date: 2017-09-07
+hero: ./hero.jpg
+excerpt: algo-clonedeep
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 测试对象
+```js
+var obj = {
+  //原数据，包含字符串、对象、函数、数组等不同的类型
+  name: "test",
+  main: {
+    a: 1,
+    b: 2,
+  },
+  fn: function () {
+    alert(1);
+  },
+  date: new Date(),
+  reg: new RegExp(),
+  friends: [1, 2, 3, [22, 33]],
+};
+```
+  
+## 浅克隆
+
+```js
+function clone(obj) {
+  let newObj = {};
+  for (let i in obj) {
+    newObj[i] = obj[i];
+  }
+  return newObj;
+}
+```
+
+
+## 深克隆
+
+```js
+function cloneDeep(obj) {
+  let newObj = null;
+  if (typeof obj === "object" && typeof obj !== null) {
+    if (obj instanceof Array) {
+      newObj = [];
+      for (let i in obj) {
+        newObj[i] = cloneDeep(obj[i]);
+      }
+    } else if (obj instanceof Date) {
+      newObj = new Date(obj)
+    } else if (obj instanceof RegExp) {
+      newObj = new RegExp(obj)
+    } else {
+      newObj = {};
+      for (let i in obj) {
+        newObj[i] = cloneDeep(obj[i]);
+      }
+    }
+  } else {
+    newObj = obj;
+  }
+  return newObj;
+}
+```

@@ -38,3 +38,19 @@ http2.0
 ## 200 状态码一定是服务器返回的吗？
 不是，命中强缓存的话，会直接从内存或者磁盘中读取资源，并返回一个 200 状态码
 
+## generate自动执行
+```js
+function asyncToGenerator(generatorFunc) {
+  return function () {
+    const genFn = generatorFunc.apply(this, arguments);
+    const next = (data) => {
+      const { value, done } = genFn.next(data);
+      if (done) return;
+      value.then((data) => {
+        next(data);
+      });
+    };
+    next(arguments);
+  };
+}
+```

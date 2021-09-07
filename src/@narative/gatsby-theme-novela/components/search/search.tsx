@@ -174,7 +174,7 @@ export const Search = (props: any) => {
       case "Enter":
         event.preventDefault();
         setIsOpen(false);
-        navigate(`/${currentSelection.slug}`);
+        currentSelection && navigate(`/${currentSelection.slug}`);
         return;
     }
   };
