@@ -55,8 +55,6 @@ const getCategory = (edges) => {
     } = art;
     const cat = relativeDirectory.split("/")[0];
     art.cat = cat;
-    console.log('Cats',Cats)
-    console.log('cat',cat)
     const { order, name, icon } = Cats[cat];
     
     res[order] = { key: cat, value: name, icon };

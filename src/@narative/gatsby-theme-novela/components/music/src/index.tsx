@@ -132,7 +132,6 @@ const SmartBackground = (props: SmartBackgroundProps) => {
     });
   }, []);
 
-  console.log('childrenWrapClassName',childrenWrapClassName)
 
   return (
     <>
