@@ -1,0 +1,40 @@
+---
+slug: algo-lodash-get
+title: lodash get 实现
+author: 袁官东
+date: 2021-09-08
+hero: ./hero.jpg
+excerpt: algo-lodash-get
+---
+
+<div className={"img-desc"}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 实现
+
+```js
+const a = {
+  b: {
+    c: [1, 2, 3],
+  },
+};
+
+const get = (obj, path, defaultValue = undefined) => {
+  if (path.length === 0) {
+    return obj;
+  }
+  if (!obj) {
+    return defaultValue;
+  }
+  if (typeof path === "string") {
+    path = path.replace(/\[/g, ".").replace(/\]/g, "").split(".");
+  }
+  let p = path.shift();
+  return get(obj[p], path);
+};
+
+const res = get(a, "b.c[3]");
+
+console.log(res);
+```
