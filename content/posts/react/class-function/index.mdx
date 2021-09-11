@@ -1,0 +1,45 @@
+---
+slug: react-class-function
+title: React class组件和function组件异同
+author: 袁官东
+date: 2021-09-11
+hero: ./hero.jpg
+excerpt: 类组件和函数组件有何相同点有何不同点呢？
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 相同点
+
+都可以接收props返回react元素
+
+## 不同点
+
+### 编程思想
+
+类组件需要创建实例，面向对象，函数组件不需要创建实例，接收输入，返回输出，函数式编程
+
+### 内存占用
+类组建需要创建并保存实例，占用一定的内存
+
+### 值捕获特性
+函数组件具有值捕获的特性 下面的函数组件换成类组件打印的num一样吗
+
+### 可测试性
+函数组件方便测试
+
+### 状态
+类组件有自己的状态，函数组件没有，只能通过useState
+
+### 生命周期
+类组件有自己的生命周期，函数组件没有，可以使用useEffect实现类似的生命周期
+
+### 逻辑复用
+类组件继承，用HOC, 会导致逻辑混乱，嵌套，组合优于继承，函数组件hook逻辑复用
+
+### 跳过更新
+shouldComponentUpdate PureComponent, React.memo
+
+### 发展未来
+函数组件未来成为主流，屏蔽this、规范、复用、适合时间分片和渲染

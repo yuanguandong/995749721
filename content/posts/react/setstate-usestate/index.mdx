@@ -17,7 +17,9 @@ setState的“异步”并不是说内部由异步代码实现，其实本身执
 最终决定setState是同步渲染还是异步渲染的关键因素是`ReactFiberWorkLoop`工作空间的执行上下文.
 
 ## 什么时候是"异步"
-如果是concurrent 模式就永远是异步 
+legacy模式下：命中batchedUpdates时是异步 未命中batchedUpdates时是同步的
+
+concurrent模式下：都是异步的
 
 函数组件里使用useState都是异步的
 

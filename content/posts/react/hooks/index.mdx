@@ -145,3 +145,8 @@ fiber树更新阶段, 把current.memoizedState链表上的所有Hook按照顺序
 ## 注意
 
 其中 hook.queue 与 fiber.updateQueue 虽然都是 update 环形链表, 尽管 update 对象的数据结构与处理方式都高度相似, 但是这 2 个队列中的 update 对象是完全独立的. hook.queue 只作用于 hook 对象的状态维护, 切勿与 fiber.updateQueue 混淆.
+
+
+## 为什么hooks不能写在条件判断中？
+hook会按顺序存储在链表中，如果写在条件判断中，就没法保持链表的顺序
+

@@ -1,0 +1,192 @@
+---
+slug: react-usestate-comply
+title: Mini useState 实现
+author: 袁官东
+date: 2021-09-11
+hero: ./hero.jpg
+excerpt: 我们来思考一下useState是怎么实现的呢？
+---
+
+<div className={"img-desc"}>图：Tran Mau Tri Tam</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## Mini版实现
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+
+function Counter() {
+  var [count, setCount] = useState(0);
+  var [name, setName] = useState("john");
+  const onClick = () => {
+    setCount(count + 1);
+  };
+  const onClickName = () => {
+    setName("name" + Math.random());
+  };
+  return (
+    <div>
+      <div>{count}</div>
+      <button onClick={onClick}>点击</button>
+      <div>{name}</div>
+      <button onClick={onClickName}>点击</button>
+    </div>
+  );
+}
+
+let stateArray = [];
+let cursor = 0;
+
+function useState(initialState) {
+  const currentCursor = cursor;
+  stateArray[currentCursor] = stateArray[currentCursor] || initialState;
+  function setState(newState) {
+    stateArray[currentCursor] = newState;
+    render();
+  }
+  ++cursor;
+  return [stateArray[currentCursor], setState];
+}
+
+export function render() {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Counter />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+  cursor = 0;
+}
+render();
+```
+
+<div className="art-container">
+  <a href="https://codesandbox.io/s/usestate-zoj75?file=/src/index.js:0-984" target="_blank" style={{marginBottom:20,width:184,height:40, display:'block',background:'url("https://codesandbox.io/static/img/play-codesandbox.svg")'}}>
+  </a>
+</div>
+
+真实的 react useState 比这个复杂的多
+
+mini版每次都要重新生成RootFiber，并且要重置状态’指针‘
+
+mini版把状态存在了全局作用域，react 真实的实现是挂在 fiber 节点上的 memoizedState, 
+
+mini版本的状态指针“cursor”是个数组的索引，而真实的是通过链表实现的，
+
+mini 版的实现只能当做一种启发
+
+
+## 进阶版实现
+
+竟可能的模拟内部实现
+
+```js
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+let workInProgressHook;//当前工作中的hook
+let isMount = true;//是否时mount时
+
+const fiber = {//fiber节点
+  memoizedState: null,//hook链表
+  stateNode: App//dom
+};
+
+const Dispatcher = (() => {//Dispatcher对象
+  function mountWorkInProgressHook() {//mount时调用
+    const hook = {//构建hook
+      queue: {//更新队列
+        pending: null//未执行的update队列
+      },
+      memoizedState: null,//当前state
+      next: null//下一个hook
+    };
+    if (!fiber.memoizedState) {
+      fiber.memoizedState = hook;//第一个hook的话直接赋值给fiber.memoizedState
+    } else {
+      workInProgressHook.next = hook;//不是第一个的话就加在上一个hook的后面，形成链表
+    }
+    workInProgressHook = hook;//记录当前工作的hook
+    return workInProgressHook;
+  }
+  function updateWorkInProgressHook() {//update时调用
+    let curHook = workInProgressHook;
+    workInProgressHook = workInProgressHook.next;//下一个hook
+    return curHook;
+  }
+  function useState(initialState) {
+    let hook;
+    if (isMount) {
+      hook = mountWorkInProgressHook();
+      hook.memoizedState = initialState;//初始状态
+    } else {
+      hook = updateWorkInProgressHook();
+    }
+
+    let baseState = hook.memoizedState;//初始状态
+    if (hook.queue.pending) {
+      let firstUpdate = hook.queue.pending.next;//第一个update
+
+      do {
+        const action = firstUpdate.action;
+        baseState = action(baseState);
+        firstUpdate = firstUpdate.next;//循环update链表
+      } while (firstUpdate !== hook.queue.pending);//通过update的action计算state
+
+      hook.queue.pending = null;//重置update链表
+    }
+    hook.memoizedState = baseState;//赋值新的state
+
+    return [baseState, dispatchAction.bind(null, hook.queue)];//useState的返回
+  }
+
+  return {
+    useState
+  };
+})();
+
+function dispatchAction(queue, action) {//触发更新
+  const update = {//构建update
+    action,
+    next: null
+  };
+  if (queue.pending === null) {
+    update.next = update;//update的环状链表
+  } else {
+    update.next = queue.pending.next;//新的update的next指向前一个update
+    queue.pending.next = update;//前一个update的next指向新的update
+  }
+  queue.pending = update;//更新queue.pending
+
+  isMount = false;//标志mount结束
+  workInProgressHook = fiber.memoizedState;//更新workInProgressHook
+  schedule();//调度更新
+}
+
+function App() {
+  let [count, setCount] = Dispatcher.useState(1);
+  let [age, setAge] = Dispatcher.useState(10);
+  return (
+    <>
+      <p>Clicked {count} times</p>
+      <button onClick={() => setCount(() => count + 1)}> Add count</button>
+      <p>Age is {age}</p>
+      <button onClick={() => setAge(() => age + 1)}> Add age</button>
+    </>
+  );
+}
+
+function schedule() {
+  ReactDOM.render(<App />, document.querySelector("#root"));
+}
+
+schedule();
+```
+
+<div className="art-container">
+  <a href="https://codesandbox.io/s/react-usestate-1-j2g0i?file=/src/index.js:1802-1808" target="_blank" style={{marginBottom:20,width:184,height:40, display:'block',background:'url("https://codesandbox.io/static/img/play-codesandbox.svg")'}}>
+  </a>
+</div>

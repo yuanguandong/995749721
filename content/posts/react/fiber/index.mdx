@@ -1,0 +1,26 @@
+---
+slug: react-fiber
+title: React Fiber
+author: 袁官东
+date: 2021-09-11
+hero: ./hero.jpg
+excerpt: react-fiber
+---
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## Fiber是什么？
+
+Fiber是一个js对象，承载了节点信息、优先级、updateQueue, 是一个工作单元
+
+## Fiber特性
+1. Fiber双缓存可以在构建好workInProgress Fiber树之后切换成current Fiber, 内存中直接一次性切换，提高了性能
+2. Fiber的存在使异步更新成为了可能，作为工作单元，可以在时间片内执行工作，没时间了交还执行权给浏览器，下次时间片继续执行之前的暂停之后返回FiberRootNode
+3. Fiber可以在reconcile的时候进行相应的diff更新，让最后的更新应用在真实的节点上
+
+
+## 与jsx的关系
+
+在mount时通过jsx对象（调用createElement的结果）调用createFiberFromElement生成Fiber update时通过reconcileChildFibers或reconcileChildrenArray对比新jsx和老的Fiber(current Fiber)生成新的Fiber树
+
