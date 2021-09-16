@@ -3,6 +3,11 @@ setState 怎么获取到更新后的值？异步函数中为什么setState 会�
 
 
 ```tsx
+
+
+
+
+
 <div className="art-container">
   <Draw name="hooks" />
 </div>
@@ -11,4 +16,15 @@ setState 怎么获取到更新后的值？异步函数中为什么setState 会�
   <a href="https://codesandbox.io/s/usestate-zoj75?file=/src/index.js:0-984" target="_blank" style={{marginBottom:20,width:184,height:40, display:'block',background:'url("https://codesandbox.io/static/img/play-codesandbox.svg")'}}>
   </a>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 ```
