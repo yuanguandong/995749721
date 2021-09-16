@@ -14,6 +14,15 @@ import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw"
 
 Fiber是一个js对象，承载了节点信息、优先级、updateQueue, 是一个工作单元
 
+## 作用
+* 工作单元 任务分解 ：Fiber最重要的功能就是作为工作单元，保存原生节点或者组件节点对应信息（包括优先级），这些节点通过指针的形似形成Fiber树
+
+* 增量渲染：通过jsx对象和current Fiber的对比，生成最小的差异补丁fiberEffectList，应用到真实节点上
+
+* 根据优先级暂停、继续、排列优先级：Fiber节点上保存了优先级，能通过不同节点优先级的对比，达到任务的暂停、继续、排列优先级等能力，也为上层实现批量更新、Suspense提供了基础
+
+* 保存状态 : Fiber能保存状态和更新的信息，所以就能实现函数组件的状态更新，也就是hooks
+
 ## Fiber特性
 1. Fiber双缓存可以在构建好workInProgress Fiber树之后切换成current Fiber, 内存中直接一次性切换，提高了性能
 2. Fiber的存在使异步更新成为了可能，作为工作单元，可以在时间片内执行工作，没时间了交还执行权给浏览器，下次时间片继续执行之前的暂停之后返回FiberRootNode
@@ -23,4 +32,70 @@ Fiber是一个js对象，承载了节点信息、优先级、updateQueue, 是一
 ## 与jsx的关系
 
 在mount时通过jsx对象（调用createElement的结果）调用createFiberFromElement生成Fiber update时通过reconcileChildFibers或reconcileChildrenArray对比新jsx和老的Fiber(current Fiber)生成新的Fiber树
+
+## 数据结构
+```tsx
+function FiberNode(
+  tag: WorkTag,
+  pendingProps: mixed,
+  key: null | string,
+  mode: TypeOfMode,
+) {
+  //作为静态的数据结构 保存节点的信息 
+  this.tag = tag;//对应组件的类型
+  this.key = key;//key属性
+  this.elementType = null;//元素类型
+  this.type = null;//func或者class
+  this.stateNode = null;//真实dom节点
+
+  //作为fiber数架构 连接成fiber树
+  this.return = null;//指向父节点
+  this.child = null;//指向child
+  this.sibling = null;//指向兄弟节点
+  this.index = 0;
+
+  this.ref = null;
+
+  //用作为工作单元 来计算state
+  this.pendingProps = pendingProps;
+  this.memoizedProps = null;
+  this.updateQueue = null;
+  this.memoizedState = null;
+  this.dependencies = null;
+
+  this.mode = mode;
+    
+	//effect相关
+  this.effectTag = NoEffect;
+  this.nextEffect = null;
+  this.firstEffect = null;
+  this.lastEffect = null;
+
+  //优先级相关的属性
+  this.lanes = NoLanes;
+  this.childLanes = NoLanes;
+
+  //current和workInProgress的指针
+  this.alternate = null;
+}
+```
+
+## Fiber双缓存
+
+### mount时
+1. mount时，current Fiber只有一个节点，rootFier
+
+2. 然后根据jsx创建workInProgress Fiber
+
+3. 创建完成workInProgress后直接把fiberRoot的current指针指向workInProgress，即这时的workInProgress变为了currentFiber
+
+### update时
+
+1. 根据最新的jsx开始构建workInProgressFiber
+
+2. 构建时同时和currentFiber做diff, 找出不同的节点，生成fiberEffectList
+
+3. 构建完成workInProgressFiber，把currentFiber切换为workInProgressFiber，等待下一次更新
+
+4. 把fiberEffectList交给renderer commit阶段 进行真实节点更新渲染
 
