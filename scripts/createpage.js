@@ -30,7 +30,7 @@ date: ${moment(new Date()).format('YYYY-MM-DD')}
 hero: ./hero.webp
 excerpt: ${slug}
 ---
-<div className={'img-desc'}>图：Mako Tsereteli</div>
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
 
 import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
 
