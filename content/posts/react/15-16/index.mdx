@@ -1,0 +1,56 @@
+---
+slug: react-15-16
+title: React 15 和 React 16 的区别
+author: 袁官东
+date: 2021-10-06
+hero: ./hero.webp
+excerpt: react-15-16
+---
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 结构
+
+### react15的架构可以分为两层：
+
+* Reconciler（协调器）— 找出需要更新的组件，以及标识出如何更新
+* Renderer（渲染器）— 负责将变化后的组件渲染到页面上
+
+### react16的架构可以分为三层：
+* Scheduler（调度器）— 调度任务的优先级，高级优先级的优先进入Reconciler阶段
+* Reconciler（协调器）— 找出需要更新的组件，以及标识出如何更新
+* Renderer（渲染器）— 负责将变化后的组件渲染到页面上
+
+浏览器的16.6ms机制
+
+对人眼来说，正常流畅的刷新率为60hz，即60帧，即浏览器16.6ms刷新一次。
+
+我们知道js可以操作dom元素，所以浏览器的GUI线程和js线程是互斥的。js的执行和浏览器的绘制、布局不能同时进行。所以在每16.6ms内浏览器要执行如下操作：
+
+```js
+JS脚本执行 ------ 浏览器样式布局 ------ 浏览器样式绘制
+```
+
+如果js脚本执行时间过长，超过16.6ms，这次刷新中浏览器绘制和布局就无法执行，这就会造成人眼可识别的卡顿，发现操作时浏览器没有“实时”做出反应。如：对于用户在输入框输入内容这个行为来说，就体现为按下了键盘按键但是页面上不实时显示输入。
+
+
+## 区别
+
+react15的reconciler是stack-reconciler。
+
+即是采用递归形式工作的，是同步的，在生成虚拟dom树并diff过程中是无法中断的。
+
+这样在组件层级过深时，会造成js执行时间过长，浏览器无法布局和绘制，造成丢帧。
+
+
+react16的reconciler是fiber-reconciler。
+
+即采用的异步可中断更新代替react15的同步更新，react16的scheduler调度器会告诉reconciler，浏览器是否有空闲时间执行js脚本。
+
+这样就不会影响浏览器的绘制和布局工作。不会丢帧。
+
+在react16中，原来的虚拟DOM,因其结构已不能满足异步可中断更新的需求，改而采用新的结构Fiber。
+
+虚拟dom节对应变为Fiber节点，虚拟dom树对应变为Fiber树。
+

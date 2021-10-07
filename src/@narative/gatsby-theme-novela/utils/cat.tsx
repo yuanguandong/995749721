@@ -53,14 +53,14 @@ export default {
     order: 8,
     icon: <FaGlobe />,
   },
-  babel: {
-    name: "编译原理",
-    order: 9,
-    icon: <FaBuyNLarge />,
-  },
+  // babel: {
+  //   name: "编译原理",
+  //   order: 9,
+  //   icon: <FaBuyNLarge />,
+  // },
   other: {
     name: "其他",
-    order: 10,
+    order: 9,
     icon: <FaEllipsisH />,
   },
 };
