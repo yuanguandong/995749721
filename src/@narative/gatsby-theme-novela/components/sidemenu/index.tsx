@@ -56,7 +56,7 @@ const getCategory = (edges) => {
     const cat = relativeDirectory.split("/")[0];
     art.cat = cat;
     const { order, name, icon } = Cats[cat];
-    
+
     res[order] = { key: cat, value: name, icon };
   });
   return res;
@@ -292,5 +292,5 @@ const MusicBar = styled.div<{ show }>`
   bottom: 10px;
   left: 10px;
   transition: all 0.3s;
-  transform: ${(p) => (p.show ? "translateY(0)" : "translateY(1000px)")};
+  transform: ${(p) => (p.show ? "translateY(0)" : "translateX(-1000px)")};
 `;
