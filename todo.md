@@ -25,3 +25,8 @@ react 事件
 keepAlive 源码
 
 
+https://riptutorial.com/less/example/19311/writing-a-simple-for-loop
+
+
+npm root -g
+npm bin -g
