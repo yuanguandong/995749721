@@ -27,6 +27,11 @@ keepAlive 源码
 
 https://riptutorial.com/less/example/19311/writing-a-simple-for-loop
 
+umi源码
 
 npm root -g
 npm bin -g
+
+
+SplitChunks
+https://zhuanlan.zhihu.com/p/152097785?from_voters_page=true
