@@ -29,8 +29,10 @@ import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw"
 
 ```js
 a.constructor === test; // true
+a.__proto__ === test.prototype  //true
 a.__proto__.constructor === test; // true
 a.__proto__.constructor === test.prototype.constructor; // true
+test.prototype.constructor === test  //true
 ```
 
 ## 测试
