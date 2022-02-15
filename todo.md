@@ -12,11 +12,6 @@
 </div>
 
 ```js
-字典树
-https://blog.csdn.net/dingshao1114/article/details/107282626/
-
-react 事件
-
 keepAlive 源码
 
 umi源码
