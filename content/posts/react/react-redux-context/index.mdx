@@ -54,7 +54,12 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { storeContext } from "./context";
 
 export const ConnectComponent = (props: any) => {
-  const { WrapperComponent, mapStateToProps, mapDispatchToProps } = props;
+  const {
+    WrapperComponent,
+    mapStateToProps,
+    mapDispatchToProps,
+    ...restProps
+  } = props;
   const [, forceUpdate] = useState<any>();
   const { dispatch, getState, subscribe } = useContext(storeContext);
   const state = getState();
@@ -75,7 +80,12 @@ export const ConnectComponent = (props: any) => {
 
   const memoComponent = useMemo(() => {
     return (
-      <WrapperComponent {...mapState} {...mapAction} dispatch={dispatch} />
+      <WrapperComponent
+        {...mapState}
+        {...mapAction}
+        {...restProps}
+        dispatch={dispatch}
+      />
     );
   }, [mapState, mapAction]);
 
@@ -87,8 +97,9 @@ export const ConnectComponent = (props: any) => {
 };
 
 export const connect = (mapStateToProps?: any, mapDispatchToProps?: any) => {
-  return (WrapperComponent: React.ElementType) => () => (
+  return (WrapperComponent: React.ElementType) => (props: any) => (
     <ConnectComponent
+      {...props}
       mapStateToProps={mapStateToProps}
       WrapperComponent={WrapperComponent}
       mapDispatchToProps={mapDispatchToProps}
