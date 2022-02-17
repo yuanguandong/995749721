@@ -1,0 +1,94 @@
+---
+slug: react-mobx
+title: mobx-react 使用
+author: 袁官东
+date: 2022-02-16
+hero: ./hero.webp
+excerpt: 虽然不常用，但是可以学一下
+---
+<div className={'img-desc'}>图：Vivivian</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## index
+
+```tsx
+import { render } from "react-dom";
+import App from "./App";
+import store from "./store";
+import { Provider } from "mobx-react";
+
+const rootElement = document.getElementById("root");
+render(
+  <Provider {...store}>
+    <App />
+  </Provider>,
+  rootElement
+);
+```
+# store
+```tsx
+import { makeObservable, observable, action } from "mobx";
+
+class Home {
+  constructor() {
+    makeObservable(this, {
+      data: observable,
+      onChange: action.bound
+    });
+  }
+  data = "home";
+  onChange(data) {
+    this.data = data;
+  }
+}
+
+class About {
+  constructor() {
+    makeObservable(this, {
+      value: observable,
+      onChange: action.bound
+    });
+  }
+  value = "About";
+  onChange(value) {
+    this.value = value;
+  }
+}
+// 上⾯的模块应该分散在各⾃的业务中，这⾥就不使⽤导⼊的⽅式了
+export default {
+  home: new Home(),
+  about: new About()
+};
+
+```
+
+# App
+```tsx
+import React from "react";
+import { inject, Observer } from "mobx-react";
+
+function MobxReact({ home, about }) {
+  return (
+    <h3>
+      <h2>mobx-react</h2>
+      <button onClick={() => home.onChange(Math.random())}>
+        home:
+        <Observer>{() => home.data}</Observer>
+      </button>
+      <br />
+      <button onClick={() => about.onChange(Math.random())}>
+        about:
+        <Observer>{() => about.value}</Observer>
+      </button>
+    </h3>
+  );
+}
+
+export default inject("home", "about")(MobxReact);
+```
+
+<div className="art-container">
+  <a href="https://codesandbox.io/s/mobx-h7nw5u?file=/src/App.tsx:0-519" target="_blank" style={{marginBottom:20,width:184,height:40, display:'block',background:'url("https://codesandbox.io/static/img/play-codesandbox.svg")'}}>
+  </a>
+</div>
