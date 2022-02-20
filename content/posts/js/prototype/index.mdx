@@ -33,7 +33,10 @@ a.__proto__ === test.prototype  //true
 a.__proto__.constructor === test; // true
 a.__proto__.constructor === test.prototype.constructor; // true
 test.prototype.constructor === test  //true
+// 函数（包括原生构造函数）的原型对象为Function.prototype 
+test.__proto__ === Function.prototype // true
 ```
+函数都是由 Function 原生构造函数创建的，所以函数的 __proto__ 属性指向 Function 的 prototype 属性。
 
 ## 测试
 

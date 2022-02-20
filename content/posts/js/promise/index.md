@@ -559,3 +559,121 @@ const test3 = new MPromise((resolve, reject) => {
 
 MPromise.race([test, test2, test3]).then(console.log);
 ```
+
+
+# 其他方法
+
+* 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
+* 如果所有Promise都成功，则返回成功结果数组
+* 如果有一个Promise失败，则返回这个失败结果
+
+```js
+static all(promises) {
+    const result = []
+    let count = 0
+    return new MyPromise((resolve, reject) => {
+        const addData = (index, value) => {
+            result[index] = value
+            count++
+            if (count === promises.length) resolve(result)
+        }
+        promises.forEach((promise, index) => {
+            if (promise instanceof MyPromise) {
+                promise.then(res => {
+                    addData(index, res)
+                }, err => reject(err))
+            } else {
+                addData(index, promise)
+            }
+        })
+    })
+}
+
+```
+
+# race
+
+* 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
+* 哪个Promise最快得到结果，就返回那个结果，无论成功失败
+
+```js
+static race(promises) {
+    return new MyPromise((resolve, reject) => {
+        promises.forEach(promise => {
+            if (promise instanceof MyPromise) {
+                promise.then(res => {
+                    resolve(res)
+                }, err => {
+                    reject(err)
+                })
+            } else {
+                resolve(promise)
+            }
+        })
+    })
+}
+
+```
+
+# allSettled
+
+* 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
+* 把每一个Promise的结果，集合成数组，返回
+
+```js
+static allSettled(promises) {
+    return new Promise((resolve, reject) => {
+        const res = []
+        let count = 0
+        const addData = (status, value, i) => {
+            res[i] = {
+                status,
+                value
+            }
+            count++
+            if (count === promises.length) {
+                resolve(res)
+            }
+        }
+        promises.forEach((promise, i) => {
+            if (promise instanceof MyPromise) {
+                promise.then(res => {
+                    addData('fulfilled', res, i)
+                }, err => {
+                    addData('rejected', err, i)
+                })
+            } else {
+                addData('fulfilled', promise, i)
+            }
+        })
+    })
+}
+```
+
+
+# any
+
+any与all相反
+
+* 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
+* 如果有一个Promise成功，则返回这个成功结果
+* 如果所有Promise都失败，则报错
+
+```js
+    static any(promises) {
+        return new Promise((resolve, reject) => {
+            let count = 0
+            promises.forEach((promise) => {
+                promise.then(val => {
+                    resolve(val)
+                }, err => {
+                    count++
+                    if (count === promises.length) {
+                        reject(new AggregateError('All promises were rejected'))
+                    }
+                })
+            })
+        })
+    }
+}
+```
