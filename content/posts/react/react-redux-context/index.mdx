@@ -14,7 +14,7 @@ import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw"
 
 ## redux store
 
-```tsx
+```js
 export const createStore = (reducer: Function, initialState: any) => {
   let state = initialState;
   let listeners: Function[] = [];
@@ -38,7 +38,7 @@ export default { createStore };
 ```
 
 # react-redux Provider
-```tsx
+```js
 import { storeContext } from "./context";
 
 export const Provider = (props: any) => {
@@ -49,7 +49,7 @@ export const Provider = (props: any) => {
 
 ```
 # react-redux connect
-```tsx
+```js
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { storeContext } from "./context";
 
