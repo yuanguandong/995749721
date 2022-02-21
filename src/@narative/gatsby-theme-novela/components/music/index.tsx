@@ -1,18 +1,21 @@
 import styled from "@emotion/styled";
-import { useLocalStorageState } from 'ahooks';
-import React, { useEffect, useState } from "react";
+import { useLocalStorageState } from "ahooks";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { FaBars, FaMusic } from "react-icons/fa";
 import { RiNeteaseCloudMusicLine } from "react-icons/ri";
 import Keyevent from "react-keyevent";
 // import Background from 'smart-background';
 import list from "../../../../../static/music";
 import Background from "./src";
+import _ from 'lodash';
 
 export default (props: any) => {
   const { id = "29460377", auto = false, hasList = false } = props;
   const [idState, setIdState] = useState(id);
   const [autoState, setAutoState] = useState(auto);
-  const [listShow, setListShow] = useLocalStorageState('musicListShow',false);
+  const [listShow, setListShow] = useLocalStorageState("musicListShow", false);
+
+  const iframeRef = useRef<any>();
 
   const check = (id) => {
     setIdState(id);
@@ -32,6 +35,15 @@ export default (props: any) => {
     setAutoState(!autoState);
   };
 
+  // useLayoutEffect(() => {
+  //   if(_.isEmpty(iframeRef.current)){return}
+  //   const childDocument = iframeRef.current.contentWindow
+  //   if(childDocument){
+  //     console.log('childDocument',childDocument)
+  //     // childDocument.body.style.backgroundColor = 'red'
+  //   }
+  // }, []);
+
   return (
     <Music className="Music">
       {hasList && (
@@ -43,59 +55,59 @@ export default (props: any) => {
             symbolsStyle={{
               top: "-30%",
               left: "50%",
-              opacity:'0.1'
+              opacity: "0.1",
             }}
-            childrenWrapClassName={'hideScroller'}
+            childrenWrapClassName={"hideScroller"}
             childrenWrapStyle={{
-              padding:10
+              padding: 10,
             }}
           >
-          <div
-            style={{
-              fontWeight: "bold",
-              margin: "0 5px 10px 5px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <FaMusic /> 战歌
-            </div>
-            <div>{list.length}</div>
-          </div>
-          {list.map((item) => (
             <div
-              key={item.id}
-              onClick={() => check(item.id)}
               style={{
-                cursor: "pointer",
-                margin: "5px",
+                fontWeight: "bold",
+                margin: "0 5px 10px 5px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              <div style={{ fontSize: 14 }}>
-                {item.id === idState && (
-                  <div
-                    style={{
-                      display: "inline-block",
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background:
-                        "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
-                      marginRight: "5px",
-                      verticalAlign: "middle",
-                    }}
-                  />
-                )}
-                {item.name}
+              <div>
+                <FaMusic /> 战歌
               </div>
-              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
-                {item.author}
-              </div>
+              <div>{list.length}</div>
             </div>
-          ))}
+            {list.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => check(item.id)}
+                style={{
+                  cursor: "pointer",
+                  margin: "5px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ fontSize: 14 }}>
+                  {item.id === idState && (
+                    <div
+                      style={{
+                        display: "inline-block",
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background:
+                          "linear-gradient(to right, #43e97b 0%, #38f9d7 100%)",
+                        marginRight: "5px",
+                        verticalAlign: "middle",
+                      }}
+                    />
+                  )}
+                  {item.name}
+                </div>
+                <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)" }}>
+                  {item.author}
+                </div>
+              </div>
+            ))}
           </Background>
         </MusicList>
       )}
@@ -128,6 +140,7 @@ export default (props: any) => {
           src={`//music.163.com/outchain/player?type=2&id=${idState}&auto=${
             autoState ? 1 : 0
           }&height=66`}
+          ref={iframeRef}
         />
         {hasList && (
           <div
@@ -206,11 +219,7 @@ const MusicList = styled.div<{ show }>`
     height: 100%;
     animation: change1 10s alternate infinite;
     // background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
-    background-image: linear-gradient(
-      90deg,
-      #ff0844 0%,
-      #ffb199 100%
-    );
+    background-image: linear-gradient(90deg, #ff0844 0%, #ffb199 100%);
     z-index: -1;
     background-position: 0% 0%;
     background-attachment: fixed;
@@ -220,11 +229,11 @@ const MusicList = styled.div<{ show }>`
   @keyframes change {
     from {
       // background-position: 0% 0%;
-      background-size:10%;
+      background-size: 10%;
     }
     to {
       background-position: 40% 0%;
-      background-size:400%;
+      background-size: 400%;
     }
   }
   @keyframes change1 {
