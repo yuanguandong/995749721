@@ -1,0 +1,152 @@
+---
+slug: nodejs-cli
+title: 如何开发一个cli
+author: 袁官东
+date: 2022-02-21
+hero: ./hero.webp
+excerpt: 命令行交互界面是程序员必备的工具，如何开发一个呢？
+---
+<div className={'img-desc'}>图：Philipp Kühn</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+我们来开发一个下载仓库代码，并通过命令行界面来启动项目的功能
+
+## 准备工作
+
+安装以下工具,注意版本
+
+```
+clear: 清屏
+chalk: 装饰作用，使之终端上的输出加上颜色
+figlet: 将字母转化为字符拼成的文字
+git-pull-or-clone：将代码下载
+inquirer: 在命令行中打出交互式的命令
+ora: 优雅的显示loading效果
+```
+
+## 编码
+
+```js
+const { resolve } = require("path");
+const fs = require("fs");
+const { promisify } = require("util");
+const chalk = require("chalk");
+const inquirer = require("inquirer");
+const figlet = require("figlet");
+const clear = require("clear");
+const ora = require("ora");
+const download = promisify(require("git-pull-or-clone"));
+const { spawn, log } = require("./utils");
+
+//仓库地址
+const repo = "git@github.com:yuanguandong/react-keyevent.git";
+
+//清屏
+clear();
+//打印logo
+log(
+  figlet.textSync("WIDGET", {
+    horizontalLayout: "fitted",
+    verticalLayout: "default",
+    width: 80,
+    whitespaceBreak: true,
+  }),
+  "green"
+);
+
+//主流程
+const main = async () => {
+  // 项⽬名称
+  const answer = await inquirer.prompt([
+    {
+      type: "input",
+      message: "DirName:",
+      name: "name",
+      default: "widgets", // 默认值
+    },
+  ]);
+  const dir = resolve(`./${answer.name}`);
+  const process = ora(chalk["gray"](`${dir} loading.....`));
+  process.start();
+  try {
+    await download(repo, dir);
+    process.succeed();
+    log(`✅ Download Success`);
+  } catch (e) {
+    log(e, "red");
+    process.fail();
+  }
+  tool(answer.name, dir);
+};
+
+//工具方法
+const actions = {
+  install: async ({ dir, name }) => {
+    log("installing....", "gray");
+    await spawn("pnpm", ["install"], { cwd: `${name}/` });
+    log("✅ Installed");
+  },
+  run: async ({ dir, name }) => {
+    const isFile = fs.existsSync(`${dir}/node_modules`);
+    if (isFile) {
+      const res = await spawn("pnpm", ["run", "test"], { cwd: `${name}/` });
+      return;
+    } else {
+      log("Not Installed", "red");
+    }
+  },
+  exit: async ({ dir, name }) => {
+    const isFile = fs.existsSync(`${dir}/node_modules`);
+    if (isFile) {
+      log("🖐  Bye Bye!", "yellow");
+    }
+    return;
+  },
+};
+
+//工具箱
+async function tool(name, dir) {
+  const answer = await inquirer.prompt([
+    {
+      type: "rawlist",
+      message: "Action",
+      name: "operation",
+      choices: Object.keys(actions),
+    },
+  ]);
+  const res = await actions[answer.operation]({ dir, name });
+  if (!res) {
+    return;
+  }
+  tool(name, dir);
+}
+
+main();
+
+module.exports = { main, tool };
+
+```
+
+## Utils
+```js
+const chalk = require("chalk");
+const { spawn: _spawn } = require("child_process");
+
+const spawn = async (...args) => {
+  return new Promise((resolve) => {
+    const proc = _spawn(...args);
+    proc.stdout.pipe(process.stdout);
+    proc.stderr.pipe(process.stderr);
+    proc.on("close", (...restArgs) => {
+      resolve(restArgs);
+    });
+  });
+};
+
+const log = (msg, color = "green", ...arg) =>
+  console.log(chalk[color](msg, arg));
+
+module.exports = { spawn, log };
+
+```
