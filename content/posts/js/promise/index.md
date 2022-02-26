@@ -1,5 +1,5 @@
 ---
-slug: promisea+
+slug: js-promisea+
 title: 手写PromiseA+实现
 author: 袁官东
 date: 2020-04-30
@@ -561,7 +561,7 @@ MPromise.race([test, test2, test3]).then(console.log);
 ```
 
 
-# 其他方法
+# all
 
 * 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
 * 如果所有Promise都成功，则返回成功结果数组

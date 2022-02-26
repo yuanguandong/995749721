@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="ul" id="list">
+
+  </div>
+</body>
+
+<script type="module">
+  import cat from './cat.js'
+  import _ from '../node_modules/lodash-es/lodash.js';
+
+  const list = document.getElementById('list')
+  list.style.display = '--webkit-box'
+  list.style.columnCount = 2
+  const dataSource = cat.data.allArticle.nodes
+
+  dataSource.forEach(function(item){
+    item.cat = item.slug.split('-')[0]
+  })
+
+  const data = _.groupBy(dataSource,'cat');
+
+  console.log('data',data)
+
+  for(let key in data){
+
+    const listData = data[key]
+
+    const catDiv = document.createElement('div')
+    // catDiv.style.float = 'left'
+    const h4 = document.createElement('h4')
+    h4.innerHTML = key
+
+    catDiv.appendChild(h4)
+
+    for(let item of listData){
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href= `https://www.favori.cn/${item.slug}`
+      console.log('item',item)
+      a.innerHTML=item.title
+      li.appendChild(a)
+      catDiv.appendChild(li)
+    }
+
+
+    list.appendChild(catDiv)
+    
+  }
+  </script>
+
+</html>
