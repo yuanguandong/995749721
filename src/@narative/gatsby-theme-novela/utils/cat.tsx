@@ -10,6 +10,7 @@ import {
   FaReact,
   FaSlack,
   FaCalculator,
+  FaGrinAlt,
 } from "react-icons/fa";
 
 export default {
@@ -53,14 +54,14 @@ export default {
     order: 8,
     icon: <FaGlobe />,
   },
-  // babel: {
-  //   name: "编译原理",
-  //   order: 9,
-  //   icon: <FaBuyNLarge />,
-  // },
+  life: {
+    name: "Life",
+    order: 9,
+    icon: <FaGrinAlt/>,
+  },
   other: {
     name: "其他",
-    order: 9,
+    order: 10,
     icon: <FaEllipsisH />,
   },
 };

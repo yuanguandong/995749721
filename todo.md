@@ -1,5 +1,10 @@
 ```tsx
 
+//music
+import Music from '../../../../src/@narative/gatsby-theme-novela/components/music' 
+
+<div className='art-container'><Music id="1407551413" /></div>
+
 //线框图
 <div className="art-container">
   <Draw name="hooks" />
@@ -11,8 +16,13 @@
   </a>
 </div>
 
+[![](图片地址)](超链接地址)
+
+
 ```js
 keepAlive 源码
 
 umi源码
 ```
+
+https://blog.csdn.net/cpa0701/article/details/118543618
