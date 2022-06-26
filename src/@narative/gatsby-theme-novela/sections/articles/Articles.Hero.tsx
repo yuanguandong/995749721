@@ -33,7 +33,7 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
     setGridLayout,
   } = useContext(GridLayoutContext);
 
-  const [count,setCount] = useState(1);
+  const [count, setCount] = useState(1);
   const results = useStaticQuery(authorQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
   const tilesIsActive = hasSetGridLayout && gridLayout === "tiles";
@@ -46,22 +46,25 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
   `);
   }
 
-  const motto = useMemo(()=>{
-    return randomMotto()
-  },[count])
+  const motto = useMemo(() => {
+    return randomMotto();
+  }, [count]);
 
-  const genMotto = () =>{
-    setCount(count+1)
-  }
+  const genMotto = () => {
+    setCount(count + 1);
+  };
 
   return (
-    <Section relative id="Articles__Hero">
+    <Section relative id="Articles__Hero" style={{position:'relative'}}>
       <HeadingContainer
         style={{
           maxWidth: `${1000}px`,
         }}
       >
-        <HeroHeading dangerouslySetInnerHTML={{ __html: motto }} onClick={genMotto}/>
+        <HeroHeading
+          dangerouslySetInnerHTML={{ __html: motto }}
+          onClick={genMotto}
+        />
       </HeadingContainer>
       <SubheadingContainer>
         <Bio author={featuredAuthor} />
@@ -122,7 +125,7 @@ const GridControlsContainer = styled.div`
 
 const HeadingContainer = styled.div`
   margin: 100px 0;
-  word-break: break-word!important;
+  word-break: break-word !important;
   ${mediaqueries.desktop`
     width: 80%;
   `}

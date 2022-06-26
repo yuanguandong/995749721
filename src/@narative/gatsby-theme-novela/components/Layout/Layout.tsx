@@ -22,10 +22,13 @@ import "./index.less";
  */
 const Layout: React.FC<{}> = (props) => {
   const { children } = props;
-  const [colorMode,setColorMode] = useColorMode();
+  const [colorMode, setColorMode] = useColorMode();
   const isPC = isBrowser() ? window.innerWidth > 680 : false;
   const [showMenu, setShowMenu] = useState<boolean>(isPC);
-  const [showMusic, setShowMusic] = useLocalStorageState<boolean>('showMusic',true);
+  const [showMusic, setShowMusic] = useLocalStorageState<boolean>(
+    "showMusic",
+    true
+  );
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [cursorType, setCursorType] = useLocalStorageState<string>(
     "curType",
@@ -65,16 +68,16 @@ const Layout: React.FC<{}> = (props) => {
   };
 
   const onAltC = () => {
-    toggleCursor()
+    toggleCursor();
   };
 
   const onShiftT = () => {
-    setColorMode(colorMode==='dark'?'light':'dark')
+    setColorMode(colorMode === "dark" ? "light" : "dark");
   };
 
-  const onEsc = ()=>{
-    navigate('/')
-  }
+  const onEsc = () => {
+    navigate("/");
+  };
 
   return (
     <>
@@ -101,7 +104,7 @@ const Layout: React.FC<{}> = (props) => {
           onMetaS,
           onAltC,
           onShiftT,
-          onEsc
+          onEsc,
         }}
       >
         <ArticlesContextProvider>
@@ -112,6 +115,24 @@ const Layout: React.FC<{}> = (props) => {
               useMusic={[showMusic, setShowMusic]}
             />
             <Main>
+              {/* <div
+                style={{
+                  width: "100%",
+                  height: '100vh',
+                  position: "fixed",
+                  overflow:'hidden',
+                  top:0,
+                  left:0
+                }}
+              >
+                <iframe
+                  src="https://my.spline.design/planetringcopy-256475a38f9d6c398a0639fca8019cda/"
+                  frameBorder="0"
+                  width="100%"
+                  height="100%"
+                  style={{ position: "absolute",top:'-300px', right: "-50%" }}
+                />
+              </div> */}
               <Global styles={globalStyles} />
               <NavigationHeader
                 useMenu={[showMenu, setShowMenu]}
@@ -135,6 +156,8 @@ export default Layout;
 const Container = styled.div<{ cursorType }>`
   display: flex;
   min-height: 100vh;
+  position: relative;
+  background: ${(p) => p.theme.colors.background};
   transition: ${(p) => p.theme.colorModeTransition};
   cursor: ${(p) => {
     let res = "";
@@ -155,7 +178,7 @@ const Container = styled.div<{ cursorType }>`
 const Main = styled.div`
   position: relative;
   flex: 18;
-  background: ${(p) => p.theme.colors.background};
+  background:transparent;
   transition: ${(p) => p.theme.colorModeTransition};
   min-height: 100vh;
   @media (max-width: 680px) {
