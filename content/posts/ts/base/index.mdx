@@ -444,7 +444,6 @@ type CoordX = {
 };
 ```
 
-
 ## 泛型
 
 > 软件工程中，我们不仅要创建一致的定义良好的 API，同时也要考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型，这在创建大型系统时为你提供了十分灵活的功能。
@@ -466,7 +465,6 @@ class Stack<T> {
 }
 ```
 
-
 ## Parameters
 
 提取函数的参数类型
@@ -487,4 +485,32 @@ type T3 = Parameters<(arg1: string, arg2: number) => void>; // [arg1: string, ar
 type T0 = ReturnType<() => string>; // string
 
 type T1 = ReturnType<(s: string) => void>; // void
+```
+
+## 索引签名
+
+```ts
+interface PropChangeHandler {
+  [key: `${string}Changed`]: () => void;
+}
+
+let handlers: PropChangeHandler = {
+  idChanged: () => {}, //ok
+  nameChanged: () => {}, //ok
+  ageChange: () => {}, //error
+};
+```
+
+索引签名参数类型不能为字面量类型或泛型类型
+考虑使用映射的对象类型
+
+```ts
+type User1 = {
+  [key: "id"]: string; //error
+};
+type User2 = {
+  [key: "id" | "name"]: string; //error
+};
+type User3 = Record<"id", string>;
+type User4 = Record<"id" | "name", string>;
 ```
