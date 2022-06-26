@@ -26,3 +26,5 @@ umi源码
 ```
 
 https://blog.csdn.net/cpa0701/article/details/118543618
+
+请求类型

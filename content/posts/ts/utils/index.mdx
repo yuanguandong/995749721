@@ -1,0 +1,33 @@
+---
+slug: ts-utils
+title: TypeScript里常用的工具类型
+author: 袁官东
+date: 2022-06-26
+hero: ./hero.jpg
+excerpt: 经常用到的工具类型，提取抽离出来，供以后复用
+---
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+### 使属性变为可选
+
+```ts
+type PartialByKeys<T, K extends keyof T> = {
+  [P in K]?: T[P];
+} & Pick<T, Exclude<keyof T, K>>;
+```
+
+### 使属性变为必填
+
+```ts
+type RequiredByKeys<T, K extends keyof T> = {
+  [P in K]-?: T[P];
+} & Omit<T, K>;
+```
+
+### 判断类型是否是另一个类型的子类型
+
+```ts
+type SubtypeOf<T,U> = T extends U ? true : false
+```
