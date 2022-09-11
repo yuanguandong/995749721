@@ -1,0 +1,328 @@
+---
+slug: nodejs-puppeteer
+title: puppeteer应用
+author: 袁官东
+date: 2022-09-11
+hero: ./hero.webp
+excerpt: 使用傀儡师来操作浏览器这个傀儡吧
+---
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 介绍
+Puppeteer 是一个 Node 库，它提供了一个高级 API 来通过DevTools 协议控制 Chrome 或 Chromium 。Puppeteer 默认运行无头，但可以配置为运行完整（非无头）Chrome 或 Chromium。
+
+一般用于：
+
+生成页面的屏幕截图和 PDF。
+
+抓取 SPA（单页应用程序）并生成预渲染内容（即“SSR”（服务器端渲染））。
+
+自动化表单提交、UI 测试、键盘输入等。
+
+创建最新的自动化测试环境。使用最新的 JavaScript 和浏览器功能直接在最新版本的 Chrome 中运行测试。
+
+捕获您网站的时间线轨迹以帮助诊断性能问题。
+
+测试 Chrome 扩展程序。
+  
+### 安装
+```bash
+npm i puppeteer
+```
+
+### 截图
+```js
+// 截图
+const screenShot = async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  const a = await page.screenshot({ path: 'example.png' });
+  await browser.close();
+}
+```
+
+### 执行scripts
+```js
+// 执行脚本
+const doScript = async () => {
+  await page.goto('https://www.all1024.com', {
+    waitUntil: 'networkidle2',
+  });
+  await page.pdf({ path: '1024.pdf', format: 'a4' });
+  const dimensions = await page.evaluate(() => {
+    return {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+      deviceScaleFactor: window.devicePixelRatio,
+    };
+  });
+  console.log('Dimensions:', dimensions);
+}
+```
+
+### 自动填表单
+```js
+// 自动填表单
+const fillForm = async () => {
+  const browser = await puppeteer.launch();
+  // 调试可见
+  // const browser = await puppeteer.launch({
+  //   headless: false,
+  //   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  //   args: ['--start-maximized']
+  //   //launch这里将浏览器设置为非无头模式，且这里设置启动本机安装的chrome，如果这里不设置，还需要下载chromium，这里请设置你自己本机的chrome浏览器
+  // });
+  const page = await browser.newPage();
+  // 地址栏输入网页地址
+  await page.goto('https://baidu.com/', {
+    waitUntil: 'networkidle2',
+  });
+
+  // 输入搜索关键字
+  await page.type('#kw', '腾讯公司', {
+    delay: 1000, // 控制 keypress 也就是每个字母输入的间隔
+  });
+
+  // 回车
+  await page.keyboard.press('Enter');
+}
+```
+
+
+## REPL(交互式解释器)
+调试puppeteer应用程式有两种方法，一种是打开可见的带头的浏览器，观察真实效果，另一种是单步调试，通过交互式解释器来实现。
+
+使用交互式 REPL 使快速 puppeteer 调试和探索变得有趣。
+
+可以随时中断您的代码以在您的控制台中启动交互式REPL 。
+
+向和实例添加便利.repl()方法。PageBrowser
+
+支持检查任意对象和实例。
+
+可用对象属性的功能选项卡自动完成和彩色提示。
+
+```js
+const puppeteer = require('puppeteer-extra');
+const repl = require('puppeteer-extra-plugin-repl')();
+
+async function showREPL() {
+  await puppeteer.use(repl);
+  //固定写法，表示puppeteer要使用repl插件
+
+  const browser = await puppeteer.launch({
+    headless: false,
+    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    args: ['--start-maximized']
+    //launch这里将浏览器设置为非无头模式，且这里设置启动本机安装的chrome，如果这里不设置，还需要下载chromium，这里请设置你自己本机的chrome浏览器
+  });
+  const page = await browser.newPage();
+  await page.setViewport({
+    width: 1366,
+    height: 768
+  });
+  await page.goto('https://example.com');
+  //默认打开上面的网页
+
+  await page.repl();
+  //在page对象上开启交互的REPL，这样可以实时看到page上提供的方法执行结果，执行效果见下图所示
+
+  //在page对象上开启交互的REPL，这样可以实时看到page上提供的方法执行结果
+
+  await browser.repl();
+  //在browser对象上开启交互的REPL，这样可以实时看到page上提供的方法执行结果
+
+  await browser.close();
+}
+showREPL();
+```
+
+## 应用
+最近公司会用到邮件发送报表的功能，来实现一个服务端生成网页png/pdf的功能吧
+
+### 暴露接口，供其他服务调用
+
+```js
+const express = require("express");
+const getPDF = require('./getPDF');
+const getPNG = require('./getPNG');
+
+const app = express();
+const port = 9000;
+
+app.get("/getPDF", async (req, res) => {
+  const { url } = req.query;
+  if (!url) { res.send({ status: 'error', msg: '缺少参数url' }) }
+  const result = await getPDF({ url });
+  res.send(result);
+});
+
+app.get("/getPNG", async (req, res) => {
+  const { url, width: _width } = req.query;
+  if (!url) { res.send({ status: 'error', msg: '缺少参数url' }) }
+  const width = _width ? 1000 : Number(_width);
+  const result = await getPNG({ url, width });
+  res.send(result);
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+```
+
+### getPNG实现
+
+```js
+const puppeteer = require('puppeteer');
+const UTILS = require('./utils');
+
+module.exports = async ({ url, name = 'file.png', width = 1366 }) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setViewport({
+    width,
+    height: 768
+  });
+  await page.goto(url, {
+    waitUtil: 'networkidle2'
+  });
+  await UTILS.waitTillHTMLRendered(page);
+  console.log('开始截图……')
+  const res = await page.screenshot({ path: name, fullPage: true });
+  console.log('完成截图')
+  await browser.close();
+  return res
+}
+```
+
+### getPDF实现
+
+```js
+const puppeteer = require('puppeteer');
+
+module.exports = async function getPDF({ url }) {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      "--no-sandbox", // linux系统中必须开启
+      "--no-zygote",
+      // "--single-process", // 此处关掉单进程
+      "--disable-setuid-sandbox",
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+      "--no-first-run",
+      "--disable-extensions",
+      "--disable-file-system",
+      "--disable-background-networking",
+      "--disable-default-apps",
+      "--disable-sync", // 禁止同步
+      "--disable-translate",
+      "--hide-scrollbars",
+      "--metrics-recording-only",
+      "--mute-audio",
+      "--safebrowsing-disable-auto-update",
+      "--ignore-certificate-errors",
+      "--ignore-ssl-errors",
+      "--ignore-certificate-errors-spki-list",
+      "--font-render-hinting=medium",
+    ]
+  });
+  // try...catch...
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, {
+      waitUtil: 'networkidle2'
+    });
+    // 页眉模板（图片使用base64，此处的src的base64为占位值）
+    const headerTemplate = ``
+    // 页脚模板（pageNumber处会自动注入当前页码）
+    const footerTemplate = ``;
+    // 对于大的PDF生成，可能会时间很久，这里规定不会进行超时处理
+    await page.setDefaultNavigationTimeout(0);
+    // 定义html内容
+    // await page.setContent(this.HTMLStr, { waitUntil: "networkidle2" });
+    // 等待字体加载响应
+    await page.evaluateHandle("document.fonts.ready");
+    let pdfbuf = await page.pdf({
+      // 页面缩放比例
+      scale: 1,
+      // 是否展示页眉页脚
+      // displayHeaderFooter: true,
+      // pdf存储单页大小
+      format: "a4",
+      // 页面的边距
+      // 页眉的模板
+      // headerTemplate,
+      // // 页脚的模板
+      // footerTemplate,
+      margin: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+      },
+      // 输出的页码范围
+      pageRanges: "",
+      // CSS
+      preferCSSPageSize: true,
+      // 开启渲染背景色，因为 puppeteer 是基于 chrome 浏览器的，浏览器为了打印节省油墨，默认是不导出背景图及背景色的
+      // 坑点，必须加
+      printBackground: true,
+    });
+    // 关闭browser
+    await browser.close();
+    // 返回的是buffer不需要存储为pdf，直接将buffer传回前端进行下载，提高处理速度
+    return pdfbuf
+  } catch (e) {
+    await browser.close();
+    throw e
+  }
+}
+
+```
+### 判断页面加载完成工具函数
+如何判断页面渲染完成其实不能单单从网络或者document load来判断，因为应用里js一般都会是动态加载其他js来动态渲染，所以，用定时轮询页面大小变化来判断页面是否加载完毕比较合适。
+
+```js
+// 判断页面加载完成
+const waitTillHTMLRendered = async (page, timeout = 10000) => {
+  console.log('页面加载中...')
+  const checkDurationMsecs = 1000;
+  const maxChecks = timeout / checkDurationMsecs;
+  let lastHTMLSize = 0;
+  let checkCounts = 1;
+  let countStableSizeIterations = 0;
+  const minStableSizeIterations = 3;
+  while (checkCounts++ <= maxChecks) {
+    let html = await page.content();
+    let currentHTMLSize = html.length;
+    let bodyHTMLSize = await page.evaluate(() => document.body.innerHTML.length);
+    console.log('last: ', lastHTMLSize, ' <> curr: ', currentHTMLSize, " body html size: ", bodyHTMLSize);
+    if (lastHTMLSize != 0 && currentHTMLSize == lastHTMLSize)
+      countStableSizeIterations++;
+    else
+      countStableSizeIterations = 0; //reset the counter
+
+    if (countStableSizeIterations >= minStableSizeIterations) {
+      console.log("页面完成加载!");
+      checkCounts = maxChecks + 2
+      break;
+    }
+    lastHTMLSize = currentHTMLSize;
+    await page.waitForTimeout(checkDurationMsecs);
+  }
+};
+
+
+
+
+module.exports = {
+  waitTillHTMLRendered
+}
+```
+
+至此，就实现了一个非常常见的需求，生成的png或者pdf就可以用于其他服务来发报表邮件了。
