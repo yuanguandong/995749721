@@ -1,0 +1,227 @@
+---
+slug: js-sandbox
+title: JS沙箱sandbox的各种实现
+author: 袁官东
+date: 2022-09-18
+hero: ./hero.webp
+excerpt: 我们把Js隔离机制常常称作沙箱
+---
+<div className={'img-desc'}>图：Peter Tarka</div>
+
+import Draw from "../../../../src/@narative/gatsby-theme-novela/components/draw";
+
+## 类eval型沙箱
+```js
+// 监控执行代码
+function compileCode(src) {
+  src = `with (exposeObj){${src}}`
+  return new Function('exposeObj', src)
+}
+// 代理对象
+function proxyObj(originObj) {
+  let exposeObj = new Proxy(originObj, {
+    has: (target, key) => {
+      if (['console', 'Math', 'Date'].indexOf(key) >= 0) {
+        return target[key]
+      }
+      if (!target.hasOwnProperty(key)) {
+        throw new Error(`${target}上不存在${key}`)
+      }
+      return target[key]
+    }
+  })
+  return exposeObj
+}
+// 创建沙盒
+function createSandbox(src, obj) {
+  let proxy = proxyObj(obj);
+  compileCode(src).call(proxy, proxy)
+}
+
+const testObj = {
+  value: 1,
+  a: {
+    b: 2
+  },
+  c: '3'
+}
+const c = 'c'
+createSandbox(`value='32323';console.log(c);`, testObj)
+```
+  
+## 快照Snapshot沙箱
+核心原理是激活当前沙箱时把前宿主环境的全局变量备份一下，并把上一次对该沙箱做的更改恢复一下（若存在）
+
+失活时找出当次沙箱和备份的全局变量不同的属性，存储一下，并把存储的宿主环境恢复一下
+
+哈，双缓存策略
+
+
+```js
+class SnapshotSandBox {
+  constructor(name) {
+    this.modifyMap = {}; // 存放修改的属性
+    this.windowSnapshot = {};
+  }
+  active() {
+    // 缓存active状态的沙箱
+    this.windowSnapshot = {};
+    for (const item in window) {
+      this.windowSnapshot[item] = window[item];
+    }
+
+    Object.keys(this.modifyMap).forEach(p => {
+      window[p] = this.modifyMap[p];
+    })
+
+  }
+  inactive() {
+    for (const item in window) {
+      if (this.windowSnapshot[item] !== window[item]) {
+        // 记录变更
+        this.modifyMap[item] = window[item];
+        // 还原window
+        window[item] = this.windowSnapshot[item];
+      }
+    }
+  }
+}
+window.a = '1'
+const diffSandbox = new SnapshotSandBox();
+diffSandbox.active();  // 激活沙箱
+debugger
+window.a = '0'
+console.log('开启沙箱：', window.a);
+diffSandbox.inactive(); //失活沙箱
+debugger
+console.log('失活沙箱：', window.a);
+diffSandbox.active();   // 重新激活
+debugger
+console.log('再次激活', window.a);
+
+
+```
+这种方式也无法支持多实例，因为运行期间所有的属性都是保存在window上的。
+
+## 代理Proxy沙箱
+
+### 单实例
+```js
+class LegacySandBox {
+  addedPropsMapInSandbox = new Map();
+  modifiedPropsOriginalValueMapInSandbox = new Map();
+  currentUpdatedPropsValueMap = new Map();
+  proxyWindow;
+  setWindowProp(prop, value, toDelete = false) {
+    if (value === undefined && toDelete) {
+      delete window[prop];
+    } else {
+      window[prop] = value;
+    }
+  }
+  active() {
+    this.currentUpdatedPropsValueMap.forEach((value, prop) => this.setWindowProp(prop, value));
+  }
+  inactive() {
+    this.modifiedPropsOriginalValueMapInSandbox.forEach((value, prop) => this.setWindowProp(prop, value));
+    this.addedPropsMapInSandbox.forEach((_, prop) => this.setWindowProp(prop, undefined, true));
+  }
+  constructor() {
+    const fakeWindow = Object.create(null);
+    this.proxyWindow = new Proxy(fakeWindow, {
+      set: (target, prop, value, receiver) => {
+        const originalVal = window[prop];
+        if (!window.hasOwnProperty(prop)) {
+          this.addedPropsMapInSandbox.set(prop, value);
+        } else if (!this.modifiedPropsOriginalValueMapInSandbox.has(prop)) {
+          this.modifiedPropsOriginalValueMapInSandbox.set(prop, originalVal);
+        }
+        this.currentUpdatedPropsValueMap.set(prop, value);
+        window[prop] = value;
+      },
+      get: (target, prop, receiver) => {
+        return target[prop];
+      }
+    });
+  }
+}
+// 验证：
+let legacySandBox = new LegacySandBox();
+legacySandBox.active();
+legacySandBox.proxyWindow.city = 'Beijing';
+console.log('window.city-01:', window.city);
+legacySandBox.inactive();
+console.log('window.city-02:', window.city);
+legacySandBox.active();
+console.log('window.city-03:', window.city);
+legacySandBox.inactive();
+// 输出：
+// window.city-01: Beijing
+// window.city-02: undefined
+// window.city-03: Beijing
+```
+
+### 多实例
+
+```js
+class MultipleProxySandbox {
+  active() {
+    this.sandboxRunning = true;
+  }
+  inactive() {
+    this.sandboxRunning = false;
+  }
+  constructor() {
+    const rawWindow = window;
+    const fakeWindow = {};
+    const proxy = new Proxy(fakeWindow, {
+      set: (target, prop, value) => {
+        if (this.sandboxRunning) {
+          target[prop] = value;
+          return true;
+        }
+      },
+      get: (target, prop) => {
+        // 如果fakeWindow里面有，就从fakeWindow里面取，否则，就从外部的window里面取
+        let value = prop in target ? target[prop] : rawWindow[prop];
+        return value
+      }
+    })
+    this.proxy = proxy;
+  }
+}
+
+const context = { document: window.document };
+
+const newSandBox1 = new MultipleProxySandbox('代理沙箱1', context);
+newSandBox1.active();
+const proxyWindow1 = newSandBox1.proxy;
+
+const newSandBox2 = new MultipleProxySandbox('代理沙箱2', context);
+newSandBox2.active();
+const proxyWindow2 = newSandBox2.proxy;
+console.log('共享对象是否相等', window.document === proxyWindow1.document, window.document === proxyWindow2.document);
+
+proxyWindow1.a = '1'; // 设置代理1的值
+proxyWindow2.a = '2'; // 设置代理2的值
+window.a = '3';  // 设置window的值
+console.log('打印输出的值', proxyWindow1.a, proxyWindow2.a, window.a);
+
+
+newSandBox1.inactive(); newSandBox2.inactive(); // 两个沙箱都失活
+
+proxyWindow1.a = '4'; // 设置代理1的值
+proxyWindow2.a = '4'; // 设置代理2的值
+window.a = '4';  // 设置window的值
+console.log('失活后打印输出的值', proxyWindow1.a, proxyWindow2.a, window.a);
+
+newSandBox1.active(); newSandBox2.active(); // 再次激活
+
+proxyWindow1.a = '4'; // 设置代理1的值
+proxyWindow2.a = '4'; // 设置代理2的值
+window.a = '4';  // 设置window的值
+console.log('失活后打印输出的值', proxyWindow1.a, proxyWindow2.a, window.a);
+
+```
+
+可以看出最后一种实现是最优实现，既没有操作window,又能实现多实例，代码又精简，通俗易懂👍🏻
