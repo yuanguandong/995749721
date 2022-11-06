@@ -133,7 +133,7 @@ const PrismCSS = p => css`
     margin: 0 auto;
     padding: 32px;
     font-size: 13px;
-    margin: 15px auto 50px;
+    margin: 15px auto 30px;
     border-radius: 5px;
     font-family: ${p.theme.fonts.monospace};
     background: ${p.theme.colors.prism.background};
@@ -142,10 +142,10 @@ const PrismCSS = p => css`
       border-left: 3px solid transparent;
 
       ${Object.keys(p.theme.colors.prism)
-        .map(key => {
-          return `.${toKebabCase(key)}{color:${p.theme.colors.prism[key]};}`;
-        })
-        .reduce((curr, next) => curr + next, ``)};
+    .map(key => {
+      return `.${toKebabCase(key)}{color:${p.theme.colors.prism[key]};}`;
+    })
+    .reduce((curr, next) => curr + next, ``)};
 
       & > span {
       }

@@ -3,13 +3,13 @@ import mediaqueries from "@styles/media";
 
 const Blockquote = styled.blockquote`
   transition: ${p => p.theme.colorModeTransition};
-  margin: 15px auto 50px;
+  margin: 15px 12px;
   color: ${p => p.theme.colors.articleText};
   font-family: ${p => p.theme.fonts.serif};
   font-style: italic;
 
   ${mediaqueries.tablet`
-    margin: 10px auto 35px;
+    margin: 10px 12px;
   `};
 
   & > p {
@@ -19,7 +19,7 @@ const Blockquote = styled.blockquote`
     padding-bottom: 0;
     width: 100%;
     margin: 0 auto;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 1.32;
     font-weight: bold;
     border-left: 3px solid rgba(128,128,128,1);
@@ -31,7 +31,7 @@ const Blockquote = styled.blockquote`
     `};
 
     ${mediaqueries.phablet`
-      font-size: 24px;
+      font-size: 16px;
       padding: 0 20px 0 40px;
     `};
   }
