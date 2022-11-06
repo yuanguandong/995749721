@@ -315,7 +315,7 @@ const BackArrowIconContainer = styled.div`
 const NavContainer = styled.div`
   position: relative;
   z-index: 100;
-  padding-top: 100px;
+  padding-top: 40px;
   display: flex;
   justify-content: space-between;
 
@@ -328,7 +328,7 @@ const NavContainer = styled.div`
   }
 `;
 
-const LogoLink = styled(Link)<{ back: string }>`
+const LogoLink = styled(Link) <{ back: string }>`
   position: relative;
   display: flex;
   align-items: center;
