@@ -28,7 +28,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
 
       # Runs a single command using the runners shell
       - name: install
@@ -46,10 +46,10 @@ jobs:
           git add .
           git commit -m "Automated build docs"
           git push origin master
-        
+
       # 部署到github pages
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./docs
+      # - name: Deploy to gh-pages
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+      #     publish_dir: ./docs
