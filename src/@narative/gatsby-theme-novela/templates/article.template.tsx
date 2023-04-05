@@ -15,11 +15,7 @@ import ArticleHero from "../sections/article/Article.Hero";
 import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
-import ArticleFooter from './article.footer.template';
-
-
-
-
+import ArticleFooter from "./article.footer.template";
 
 const siteQuery = graphql`
   {
@@ -61,7 +57,7 @@ const Article: Template = ({ pageContext, location }) => {
         const debouncedCalculation = debounce(calculateBodySize);
         const $imgs = contentSection.querySelectorAll("img");
 
-        $imgs.forEach($img => {
+        $imgs.forEach(($img) => {
           // If the image hasn't finished loading then add a listener
           if (!$img.complete) $img.onload = debouncedCalculation;
         });
@@ -91,9 +87,7 @@ const Article: Template = ({ pageContext, location }) => {
         <ArticleControls />
       </MobileControls>
       <ArticleBody ref={contentSectionRef}>
-        <MDXRenderer content={article.body}>
-          <ArticleShare />
-        </MDXRenderer>
+        <MDXRenderer content={article.body}>{/* <ArticleShare /> */}</MDXRenderer>
       </ArticleBody>
       <ArticleFooter pageContext={pageContext} />
       {next.length > 0 && (
@@ -148,7 +142,7 @@ const FooterNext = styled.h3`
   opacity: 0.25;
   margin-bottom: 100px;
   font-weight: 400;
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
 
   ${mediaqueries.tablet`
     margin-bottom: 60px;
@@ -157,7 +151,7 @@ const FooterNext = styled.h3`
   &::after {
     content: '';
     position: absolute;
-    background: ${p => p.theme.colors.grey};
+    background: ${(p) => p.theme.colors.grey};
     width: ${(910 / 1140) * 100}%;
     height: 1px;
     right: 0;
