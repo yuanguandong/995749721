@@ -9,7 +9,7 @@
     "start": "gatsby develop",
     "clean": "gatsby clean",
     "proxy": "netlify-cms-proxy-server",
-    "postbuild": "rm -rf docs && mv public docs && mv CNAME docs/CNAME",
+    "postbuild": "cp CNAME public/CNAME",
     "c": "node ./scripts/createpage.js"
   },
   "dependencies": {
