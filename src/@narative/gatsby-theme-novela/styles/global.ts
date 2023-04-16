@@ -189,6 +189,7 @@ export const globalStyles = css`
     max-width: 680px;
     margin:0 auto;
     text-align:center;
+    margin-bottom:12px;
     // padding:10px;
     @media (max-width:680px){
       padding:0 20px;
