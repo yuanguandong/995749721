@@ -1,13 +1,10 @@
-import React from "react";
 import styled from "@emotion/styled";
-
-import Section from "@components/Section";
-import SEO from "@components/SEO";
+import React from "react";
 import Layout from "@components/Layout";
-import Paginator from "@components/Navigation/Navigation.Paginator";
+import SEO from "@components/SEO";
+import Section from "@components/Section";
 
 import AuthorHero from "../sections/author/Author.Hero";
-import AuthorArticles from "../sections/author/Author.Articles";
 
 import { Template } from "@types";
 
@@ -17,22 +14,18 @@ const ArticlesPage: Template = ({ location, pageContext }) => {
 
   return (
     <Layout>
-      <SEO
-        pathname={location.pathname}
-        title={author.name}
-        description={author.bio}
-      />
+      <SEO pathname={location.pathname} title={author.name} description={author.bio} />
       <Section narrow>
         <AuthorHero author={author} />
-        <AuthorArticles articles={articles} />
+        {/* <AuthorArticles articles={articles} />
         <AuthorPaginator>
           <Paginator {...pageContext} />
-        </AuthorPaginator>
+        </AuthorPaginator> */}
       </Section>
       <AuthorsGradient />
     </Layout>
   );
-}
+};
 
 export default ArticlesPage;
 
@@ -44,8 +37,8 @@ const AuthorsGradient = styled.div`
   height: 590px;
   z-index: 0;
   pointer-events: none;
-  background: ${p => p.theme.colors.gradient};
-  transition: ${p => p.theme.colorModeTransition};
+  background: ${(p) => p.theme.colors.gradient};
+  transition: ${(p) => p.theme.colorModeTransition};
 `;
 
 const AuthorPaginator = styled.div`

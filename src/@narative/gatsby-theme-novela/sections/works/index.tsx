@@ -2,42 +2,32 @@ import styled from "@emotion/styled";
 import React from "react";
 import { FaNpm } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
-
-const npms = [
+import { BsPersonWorkspace } from "react-icons/bs";
+const works = [
   {
-    name: "React Dashboard Pro",
-    homepage: "https://yuanguandong.github.io/react-dashboard-pro",
-    img: "https://github.com/yuanguandong/react-dashboard-pro/raw/master/snapshot.png",
+    name: "webgl-3d-text",
+    homepage: "https://webgl-3d-text-five-hazel.vercel.app/",
+    img: "https://raw.githubusercontent.com/yuanguandong/resources/master/favori/webgl-3d-text.png",
   },
-  {
-    name: "Smart Background",
-    homepage: "https://yuanguandong.github.io/smart-background/",
-    img: "https://github.com/yuanguandong/smart-background/raw/master/snapshot.png",
-  },
-  {
-    name: "React Keyevent",
-    homepage: "https://yuanguandong.github.io/react-keyevent",
-    img: "https://user-images.githubusercontent.com/13197560/125153789-c44b4080-e188-11eb-829e-307a738ad92b.png",
-  }
-  
 ];
 
-export const NpmList = (props) => {
+export const Works = (props) => {
   const [colorMode] = useColorMode();
 
   return (
     <>
-      <FaNpm
+      <BsPersonWorkspace
         style={{
-          marginTop:100,
-          fontSize: 64,
+          marginTop: 100,
+          marginBottom: 50,
+          fontSize: 48,
           color: colorMode === "dark" ? "#fff" : "#000",
         }}
       />
       <NpmListContainer>
-        {npms.map((item) => (
-          <Npm href={item.homepage} target="_blank" img={item.img}>
-            <div className="npmname">{item.name}</div>
+        {works.map((item) => (
+          <Npm href={item.homepage} target='_blank' img={item.img}>
+            <div className='npmname'>{item.name}</div>
           </Npm>
         ))}
       </NpmListContainer>

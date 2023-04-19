@@ -1,13 +1,11 @@
 import Image from "@components/Image";
-import { NpmList } from '@components/npm';
 import SocialLinks from "@components/SocialLinks";
 import styled from "@emotion/styled";
 import mediaqueries from "@styles/media";
 import { IAuthor } from "@types";
 import React from "react";
-
-
-
+import { NpmList } from "../npm";
+import { Works } from "../works";
 interface AuthorHeroProps {
   author: IAuthor;
 }
@@ -19,13 +17,13 @@ const AuthorHero: React.FC<AuthorHeroProps> = ({ author }) => {
         <RoundedImage src={author.avatar.large} />
       </HeroImage>
       <Heading>{author.name}</Heading>
-      <Subheading dangerouslySetInnerHTML={{__html: author.bio}}></Subheading>
-      
+      <Subheading dangerouslySetInnerHTML={{ __html: author.bio }}></Subheading>
+
       <Social>
         <SocialLinks links={author.social} />
       </Social>
-      
-      <NpmList/>
+      <NpmList />
+      <Works />
     </Hero>
   );
 };
@@ -50,7 +48,7 @@ const HeroImage = styled.div`
   margin-bottom: 35px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid ${p => p.theme.colors.background};
+  border: 2px solid ${(p) => p.theme.colors.background};
   box-shadow: 0px 15.619px 31.2381px rgba(0, 0, 0, 0.15);
 
   ${mediaqueries.tablet`
@@ -71,8 +69,8 @@ const RoundedImage = styled(Image)`
 
 const Heading = styled.h1`
   font-size: 38px;
-  font-family: ${p => p.theme.fonts.sansSerif};
-  color: ${p => p.theme.colors.primary};
+  font-family: ${(p) => p.theme.fonts.sansSerif};
+  color: ${(p) => p.theme.colors.primary};
   margin-bottom: 15px;
   font-weight: 600;
 
@@ -86,9 +84,9 @@ const Heading = styled.h1`
 const Subheading = styled.p`
   margin: 0 auto;
   max-width: 450px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p) => p.theme.colors.grey};
   font-size: 18px;
-  font-family: ${p => p.theme.fonts.sansSerif};
+  font-family: ${(p) => p.theme.fonts.sansSerif};
   line-height: 1.4;
   text-align: center;
 
