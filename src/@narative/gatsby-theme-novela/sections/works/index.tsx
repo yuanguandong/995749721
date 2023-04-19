@@ -3,7 +3,7 @@ import React from "react";
 import { FaNpm } from "react-icons/fa";
 import { useColorMode } from "theme-ui";
 import { BsPersonWorkspace } from "react-icons/bs";
-const works = [
+const dataSource = [
   {
     name: "webgl-3d-text",
     homepage: "https://webgl-3d-text-five-hazel.vercel.app/",
@@ -25,7 +25,7 @@ export const Works = (props) => {
         }}
       />
       <NpmListContainer>
-        {works.map((item) => (
+        {dataSource.map((item) => (
           <Npm href={item.homepage} target='_blank' img={item.img}>
             <div className='npmname'>{item.name}</div>
           </Npm>
