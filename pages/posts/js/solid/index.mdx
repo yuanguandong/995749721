@@ -1,0 +1,76 @@
+---
+slug: js-solid
+title: Amazing！Solid 比react还react
+author: Favori
+date: 2022-09-12
+hero: ./hero.webp
+excerpt: 今天来介绍2个amazing的东东
+---
+
+![Solid](./hero.webp)
+
+
+<div className={'img-desc'}>图：Vivivian</div>
+
+import Draw from "../../../../components/draw";
+
+## 介绍
+solid是一个用于构建用户界面，简单高效、性能卓越的JavaScript库
+
+Solid 站在 React, Knockout 等巨人的肩膀上。如果你之前用 React Hooks 开发过，Solid 应该看起来很自然。事实上，Solid 模型更简单，没有 Hook 规则。每个组件执行一次，随着依赖项的更新，钩子和绑定会多次执行。
+
+Solid 遵循与 React 相同的理念，具有单向数据流、读/写隔离和不可变接口。但是放弃了使用虚拟 DOM，使用了完全不同的实现。
+
+> Svelte 之于 Vue 就像 Solid 之于 React ,
+>  更低的功耗，更高的性能 ,
+> Svelte和Solid就像是电动车，vue和react就像是燃油车，OH!
+
+## 感受一下
+
+```html
+<html>
+  <body>
+    <script type="module">
+      import {
+        createSignal,
+        onCleanup
+      } from "https://cdn.skypack.dev/solid-js";
+      import { render } from "https://cdn.skypack.dev/solid-js/web";
+      import html from "https://cdn.skypack.dev/solid-js/html";
+      import confetti from "https://cdn.skypack.dev/canvas-confetti";
+      import moment from "https://cdn.skypack.dev/moment";
+
+      const App = () => {
+        const [count, setCount] = createSignal(0);
+
+        const timer = setInterval(() => setCount(count() + 1), 1000);
+
+        const handleAdd = (params) => {
+          setCount((count) => count + params);
+          confetti();
+          console.log(moment().format());
+        };
+
+        onCleanup(() => clearInterval(timer));
+
+        return html`<div>${count}</div>
+          <button onClick=${[handleAdd, 2]}>ADD</button>`;
+      };
+      render(App, document.body);
+    </script>
+  </body>
+</html>
+
+```
+
+## 在线体验
+<div className="art-container">
+  <a href="https://codesandbox.io/s/solid-njjr9h?file=/index.html:0-944" target="_blank" > <img src="https://codesandbox.io/static/img/play-codesandbox.svg"/>
+  </a>
+</div>
+
+
+
+skypack 用起来感觉也是极好的，Amazing
+
+这种编程体验是不是又回到了10年前最纯的样子，看似回到了原点，实则是另一个起点。

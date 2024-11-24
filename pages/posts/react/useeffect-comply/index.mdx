@@ -1,0 +1,91 @@
+---
+slug: react-useeffect-comply
+title: Mini useEffect实现
+author: Favori
+date: 2021-09-11
+hero: ./hero.webp
+excerpt: 如何实现useEffect?
+---
+
+![Useeffect Comply](./hero.webp)
+
+
+<div className={'img-desc'}>图：Tran Mau Tri Tam</div>
+
+import Draw from "../../../../components/draw";
+
+## Mini实现
+当做启发，不是真实内部实现
+
+```js
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+
+function CounterEffect() {
+    effectCursor = 0; // 注意将 effectCursor 重置为0
+
+    const [count, setCount] = useState(0);
+    const [count1, setCount1] = useState(0);
+
+    useEffect(() => {
+        console.log(count);
+    }, [count]);
+
+    useEffect(() => {
+        console.log(count1 + "哈哈哈");
+    }, [count1]);
+
+    const onClick = () => {
+        setCount(count + 1);
+    };
+
+    const onClick1 = () => {
+        setCount1(count1 + 1);
+    };
+
+    return (
+        <div>
+            <div>{count}</div>
+            <button onClick={onClick}>点击</button>
+            <div>{count1}</div>
+            <button onClick={onClick1}>点击</button>
+        </div>
+    );
+}
+
+const allDeps: Array<any[] | undefined> = [];
+let effectCursor: number = 0;
+
+function useEffect(callback: () => void, depArray?: any[]) {
+    if (!depArray) {
+        callback();
+        allDeps[effectCursor] = depArray;
+        effectCursor++;
+        return;
+    }
+    const deps = allDeps[effectCursor];
+    const hasChangedDeps = deps
+        ? depArray.some((el, i) => el !== deps[i])
+        : true;
+    if (hasChangedDeps) {
+        callback();
+        allDeps[effectCursor] = depArray;
+    }
+    effectCursor++;
+}
+
+export function render() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <CounterEffect />
+        </React.StrictMode>,
+        document.getElementById("root")
+    );
+}
+
+```
+  
+<div className="art-container">
+  <a href="https://codesandbox.io/s/react-useeffect-zjfdv" target="_blank" > <img src="https://codesandbox.io/static/img/play-codesandbox.svg"/>
+  </a>
+</div>

@@ -1,0 +1,120 @@
+---
+slug: react-react-redux-context
+title: React Redux 实现 （Context 版）
+author: Favori
+date: 2022-02-16
+hero: ./hero.webp
+excerpt: React Redux 实现 （Context 版）
+---
+
+![React Redux Context](./hero.webp)
+
+
+<div className={'img-desc'}>图：nework</div>
+
+import Draw from "../../../../components/draw";
+
+
+
+## redux store
+
+```js
+export const createStore = (reducer: Function, initialState: any) => {
+  let state = initialState;
+  let listeners: Function[] = [];
+  const getState = () => {
+    return state;
+  };
+  const subscribe = (listener: Function) => {
+    listeners.push(listener);
+    return () => {
+      listeners = listeners.filter((l) => l !== listener);
+    };
+  };
+  const dispatch = (action: { type: string; payload: any }) => {
+    state = reducer(state, action);
+    listeners.forEach((l) => l());
+  };
+  return { dispatch, getState, subscribe };
+};
+
+export default { createStore };
+```
+
+# react-redux Provider
+```js
+import { storeContext } from "./context";
+
+export const Provider = (props: any) => {
+  const { store, children } = props;
+  const ProviderComponent = storeContext.Provider;
+  return <ProviderComponent value={store}>{children}</ProviderComponent>;
+};
+
+```
+# react-redux connect
+```js
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { storeContext } from "./context";
+
+export const ConnectComponent = (props: any) => {
+  const {
+    WrapperComponent,
+    mapStateToProps,
+    mapDispatchToProps,
+    ...restProps
+  } = props;
+  const [, forceUpdate] = useState<any>();
+  const { dispatch, getState, subscribe } = useContext(storeContext);
+  const state = getState();
+
+  const mapState = useMemo(() => {
+    if (!mapStateToProps) {
+      return state;
+    }
+    return mapStateToProps(state);
+  }, [state]);
+
+  const mapAction = useMemo(() => {
+    if (!mapDispatchToProps) {
+      return {};
+    }
+    return mapDispatchToProps(dispatch);
+  }, [dispatch]);
+
+  const memoComponent = useMemo(() => {
+    return (
+      <WrapperComponent
+        {...mapState}
+        {...mapAction}
+        {...restProps}
+        dispatch={dispatch}
+      />
+    );
+  }, [mapState, mapAction]);
+
+  const unsubscribe = subscribe(() => {
+    forceUpdate({});
+  });
+
+  return memoComponent;
+};
+
+export const connect = (mapStateToProps?: any, mapDispatchToProps?: any) => {
+  return (WrapperComponent: React.ElementType) => (props: any) => (
+    <ConnectComponent
+      {...props}
+      mapStateToProps={mapStateToProps}
+      WrapperComponent={WrapperComponent}
+      mapDispatchToProps={mapDispatchToProps}
+    />
+  );
+};
+
+```
+## 😅 遇事不决加一层
+
+<div className="art-container">
+  <a href="https://codesandbox.io/s/react-redux-context-nqd073?file=/src/App.tsx" target="_blank" > <img src="https://codesandbox.io/static/img/play-codesandbox.svg"/>
+  </a>
+</div>

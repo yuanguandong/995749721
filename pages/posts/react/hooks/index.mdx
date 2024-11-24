@@ -1,0 +1,156 @@
+---
+slug: react-hooks
+title: Hooks 原理概览
+author: Favori
+date: 2021-09-05
+hero: ./hero.webp
+excerpt: react-hooks
+---
+
+![Hooks](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../components/draw";
+
+## 什么是 Hook?
+
+Hook 是一个特殊的函数, 它可以让你“钩入” React 的特性. 如, useState 是允许你在 React 函数组件中添加 state 的 Hook.
+
+在 v17.0.2 中, 共定义了 14 种 Hook
+
+```tsx
+export type HookType =
+  | "useState"
+  | "useReducer"
+  | "useContext"
+  | "useRef"
+  | "useEffect"
+  | "useLayoutEffect"
+  | "useCallback"
+  | "useMemo"
+  | "useImperativeHandle"
+  | "useDebugValue"
+  | "useDeferredValue"
+  | "useTransition"
+  | "useMutableSource"
+  | "useOpaqueIdentifier";
+```
+
+## Hook 数据结构
+
+```tsx
+type Update<S, A> = {
+  lane: Lane,
+  action: A,
+  eagerReducer: ((S, A) => S) | null,
+  eagerState: S | null,
+  next: Update<S, A>,
+  priority?: ReactPriorityLevel,
+};
+
+type UpdateQueue<S, A> = {
+  pending: Update<S, A> | null,
+  dispatch: (A => mixed) | null,
+  lastRenderedReducer: ((S, A) => S) | null,
+  lastRenderedState: S | null,
+};
+
+export type Hook = {
+  memoizedState: any, // 当前状态
+  baseState: any, // 基状态
+  baseQueue: Update<any, any> | null, // 基队列
+  queue: UpdateQueue<any, any> | null, // 更新队列
+  next: Hook | null, // next指针
+};
+
+```
+
+* hook.memoizedState: 保持在内存中的局部状态.
+* hook.baseState: hook.baseQueue 中所有 update 对象合并之后的状态.
+* hook.baseQueue: 存储 update 对象的环形链表, 只包括高于本次渲染优先级的 update 对象.
+* hook.queue: 存储 update 对象的环形链表, 包括所有优先级的 update 对象.
+* hook.next: next 指针, 指向链表中的下一个 hook.
+
+## Hook 与 Fiber
+
+使用 Hook 最终也是为了控制 fiber 节点的状态和副作用
+
+```tsx
+export type Fiber = {
+  // 1. fiber节点自身状态相关
+  pendingProps: any;
+  memoizedProps: any;
+  updateQueue: mixed;
+  memoizedState: any;
+
+  // 2. fiber节点副作用(Effect)相关
+  flags: Flags;
+  nextEffect: Fiber | null;
+  firstEffect: Fiber | null;
+  lastEffect: Fiber | null;
+};
+```
+
+使用 Hook 的任意一个 api, 最后都是为了控制上述这几个 fiber 属性.
+
+我们之前有大概了解了 Fiber,那么看下 Fiber 和 Hook 有什么关系吧，在这之前我们还是以一个组件做示例
+
+```tsx
+function App() {
+  // 1. useState
+  const [count, setCount] = useState(0);
+  // 2. useEffect
+  useEffect(() => {
+    console.log(`effect 1 created`);
+  });
+  // 3. useState
+  const [name, setName] = useState("John");
+  // 4. useEffect
+  useEffect(() => {
+    console.log(`effect 2 created`);
+  });
+  return (
+    <>
+      <h1
+        onClick={() => {
+          setCount(() => count + 1);
+        }}
+      >
+        <p title={count}>{count}</p> {name}
+      </h1>
+    </>
+  );
+}
+```
+
+在这个 function 组件中, 同时使用了状态 Hook 和副作用 Hook.
+
+
+
+<div className="art-container">
+  <Draw name="hooks" />
+</div>
+
+初次渲染时, 逻辑执行到 
+
+`performUnitOfWork`->`beginWork`->`updateFunctionComponent`->`renderWithHooks`
+
+前，没有右侧侧黄色部分
+
+只有调用了renderWithHooks后才开始有右侧黄色部分
+
+无论状态 Hook 或副作用 Hook 都按照调用顺序存储在 fiber.memoizedState 链表中
+
+fiber树更新阶段, 把current.memoizedState链表上的所有Hook按照顺序克隆到workInProgress.memoizedState上, 实现数据的持久化.
+
+## 注意
+
+其中 hook.queue 与 fiber.updateQueue 虽然都是 update 环形链表, 尽管 update 对象的数据结构与处理方式都高度相似, 但是这 2 个队列中的 update 对象是完全独立的. hook.queue 只作用于 hook 对象的状态维护, 切勿与 fiber.updateQueue 混淆.
+
+
+## 为什么hooks不能写在条件判断中？
+hook会按顺序存储在链表中，如果写在条件判断中，就没法保持链表的顺序
+

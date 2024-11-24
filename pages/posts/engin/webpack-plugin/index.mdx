@@ -1,0 +1,174 @@
+---
+slug: engin-webpack-plugin
+title: Webpack Plugin 开发
+author: Favori
+date: 2022-02-14
+hero: ./hero.webp
+excerpt: 让我们来学一下如何开发一个webpack插件
+---
+
+![Webpack Plugin](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../components/draw";
+
+## Webpack 插件概念
+
+在 Webpack 构建流程中的各个阶段、特定时机中劫持做一些代码处理、注入扩展逻辑来改变构建结果或做你想要的事情。
+
+## Webpack 插件基本架构
+
+插件由一个构造函数实例化出来。构造函数定义 apply 方法，在安装插件时，apply 方法会被 Webpack compiler 调用一次。apply 方法可以接收一个 Webpack compiler 对象的引用
+
+```js
+class HelloWorldPlugin {
+  apply(compiler) {
+    compiler.hooks.done.tap(
+      "Hello World Plugin",
+      (stats /* 在 hook 被触及时，会将 stats 作为参数传入。 */) => {
+        console.log("Hello World!");
+      }
+    );
+  }
+}
+module.exports = HelloWorldPlugin;
+```
+
+使用插件
+
+```js
+// webpack.config.js
+var HelloWorldPlugin = require("hello-world");
+
+module.exports = {
+  // ... 这里是其他配置 ...
+  plugins: [new HelloWorldPlugin({ options: true })],
+};
+```
+
+
+## compiler 编译器
+这个对象包含了 webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 webpack 启动时候被实例化，它是全局唯一的，可以简单地把它理解为 webpack 实例。
+
+
+## hook 生命周期钩子
+compiler 暴露了一些钩子
+
+https://webpack.js.org/api/compiler-hooks/#environment
+
+### 常用的钩子
+
+```js
+beforeRun // compiler.run() 之前处理逻辑
+run  //在开始读取记录之前
+beforeCompile  //创建编译参数后执行插件
+compile //在创建新编译之前立即调用
+make  //在完成编译之前执行
+afterCompile //在完成编译之后执行
+entryOption //在 webpack 选项中的 entry 配置项处理过之后
+...
+```
+
+### 同步钩子的种类
+
+* SyncHook(同步钩子) - SyncHook
+* Bail Hooks(保释钩子) - SyncBailHook
+* Waterfall Hooks(瀑布钩子) - SyncWaterfallHook
+
+### 异步钩子的种类
+
+* Async Series Hook(异步串行钩子) - AsyncSeriesHook
+* Async waterfall(异步瀑布钩子) - AsyncWaterfallHook
+* Async Series Bail - AsyncSeriesBailHook
+* Async Parallel - AsyncParallelHook
+* Async Series Bail - AsyncSeriesBailHook
+
+
+## compilation 子编译器
+compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。
+
+当 webpack 以开发模式运行时，每当检测到一个文件变化，一次新的 compilation 将被创建。
+
+compilation 对象也提供了很多事件回调供插件做扩展。
+
+通过 compilation 也能读取到 compiler 对象
+
+## compiler 和 compilation 区别
+compiler代表了整个 webpack 从启动到关闭的生命周期，而 compilation 只代表一次单独的编译。
+compilation 是 SyncHook 同步钩子
+
+## tap
+对不同钩子进行 tap 处理即可，其中 tap 方法用于同步处理，异步方式则可以调用 tapAsync 方法或 tapPromise 方法。
+
+```js
+// tapAsync
+class HelloAsyncPlugin {
+  apply(compiler) {
+    compiler.hooks.emit.tapAsync(
+      'HelloAsyncPlugin',
+      (compilation, callback) => {
+        // Do something async...
+        setTimeout(function () {
+          console.log('Done with async work...');
+          callback();
+        }, 1000);
+      }
+    );
+  }
+}
+
+module.exports = HelloAsyncPlugin;
+```
+
+
+```js
+//tapPromise
+class HelloAsyncPlugin {
+  apply(compiler) {
+    compiler.hooks.emit.tapPromise('HelloAsyncPlugin', (compilation) => {
+      // return a Promise that resolves when we are done...
+      return new Promise((resolve, reject) => {
+        setTimeout(function () {
+          console.log('Done with async work...');
+          resolve();
+        }, 1000);
+      });
+    });
+  }
+}
+
+module.exports = HelloAsyncPlugin;
+```
+
+
+## 我开发的输出一个编译文件列表MarkDown的插件
+```js
+const pluginName = 'FileList';
+
+class FileListPlugin {
+  apply(compiler) {
+    compiler.hooks.emit.tap(pluginName, (compilation) => {
+      var filelist = '生成的文件:\n\n';
+      for (var filename in compilation.assets) {
+        filelist += '- ' + filename + '\n';
+      }
+      compilation.assets['filelist.md'] = {
+        source: function () {
+          return filelist;
+        },
+        size: function () {
+          return filelist.length;
+        },
+      };
+    });
+  }
+}
+
+module.exports = FileListPlugin;
+
+```
+
+至此，我们就开发了一个简单的webpack插件

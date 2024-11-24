@@ -1,0 +1,51 @@
+---
+slug: js-debounce
+title: 极简代码实现节流Throttle和防抖Debounce
+author: Favori
+date: 2019-01-30
+hero: ./hero.webp
+excerpt: 使用各9行代码实现节流和防抖函数
+---
+
+![Debounce](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Nguyen Nhut</div>
+
+## debounce防抖
+
+```js
+function debounce(fn, delay) {
+  let timmer = null;
+  return function () {
+    timmer && clearInterval(timmer);
+    timmer = setTimeout(() => {
+      fn.call(this, arguments);
+    }, delay);
+  };
+}
+```
+## throttle节流
+```js
+function throttle(fn, delay) {
+  let startTime = 0;
+  return function () {
+    let currentTime = new Date();
+    if (currentTime - startTime > delay) {
+      fn.call(this, arguments);
+      startTime = currentTime;
+    }
+  };
+}
+```
+
+## CodePen示例
+<iframe
+  class="art-container"
+  height="400"
+  data-testid="ne-thirdparty-reader-iframe"
+  src="https://codepen.io/favori/embed/abmmpWr"
+  frameborder="0"
+  allowfullscreen=""
+></iframe>

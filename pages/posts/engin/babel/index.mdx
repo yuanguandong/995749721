@@ -1,0 +1,98 @@
+---
+slug: engin-babel
+title: babel核心
+author: Favori
+date: 2021-10-07
+hero: ./hero.webp
+excerpt: babel核心介绍
+---
+
+![Babel](./hero.webp)
+
+
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../components/draw";
+
+## babel/core
+
+```js
+const babel = require('@babel/core');
+const code = "class glass {get name() { return '水杯' }}";
+const options = {
+    presets: ['@babel/preset-env'],
+}
+// 直接转换
+const result1 = babel.transform(code, options);
+
+// 异步转换
+babel.transformAsync(code, options).then(res => console.log(res));
+console.log(result);
+
+// 加载文件同步转换
+const content = babel.transformFileSync('./babel-file.js');
+console.log(content);
+
+// 生成AST语法树
+const parsedAst = babel.parse(code, { parserOpts: { allowReturnOutsideFunction: true } });
+console.log(parsedAst);
+
+// 通过语法树转换
+const result3 = babel.transformFromAst(parsedAst, code, options);
+console.log(result3);
+
+// 生成config
+const config = babel.loadPartialConfig(options); // 提前生成config
+const result = babel.transform(code, config.options);
+console.log(result);
+```
+
+```
+babel/core的作用
+= 
+babel/parser(词法分析+语法分析 = AST) 
++ 
+babel/traverse (AST 经过plugin转化) 
++ 
+babel/generator (AST 生成code字符串)
+```
+
+## babel/parser
+
+实际就是babel内置的parser
+babelParser.parse(code, options) 等价于babel.parse(code, options); 会return一个AST树
+
+```js
+const babel = require('@babel/core');
+const code = "class glass {get name() { return '水杯' }}";
+const options = {
+    presets: ['@babel/preset-env'],
+}
+
+const parsedAst = babel.parse(code);
+console.log(parsedAst);
+
+import { parse } from '@babel/parser';
+const ast = parse(code);
+console.log(ast);
+```
+
+## babel/generator
+
+读取ast，并将它转化成代码以及source map.
+
+```js
+import { parse } from '@babel/parser';
+import generate from '@babel/generator';
+const ast = parse(code);
+const output = generate(ast, {minified: true}, code);
+console.log(output);
+```
+
+generater的作用仅仅是进行转化成代码，不会进行处理，与babel/core一节的transformFromAst不同，transformFromAst是会经过plugin的处理的，实质上是babel/traverse + generater的结合.
+
+
+## 总结
+
+实际上，通过babel/core的实现也可以看到，babel/core的依赖就是babel/parser + babel/traverse + babel/generator。
+

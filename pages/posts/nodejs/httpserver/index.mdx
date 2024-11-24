@@ -1,0 +1,89 @@
+---
+slug: nodejs-httpserver
+title: 如何使用NodeJs创建HTTP服务？
+author: Favori
+date: 2021-08-17
+hero: ./hero.webp
+excerpt: 如何使用NodeJs创建HTTP服务？
+---
+
+![Httpserver](./hero.webp)
+
+
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+
+
+## 如何使用NodeJs创建HTTP服务？
+
+1. http-server.js
+
+```js
+const http = require('http')
+http.createServer(function (req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/plain'
+    })
+    res.end('Hello World')
+}).listen(80, '127.0.0.1')
+
+console.log('Server running at http://127.0.0.1:80/')
+```
+
+2. 浏览器访问
+
+http://127.0.0.1:80/
+
+3. 用curl访问
+
+curl -v http://127.0.0.1:80 
+
+看一下请求报文
+
+```
+// 三次握手
+* Rebuilt URL to: http://127.0.0.1:80/
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 80 (#0)
+
+// 客户端向服务端发送请求报文
+> GET / HTTP/1.1
+> Host: 127.0.0.1:80
+> User-Agent: curl/7.54.0
+> Accept: */*
+>
+
+// 服务端响应客户端内容
+< HTTP/1.1 200 OK
+< Content-Type: text/plain
+< Date: Wed, 04 Aug 2021 15:55:55 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< Transfer-Encoding: chunked
+<
+* Connection #0 to host 127.0.0.1 left intact
+Hello World%
+```
+
+4. htttp-client.js
+
+```js
+const http = require('http')
+
+const options = {
+    hostname: '127.0.0.1',
+    port: 80,
+    path: '/',
+    method: 'GET'
+}
+const req = http.request(options, (res) => {
+    console.log(`Status=${res.statusCode}, Headers=${JSON.stringify(res.headers)}`);
+    res.setEncoding('utf8')
+    res.on('data', (data) => {
+        console.log(data)
+    })
+})
+req.end()
+```
+  

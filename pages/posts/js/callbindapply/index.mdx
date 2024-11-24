@@ -1,0 +1,52 @@
+---
+slug: js-callapplybind
+title: call、apply、bind的极简实现
+author: Favori
+date: 2019-06-03
+hero: ./hero.webp
+excerpt: 使用symbol实
+---
+
+![Callbindapply](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Nguyen Nhut</div>
+
+
+
+## Call
+
+```js
+Function.prototype.call = function (context, args) {
+  let symbolFn = Symbol("fn");
+  symbolFn = this;
+  context[symbolFn](args);
+  delete context[symbolFn];
+};
+```
+## Apply
+
+```js
+Function.prototype.apply = function (context, args) {
+  let symbolFn = Symbol("fn");
+  symbolFn = this;
+  context[symbolFn](...args);
+  delete context[symbolFn];
+};
+```
+
+## Bind
+
+```js
+Function.prototype.bind = function (context) {
+  let symbolFn = Symbol("fn");
+  symbolFn = this;
+  return function () {
+    let result = context[symbolFn](...arguments);
+    delete context[symbolFn];
+    return result;
+  };
+};
+
+```

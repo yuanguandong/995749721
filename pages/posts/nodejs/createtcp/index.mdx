@@ -1,0 +1,148 @@
+---
+slug: nodejs-createtcp
+title: 如何使用Nodejs来创建一个TCP/UDP服务?
+author: Favori
+date: 2021-04-17
+hero: ./hero.webp
+excerpt: 如何使用Nodejs来创建一个TCP/UDP服务?
+---
+
+![Createtcp](./hero.webp)
+
+
+<div className={'img-desc'}>图：Mako Tsereteli</div>
+
+## 如何使用Nodejs来创建一个TCP服务 
+
+在这之前咱们要先来了解一下Socket的概念,
+
+我们经常把socket翻译为套接字，socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信, 比如create，listen，accept，connect，read和write等等。
+
+node里有各种网络相关的模块, http为应用层模块，主要按照特定协议编解码数据；net为传输层模块，主要负责传输编码后的应用层数据；https是个综合模块（涵盖了http/tls/crypto等），主要用于确保数据安全性
+
+1. 创建tcp服务端
+
+```js
+const net = require('net');
+
+const HOST = '127.0.0.1';
+const PORT = 7777;
+
+// 创建一个TCP服务器实例，调用listen函数开始监听指定端口
+// net.createServer()有一个参数, 是监听连接建立的回调
+net.createServer((socket) => {
+    const remoteName = `${socket.remoteAddress}:${socket.remotePort}`;
+    // 建立成功了一个连接, 这个回调函数里返回一个socket对象.
+    console.log(`${remoteName} 连接到本服务器`);
+
+    // 接收消息
+    socket.on('data', (data) => {
+        console.log(`${remoteName} - ${data}`)
+        // 给客户端发消息
+        socket.write(`你刚才说啥？是${data}吗？`);
+    });
+
+    // 关闭
+    socket.on('close', (data) => {
+        console.log(`${remoteName} 连接关闭`)
+    });
+
+}).listen(PORT, HOST);
+
+console.log(`Server listening on ${HOST}:${PORT}`);
+```
+
+2. 创建tcp客户端
+
+```js
+const net = require('net');
+
+const HOST = '127.0.0.1';
+const PORT = 7777;
+
+const client = new net.Socket();
+const ServerName = `${HOST}:${PORT}`;
+let count = 0;
+
+client.connect(PORT, HOST, () => {
+    console.log(`成功连接到 ${ServerName}`);
+    // 向服务端发送数据
+    const timer = setInterval(() => {
+        if (count > 10) {
+            client.write('我没事了, 告辞');
+            clearInterval(timer);
+            return;
+        }
+        client.write('马冬梅' + count++);
+    }, 1000)
+});
+
+// 接收消息
+client.on('data', (data) => {
+    console.log(`${ServerName} - ${data}`);
+    // 关闭连接
+    // client.destroy();
+});
+
+// 关闭事件
+client.on('close', () => {
+    console.log('Connection closed');
+});
+
+client.on('error', (error) => {
+    console.log(error);
+})
+```
+
+3. 运行一下
+
+`node tcp-server.js`
+
+`node tcp-client.js`
+
+## 如何使用NodeJs来创建一个UDP服务?
+
+1. 创建udp服务端
+
+```js
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
+
+server.on('message', (msg, remote) => {
+    console.log(`${remote.address}:${remote.port} - ${msg}`)
+    server.send(`收到！`, remote.port, remote.address);
+})
+
+server.on('listening', () => {
+    const address = server.address()
+    console.log(`Server listening on ${address.address}:${address.port}`);
+})
+
+
+server.bind(44444);
+```
+
+2. 创建udp客户端
+
+```js
+const dgram = require('dgram')
+const message = Buffer.alloc(5, 'john')
+const client = dgram.createSocket('udp4')
+
+client.send(message, 0, message.length, 44444, 'localhost',
+    (err, bytes) => {
+        console.log(`发送成功${bytes}字节`);
+        // client.close()
+    }
+)
+
+client.on('message', (buffer) => {
+    console.log(buffer.toString())
+})
+```
+
+3. 运行一下
+
+`node udp-server.js`
+
+`node udp-client.js`

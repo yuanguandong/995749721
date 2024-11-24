@@ -1,0 +1,362 @@
+---
+slug: engin-point-report
+title: 监控埋点方案
+author: Favori
+date: 2021-09-16
+hero: ./hero.webp
+excerpt: 前端监控埋点方案
+---
+
+![Point Report](./hero.webp)
+
+
+<div className={'img-desc'}>图：Mako Tsereteli</div>
+
+import Draw from "../../../../components/draw";
+
+## 代码埋点
+
+代码埋点是最灵活，同时也是最耗时的一种方式。
+
+一般会封装自己的一套埋点上报的npm包, 提供给各业务线使用。
+
+一般我们需要上报什么信息呢？
+
+1. 埋点的标识信息, 比如eventId, eventType
+1. 业务自定义的信息, 比如电商, 点击一个按钮, 我们要上报用户点击的是哪个商品
+2. 通用的设备信息, 比如用户的userId, useragent, deviceId, timestamp, locationUrl等等
+
+一般怎么上报？
+
+1. 实时上报, 业务方调用发送埋点的api后, 立即发出上报请求
+2. 延时上报, sdk内部收集业务方要上报的信息, 在浏览器空闲时间或者页面卸载前统一上报，上报失败会做补偿措施。
+
+### 实现
+```tsx
+// async-task-queue.ts
+import { debounce } from 'lodash';
+
+interface RequiredData {
+    timestamp: number | string;
+}
+
+class TaskQueueStorableHelper<T extends RequiredData = any> {
+    public static getInstance<T extends RequiredData = any>() {
+        if (!this.instance) {
+            this.instance = new TaskQueueStorableHelper<T>();
+        }
+        return this.instance;
+    }
+
+    private static instance: TaskQueueStorableHelper | null = null;
+
+    protected store: any = null;
+    private STORAGE_KEY = 'my_store';
+
+    constructor() {
+        const localStorageValue = localStorage.getItem(this.STORAGE_KEY);
+        if (localStorageValue) {
+            this.store = JSON.parse(localStorageValue);
+        }
+    }
+
+    get queueData() {
+        return this.store?.queueData || [];
+    }
+
+    set queueData(queueData: T[]) {
+        this.store = {
+            ...this.store,
+            queueData: queueData.sort((a, b) => Number(a.timestamp) - Number(b.timestamp)),
+        };
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.store));
+    }
+
+}
+
+export abstract class AsyncTaskQueue<T extends RequiredData = any> {
+    private get storableService() {
+        return TaskQueueStorableHelper.getInstance<T>();
+    }
+
+    private get queueData() {
+        return this.storableService.queueData;
+    }
+
+    private set queueData(value: T[]) {
+        this.storableService.queueData = value;
+        if (value.length) {
+            this.debounceRun();
+        }
+    }
+
+    protected debounceRun = debounce(this.run.bind(this), 500);
+
+    protected abstract consumeTaskQueue(data: T[]): Promise<any>;
+
+    protected addTask(data: T | T[]) {
+        this.queueData = this.queueData.concat(data);
+    }
+
+
+    private run() {
+        const currentDataList = this.queueData;
+
+        if (currentDataList.length) {
+            this.queueData = [];
+            this.consumeTaskQueue(currentDataList); // .catch(() => this.addTask(currentDataList))
+        }
+    }
+}
+
+```
+
+
+```tsx
+// track.ts
+import axios from "axios";
+import { AsyncTaskQueue } from "./async-task-queue";
+import queryString from "query-string";
+import { v4 as uuid } from "uuid";
+
+interface TrackData {
+    seqId: number;
+    id: string;
+    timestamp: number;
+}
+
+interface UserTrackData {
+    msg?: string;
+}
+
+export class BaseTrack extends AsyncTaskQueue<TrackData> {
+    private seq: number = 0;
+    public track(data: UserTrackData) {
+        this.addTask({
+            id: uuid(),
+            seqId: this.seq++,
+            timestamp: Date.now(),
+            ...data,
+        });
+    }
+    public consumeTaskQueue(data: any) {
+        return axios.post(`https://xxx.com`, { data });
+    }
+}
+```
+
+
+
+
+
+
+## 无埋点
+
+### 概念
+
+无埋点并不是真正的字面意思，其真实含义其实是，不需要研发去手动埋点。
+
+一般会有一个 sdk 封装好各种逻辑, 然后业务方直接引用即可。
+
+sdk中做的事情一般是监听所有页面事件, 上报所有点击事件以及对应的事件所在的元素，然后通过后台去分析这些数据。
+
+业界有GrowingIO, 神策, 诸葛IO, Heap, Mixpanel等等商业产品
+
+### 实现
+
+
+1. 监听window元素
+
+```js
+window.addEventListener("click", function(event){
+    let e = window.event || event;
+    let target = e.srcElement || e.target;
+}, false);
+    
+```
+
+2. 获取元素唯一标识 xPath
+
+```js
+function getXPath(element) {
+    // 如果元素有id属性，直接返回//*[@id="xPath"]
+    if (element.id) {
+        return '//*[@id=\"' + element.id + '\"]';
+    }
+    // 向上查找到body，结束查找, 返回结果
+    if (element == document.body) {
+        return '/html/' + element.tagName.toLowerCase();
+    }
+    let currentIndex = 1, // 默认第一个元素的索引为1
+        siblings = element.parentNode.childNodes;
+
+
+    for (let sibling of siblings) {
+        if (sibling == element) {
+            // 确定了当前元素在兄弟节点中的索引后, 向上查找
+            return getXPath(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (currentIndex) +
+                ']';
+        } else if (sibling.nodeType == 1 && sibling.tagName == element.tagName) {
+            // 继续寻找当前元素在兄弟节点中的索引
+            currentIndex++;
+        }
+    }
+};
+```
+
+## 获取元素的位置
+
+```js
+function getOffset(event) {
+    const rect = getBoundingClientRect(event.target);
+    if (rect.width == 0 || rect.height == 0) {
+        return;
+    }
+    let doc = document.documentElement || document.body.parentNode;
+    const scrollX = doc.scrollLeft;
+    const scrollY = doc.scrollTop;
+    const pageX = event.pageX || event.clientX + scrollX;
+    const pageY = event.pageY || event.clientY + scrollY;
+
+    const data = {
+        offsetX: ((pageX - rect.left - scrollX) / rect.width).toFixed(4),
+        offsetY: ((pageY - rect.top - scrollY) / rect.height).toFixed(4),
+    };
+
+    return data;
+}
+
+```
+
+## 上报
+
+```js
+window.addEventListener("click", function(event){
+    const e = window.event || event;
+    const target = e.srcElement || e.target;
+    const xPath = getXPath(target);
+    const offsetData = getOffset(event);
+
+    report({ xPath,  ...offsetData});
+}, false);
+```
+
+
+
+# 性能监控
+```tsx
+// performance.ts
+import { VueRouter } from 'vue-router/types/router';
+import { BaseTrack } from './track';
+
+export class Performance {
+    // TODO 注意上报的单位 现在是毫秒
+    public static readonly timing = window.performance && window.performance.timing;
+
+    public static init() {
+        if (!this.timing) {
+            console.warn('当前浏览器不支持performance API');
+            return;
+        }
+
+        window.addEventListener('load', () => {
+            new BaseTrack().track(this.getTimings());
+        });
+    }
+
+    public static record(router?: VueRouter) {
+        const setFPT = () => {
+            if (window.performance && window.performance.now) {
+                this.customFPT = window.performance.now();
+            }
+        };
+        return {
+            created: () => {
+                if (router) {
+                    router.onReady(() => {
+                        setFPT();
+                    });
+                } else {
+                    setFPT();
+                }
+            },
+        };
+    }
+
+
+    public static getTimings(): { [key in string]: number } {
+        if (!this.timing) {
+            console.warn('当前浏览器不支持performance API');
+            return {};
+        }
+
+        return {
+            redirect: this.getRedirectTime(),
+            dns: this.getDnsTime(),
+            tcp: this.getTcpTime(),
+            ttfb: this.getTimeOfFirstByte(),
+            req: this.getReqTime(),
+            ppdt: this.getParsePureDomTime(),
+            dclt: this.getDomContentLoadTime(),
+            fpt: this.getFirstPaintTime(),
+            load: this.getLoadTime(),
+        };
+    }
+
+    private static customFPT: number = 0;
+
+    private static getRedirectTime() {
+        // 重定向耗时
+        return Performance.timing.redirectEnd - Performance.timing.redirectStart;
+    }
+
+    private static getDnsTime() {
+        // dns查询耗时
+        return Performance.timing.domainLookupEnd - Performance.timing.domainLookupStart;
+    }
+
+    private static getTcpTime() {
+        // tcp连接耗时
+        return Performance.timing.connectEnd - Performance.timing.connectStart;
+    }
+
+    private static getTimeOfFirstByte() {
+        // 读取页面第一个字节耗时
+        return Performance.timing.responseStart - Performance.timing.navigationStart;
+    }
+
+    private static getReqTime() {
+        // request请求耗时
+        return Performance.timing.responseEnd - Performance.timing.responseStart;
+    }
+
+    private static getParsePureDomTime() {
+        // 解析纯DOM树耗时, 不包含js css等资源的加载和执行
+        return Performance.timing.domInteractive - Performance.timing.domLoading;
+    }
+
+    private static getDomContentLoadTime() {
+        // 页面资源加载耗时, 包含vue, js css等资源的加载和执行
+        return Performance.timing.domComplete - Performance.timing.domInteractive;
+    }
+
+    private static getFirstPaintTime() {
+        // first paint time, 首次渲染时间, 即白屏时间
+        return Math.round(
+            (window.performance.getEntriesByName &&
+                window.performance.getEntriesByName('first-paint') &&
+                window.performance.getEntriesByName('first-paint')[0] &&
+                window.performance.getEntriesByName('first-paint')[0].startTime) ||
+                this.customFPT,
+        );
+    }
+
+    private static getLoadTime() {
+        // 页面load总耗时
+        return Performance.timing.loadEventStart - Performance.timing.navigationStart;
+    }
+
+    private static toSeconds(time: number) {}
+}
+
+```

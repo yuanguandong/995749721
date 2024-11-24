@@ -1,0 +1,52 @@
+---
+slug: ts-utils
+title: TypeScript里常用的工具类型
+author: Favori
+date: 2022-06-26
+hero: ./hero.webp
+excerpt: 经常用到的工具类型，提取抽离出来，供以后复用
+---
+
+![Utils](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../components/draw";
+
+### 使属性变为可选
+
+```ts
+type PartialByKeys<T, K extends keyof T> = {
+  [P in K]?: T[P];
+} & Pick<T, Exclude<keyof T, K>>;
+```
+
+### 使属性变为必填
+
+```ts
+type RequiredByKeys<T, K extends keyof T> = {
+  [P in K]-?: T[P];
+} & Omit<T, K>;
+```
+
+### 判断类型是否是另一个类型的子类型
+
+```ts
+type SubtypeOf<T, U> = T extends U ? true : false;
+```
+
+### 提取 interface 中非函数类型的名
+
+```ts
+type NonFunctionPropertyNames<T> = {
+  [K in keyof T]:T[K] extends Function ? never : K;
+}[keyof T];
+```
+
+### 提取 interface 中非函数类型的属性
+
+```ts
+type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+```

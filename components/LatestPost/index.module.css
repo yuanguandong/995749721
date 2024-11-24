@@ -1,0 +1,38 @@
+.imageWrapper :global(span) {
+  margin: 0 !important;
+}
+
+.imageWrapper img {
+  margin: 0 !important;
+}
+
+.container {
+  margin: 2rem 0;
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+}
+
+.postLink {
+  display: block;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.postLink:hover {
+  background-color: #f5f5f5;
+}
+
+.postLink h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.postLink time {
+  font-size: 0.9rem;
+  color: #666;
+}

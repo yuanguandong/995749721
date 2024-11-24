@@ -1,0 +1,48 @@
+---
+slug: js-threejs-text
+title: Threejs 字体
+author: Favori
+date: 2023-05-26
+hero: ./hero.webp
+excerpt: threejs 里的字体介绍
+---
+
+![Threejs Text](./hero.webp)
+
+
+<div className={'img-desc'}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../components/draw";
+
+## 加载字体
+
+```js
+// 通过fontLoader加载字体json文件
+fontLoader.load("/fonts/helvetiker_regular.typeface.json", function (font) {
+  // 创建几何体
+  const textGeometry = new TextGeometry("PAGGY", {
+    // 字体
+    font,
+    // 大小
+    size: 0.5,
+    // 深度
+    height: 0.2,
+    // 细分
+    curveSegments: 12,
+    // 倒角
+    bevelEnabled: true,
+    // 倒角
+    bevelThickness: 0.03,
+    // 倒角大小
+    bevelSize: 0.02,
+    // 倒角位置
+    bevelOffset: 0,
+    // 倒角细分
+    bevelSegments: 5,
+  });
+  // 字体居中
+  textGeometry.center();
+})
+
+```
+  

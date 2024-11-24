@@ -1,0 +1,113 @@
+---
+slug: css-bfc
+title: Block Formatting Context 块级格式化上下文
+author: Favori
+date: 2021-04-17
+hero: ./hero.webp
+excerpt: 可以将BFC看成是元素的一种属性，拥有了这种属性的元素就会使他的子元素与世隔绝，不会影响到外部其他元素
+---
+
+![Bfc](./hero.webp)
+
+
+
+<div className={'img-desc'}>图：AI</div>
+
+## BFC定义
+BFC - Block Formatting Context 块级格式化上下文 BFC的定义：
+
+1、一个BFC区域包含创建该上下文元素的所有子元素，但是不包括创建了新的BFC的子元素的内部元素，
+
+2、BFC是一块块独立的渲染区域，可以将BFC看成是元素的一种属性，拥有了这种属性的元素就会使他的子元素与世隔绝，不会影响到外部其他元素
+
+```html
+<div className="box1" id="bfc1">
+  <div className="box2"></div>
+  <div className="box3"></div>
+  <div className="box4"></div>
+  <div className="box5" id="bfc2">
+    <div className="box6"></div>
+    <div className="box7"></div>
+    <div className="box8"></div>
+  </div>
+</div>
+```
+
+假设box1和box5是两个BFC区域，那么根据上述原理能理解到的就是，box1这个BFC区域包含了子元素box2，box3，box4，box5。
+但不包括box678。而box5这块BFC区域则包含了box678这三个子元素。
+
+## 总结:
+1,每一个BFC区域只包括其子元素，不包括其子元素的子元素。
+2,每一个BFC区域都是独立隔绝的,互不影响
+
+## 怎样使一个元素变成BFC区域
+
+大概有以下几种办法：
+
+```
+·body根元素
+·设置浮动，不包括none
+·设置定位，absoulte或者fixed
+·行内块显示模式，inline-block
+·设置overflow，即hidden，auto，scroll
+·表格单元格，table-cell
+·弹性布局，flex
+```
+
+那知道了怎么让元素变成BFC区域后，这个BFC到底有什么作用呢？
+
+根据上面的描述，BFC区域有一个特点，那就是独立。不会影响外部元素。根绝这个特性就能解决很多布局问题。
+
+<div className="art-container">
+  <iframe 
+    src="https://codesandbox.io/embed/bfc-2ttrhs?fontsize=14&hidenavigation=1&theme=dark"
+    style={{
+      width: '100%',
+      height: '500px',
+      border: 0,
+      borderRadius: '4px',
+      overflow: 'hidden'
+    }}
+    title="bfc"
+    allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+  />
+</div>
+
+### 1，解决外边距的塌陷问题(垂直塌陷)
+
+开发中，前端的布局手段，离不开外边距margin，那么，也会遇到一些问题，例如外边距的垂直塌陷问题。
+
+看上面son2的例子，两个盒子都有100的外边距，但是实际上两个盒子的距离却只有100px，按理来说应该是200才对，这就是margin垂直塌陷。那要解决这个问题只需要给这两个盒子都加一个父元素，并且将这个父元素设置成BFC区域，就可以解决这个margin塌陷的问题。
+
+### 2，利用BFC解决包含塌陷
+
+有时候我们给子元素加margin可能会带着父元素一起跑, 如father1
+
+很显然，我们只是想要子元素距离父元素50px，而不是整个父元素都一起跑。这个时候用padding可以解决问题，但是用BFC同样可以解决
+
+只需要将父元素变为BFC区域，就能得到解决
+
+因为将父盒子变成一个独立的区域，这样在BFC区域内部的任何操作，都不会影响到外部
+
+### 3.清除浮动。
+
+大家都知道，浮动会导致父元素高度塌陷，那大家还记得怎么清除浮动吗？相信很多人都知道：overflow：hidden嘛。
+相信在认识BFC之前大家肯定不太清楚为什么overflow：hidden可以清除浮动。
+现在知道了，BFC区域内的子元素任何边动都是不会影响到外部元素的。所以BFC区域同样可以清除浮动带来的影响。
+如son3
+
+### 4.BFC可以阻止标准流元素被浮动元素覆盖
+
+大家都知道，浮动的元素会脱离文档流，跑到上一个层面，也就是和原本的元素们不在一个层面了。所以可能会导致浮动元素覆盖基本元素的问题。
+
+那么这个时候我们只需要让蓝色区域触发BFC，就可以做到不受浮动元素影响
+
+如red, blue
+
+# 最后总结一下：
+
+一个BFC区域只包含其子元素，不包括其子元素的子元素。
+并不是所有的元素都能成为一块BFC区域，只有当这个元素满足条件的时候才会成为一块BFC区域。
+不同的BFC区域之间是相互独立的，互不影响的。利用这个特性我们可以让不同BFC区域之间的布局不产生影响。
+

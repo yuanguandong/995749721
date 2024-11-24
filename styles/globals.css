@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 主题变量 */
+:root {
+  --header-bg: #ffffff;
+  --header-border: #d0d7de;
+  --fg-deep: #24292f;
+  --fg-deeper: #000000;
+  --hover-bg: #f6f8fa;
+  --accent-color: #0969da;
+}
+
+/* 暗色主题变量 */
+.dark {
+  --header-bg: #0a0c10;
+  --header-border: #30363d;
+  --fg-deep: #c9d1d9;
+  --fg-deeper: #f0f6fc;
+  --hover-bg: #1c2128;
+  --accent-color: #58a6ff;
+}
+
+/* 基础样式重置 */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* 文章图片样式 */
+article img {
+  border-radius: 8px;
+}
+
+/* Nextra 相关覆盖样式 */
+.nextra-nav-container {
+  display: none !important;
+}
+
+main {
+  margin-top: 1rem;
+}
+
+.nx-max-w-\[90rem\] {
+  max-width: 1280px;
+}
+
+.nextra-image-wrapper span {
+  margin: 0 !important;
+}
+
+.nextra-image-wrapper img {
+  margin: 0 !important;
+}
+
+.art-container{
+  display: flex;
+}

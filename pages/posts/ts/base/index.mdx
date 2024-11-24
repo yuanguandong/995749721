@@ -1,0 +1,535 @@
+---
+slug: tsbase
+title: TypeScript基础
+author: Favori
+date: 2019-04-30
+hero: ./hero.webp
+excerpt: 介绍TypeScript基础知识
+---
+
+![Base](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Nguyen Nhut</div>
+
+## TS
+
+> TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程。 -- 官方文档
+
+| TypeScript                                      | JavaScript                       |
+| ----------------------------------------------- | -------------------------------- |
+| JavaScript 的超集，用于解决大型项目的代码复杂性 | 一种脚本语言，用于创建动态网页。 |
+| 强类型，支持静态和动态类型                      | 动态弱类型语言                   |
+| 可以在编译期间发现并纠正错误                    | 只能在运行时发现错误             |
+| 不允许改变变量的数据类型                        | 变量可以被赋予不同类型的值       |
+
+### TS 的好处
+
+1、超集，是 js 的加强版，只多不少
+2、面向对象
+3、静态检查
+4、可读性强
+
+## 类型
+
+12 种基本类型
+
+```ts
+number;
+
+string;
+
+boolean;
+
+array;
+
+object;
+
+bigint;
+
+symbol;
+
+null;
+
+undefined;
+
+Date;
+
+Error;
+
+RegExp;
+```
+
+## undefined 和 null
+
+默认情况下 null 和 undefined 是所有类型的子类型。 就是说你可以把 null 和 undefined 赋值给 number 类型的变量。
+
+```js
+let age: number = null;
+let realName: string = undefined;
+```
+
+## any、unknown 和 void 类型
+
+void 类型与 any 类型相反，它表示没有任何类型。
+
+```js
+function welcome(): void {
+  console.log("hello");
+}
+```
+
+## never 类型
+
+never 类型表示的是那些永不存在的值的类型。
+
+```ts
+const A: never = 1; // error
+```
+
+## 元组类型
+
+元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。
+
+```js
+let tuple: [number, string] = [18, "lin"];
+```
+
+可以对元组使用数组的方法，比如使用 push 时，不会有越界报错
+
+push 一个没有定义的类型，报错
+
+## 可选参数
+
+参数后加个问号，代表这个参数是可选的
+
+```js
+function add(x: number, y: number, z?: number): number {
+  return x + y;
+}
+
+add(1, 2, 3);
+add(1, 2);
+```
+
+## enum: 枚举
+
+字符串枚举的意义在于，提供有具体语义的字符串，可以更容易地理解代码和调试。
+
+```ts
+enum HttpMethod {
+  GET,
+  POST,
+  PATCH,
+  PUT,
+  DELETE,
+}
+type K = keyof typeof HttpMethod; // 'GET'|'POST'|'PATCH'|'PUT'|'DELETE'
+```
+
+### 字符串枚举
+
+```js
+enum Direction {
+    Up = "UP",
+    Down = "DOWN",
+    Left = "LEFT",
+    Right = "RIGHT",
+}
+
+const value = 'UP'
+if (value === Direction.Up) {
+    // do something
+}
+
+```
+
+### 常量枚举
+
+上文的例子，使用 const 来定义一个常量枚举
+
+```js
+const enum Direction {
+    Up = "UP",
+    Down = "DOWN",
+    Left = "LEFT",
+    Right = "RIGHT",
+}
+
+const value = 'UP'
+if (value === Direction.Up) {
+    // do something
+}
+```
+
+## type
+
+类型别名
+
+> 类型别名会给一个类型起个新名字。 类型别名有时和接口很像，但是可以作用于原始值，联合类型，元组以及其它任何你需要手写的类型。 -- TS 文档
+
+## interface
+
+interface(接口) 是 TS 设计出来用于定义对象类型的，可以对对象的形状进行描述。
+
+```js
+
+interface Person {
+    name: string
+    age: number
+}
+
+const p1: Person = {
+    name: 'lin',
+    age: 18
+}
+
+```
+
+### type 和 interface 的区别
+
+1、type 是用于声明类型的，interface 用于描述数据结构
+
+2、type 和 interface 都可以被相互继承和拓展
+
+3、type 可以声明基本类型的别名，联合类型和元组，interface 不行
+
+4、interface 可以合并重复声明
+
+## 联合类型 |
+
+联合类型一次只能一种类型；而交叉类型每次都是多个类型的合并类型。
+
+1.基础类型联合
+
+```ts
+let a: string | number;
+a = 1; //ok
+a = "a"; //ok
+```
+
+2、对象类型联合
+
+对象联合类型只能访问联合中所有共同成员
+
+```ts
+interface Women {
+  age: number;
+  sex: string;
+  cry(): void;
+}
+interface Man {
+  age: number;
+  sex: string;
+}
+declare function People(): Women | Man;
+let people = People();
+people.age = 18; //ok
+people.cry(); //error 非共同成员
+```
+
+## 交叉类型 &
+
+联合类型一次只能一种类型；而交叉类型每次都是多个类型的合并类型。
+多种类型的集合，联合对象将具有所联合类型的所有成员
+
+```ts
+interface Women {
+  age: number;
+  sex: string;
+  cry(): void;
+}
+interface Man {
+  age: number;
+  sex: string;
+}
+declare function People(): Women | Man;
+let people = People();
+people.age = 18; //ok
+people.cry(); //ok 共同成员
+```
+
+## typeof
+
+typeof 操作符可以用来获取一个变量声明或对象的类型。
+
+```ts
+function toArray(x: number): Array<number> {
+  return [x];
+}
+
+type Func = typeof toArray; // -> (x: number) => number[]
+```
+
+## keyof
+
+keyof 操作符可以用来表示一个对象中的所有 key 值：
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+type K1 = keyof Person; // "name" | "age"
+```
+
+```ts
+type K1 = keyof boolean; // "valueOf"
+type K2 = keyof any; // string | number | symbol
+```
+
+## in
+
+in 用来遍历枚举类型：
+
+```ts
+type Keys = "a" | "b" | "c";
+
+type Obj = {
+  [p in Keys]: any;
+}; // -> { a: any, b: any, c: any }
+```
+
+## extends
+
+有时候我们定义的泛型不想过于灵活或者说想继承某些类等，可以通过 extends 关键字添加泛型约束。
+
+1、约束
+
+```ts
+function getCnames<T extends { name: string }>(entities: T[]): string[] {
+  return entities.map((entity) => entity.cname);
+}
+```
+
+2、继承
+
+```ts
+interface ILengthwise {
+  length: number;
+}
+
+function loggingIdentity<T extends ILengthwise>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+
+loggingIdentity(3);
+loggingIdentity({ length: 10, value: 3 });
+```
+
+## partial
+
+`Partial<T> 的作用就是将某个类型里的属性全部变为可选项 ?`。
+
+```ts
+// Partial
+interface People {
+  name: string;
+  age: number;
+}
+
+// 报错 类型“{}”缺少类型“People”中的以下属性: name, age
+const person1: People = {};
+
+/**
+  那这个时候我们就可以用到typescript自带的高级类型 Partial，就相当于将上方接口所有属性变成可选的
+  将我们需要定义的类型当做泛型传入Partial中，那么就相当于当前的类型里面的所有属性都是可选的
+ */
+const person2: Partial<People> = {}; // 可以
+const person3: Partial<People> = { name: "xiaodu" }; // 可以
+const person4: Partial<People> = { sex: "男" }; // 报错 “sex”不在类型“Partial<People>”中
+```
+
+## Reuqired
+
+`Required<T> 的作用就是将某个类型里的属性全部变为必选项`。
+
+```ts
+// 必选参数
+interface People {
+  name?: string;
+  age?: number;
+}
+// 类型 "{ name: string; }" 中缺少属性 "age"，但类型 "Required<People>" 中需要该属性
+const person2: Required<People> = {
+  name: "11",
+};
+```
+
+## Readonly
+
+`Readonly<T> 的作用是将某个类型所有属性变为只读属性，也就意味着这些属性不能被重新赋值。`
+
+```ts
+// 只读
+interface People {
+  name: string;
+  age: number;
+  dog: {
+    name: string;
+    age: number;
+  };
+}
+const xiaoling: Readonly<People> = {
+  name: "小凌", // 只读
+  age: 18, // 只读
+  dog: {
+    age: 1,
+    name: "大黄",
+  },
+};
+// 但是是浅层的。
+xiaoling.name = "john"; // 无法分配到 "name" ，因为它是只读属性。
+xiaoling.dog.age = 2; // 可以
+```
+
+## Record
+
+`Record<K extends keyof any, T> 的作用是将 K 中所有的属性的值转化为 T 类型。`
+
+```ts
+interface PageInfo {
+  title: string;
+}
+
+type Page = "home" | "about" | "contact";
+
+const x: Record<Page, PageInfo> = {
+  about: { title: "about" },
+  contact: { title: "contact" },
+  home: { title: "home" },
+};
+```
+
+## Exclude
+
+`Exclude<T, U> 的作用是将某个类型中属于另一个的类型移除掉。取差集`
+
+```ts
+type T0 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
+type T1 = Exclude<"a" | "b" | "c", "a" | "b">; // "c"
+```
+
+## omit
+
+Omit\<T, U>从类型 T 中剔除 U 中的所有属性
+省略 interface
+
+```js
+interface IPerson {
+    name: string
+    age: number
+}
+
+type IOmit = Omit<IPerson, 'age'>
+/**
+ type somePeople = {
+    name: string;
+}
+ */
+```
+
+## Extract
+
+`Extract<T, U> 的作用是从 T 中提取出 U。取交集`
+
+```ts
+type T0 = Extract<"a" | "b" | "c", "a" | "f">; // "a"
+type T1 = Extract<string | number | (() => void), Function>; // () => void
+```
+
+## Pick
+
+选择、摘取 interface
+
+```ts
+type Coord = Record<"x" | "y", number>;
+type CoordX = Pick<Coord, "x">;
+
+// 等用于
+type CoordX = {
+  x: number;
+};
+```
+
+## 泛型
+
+> 软件工程中，我们不仅要创建一致的定义良好的 API，同时也要考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型，这在创建大型系统时为你提供了十分灵活的功能。
+> 在像 C# 和 Java 这样的语言中，可以使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据。 这样用户就可以以自己的数据类型来使用组件
+
+泛型约束类
+
+定义一个栈，有入栈和出栈两个方法，如果想入栈和出栈的元素类型统一，就可以这么写：
+
+```js
+class Stack<T> {
+    private data: T[] = []
+    push(item:T) {
+        return this.data.push(item)
+    }
+    pop():T | undefined {
+        return this.data.pop()
+    }
+}
+```
+
+## Parameters
+
+提取函数的参数类型
+
+```js
+type T1 = Parameters<() => string>; // []
+
+type T2 = Parameters<(arg: string) => void>; // [string]
+
+type T3 = Parameters<(arg1: string, arg2: number) => void>; // [arg1: string, arg2: number]
+```
+
+## ReturnType
+
+提取函数的返回值类型
+
+```js
+type T0 = ReturnType<() => string>; // string
+
+type T1 = ReturnType<(s: string) => void>; // void
+```
+
+## 索引签名
+
+```ts
+interface PropChangeHandler {
+  [key: `${string}Changed`]: () => void;
+}
+
+let handlers: PropChangeHandler = {
+  idChanged: () => {}, //ok
+  nameChanged: () => {}, //ok
+  ageChange: () => {}, //error
+};
+```
+
+索引签名参数类型不能为字面量类型或泛型类型
+考虑使用映射的对象类型
+
+```ts
+type User1 = {
+  [key: "id"]: string; //error
+};
+type User2 = {
+  [key: "id" | "name"]: string; //error
+};
+type User3 = Record<"id", string>;
+type User4 = Record<"id" | "name", string>;
+```
+
+## const 断言
+```ts
+let requestMethod = 'Get';
+let requestMethod2 = 'Get' as const;
+
+type R0 = typeof requestMethod; //string
+type R1 = typeof requestMethod2; // 'Get'
+```

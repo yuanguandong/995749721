@@ -1,0 +1,126 @@
+---
+slug: js-hoist
+title: JS中的变量提升
+author: Favori
+date: 2019-03-07
+hero: ./hero.webp
+excerpt: 为什么js当时要这样设计
+---
+
+![Hoist](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Amrit Pal Singh</div>
+
+import Draw from "../../../../components/draw";
+
+> 正如 Stoyan Stefanov 在“JavaScript 模式”一书中所解释的，提升是 JavaScript 解释器实现的结果。
+> JS 代码解释分两遍执行。在第一遍期间，解释器处理变量和函数声明。
+> 第二遍是实际的代码执行步骤。解释器处理函数表达式和未声明的变量。
+> 因此，我们可以使用“提升”的概念来描述这种行为。
+
+## 变量提升
+
+JavaScript 是单线程语言，所以执行肯定是按顺序执行。但是并不是逐行的分析和执行，而是一段一段地分析执行，会先进行编译阶段然后才是执行阶段。在编译阶段阶段，代码真正执行前的几毫秒，会检测到所有的变量和函数声明，所有这些函数和变量声明都被添加到名为 Lexical Environment 的 JavaScript 数据结构内的内存中。所以这些变量和函数能在它们真正被声明之前使用。
+
+```js
+a = 2;
+var a;
+console.log(a); //2
+```
+
+会将当前作用域的所有变量的声明，提升到程序的顶部，因此，上面的代码等价于以下代码
+
+```js
+var a;
+a = 2;
+console.log(a);
+```
+
+## 变量声明
+
+js 的变量声明应该大体上可以分三种：var 声明、let 与 const 声明和函数声明。 函数声明与其他声明一起出现的时候，就可能会引起一些冲突。我们接着往下看：
+
+```js
+fn();
+function fn() {
+  console.log("fn");
+}
+var fn = 2;
+```
+
+你觉得会输出什么？这么写会报错吗？ 其实输出的结果是 fn。这就解释了我们刚刚的问题，当函数声明与其他声明一起出现的时候，是以谁为准呢？答案就是，函数声明高于一切，毕竟函数是 js 的贵族阶级。
+
+那么多个函数声明怎么办呢？
+
+```js
+fn();
+function fn() {
+  console.log("1");
+}
+function fn() {
+  console.log("2");
+}
+```
+
+以上代码输出结果为 2。这是因为有多个函数声明的时候，是由最后的函数声明来替代前面的。
+
+```js
+fn();
+var fn = function () {
+  console.log("fn");
+};
+```
+
+它其实也分为两部分：
+
+- var fn;
+- fn = function() {};
+
+参考例 2，我们可以知道，这个的结果应该是报错了(因为 fn 声明但未赋值，因此 fn 是 undefined)。
+
+- js 会将变量的声明提升到 js 顶部执行，对于 var a = 2 这种语句，会拆分开，将 var a 这步进行提升。
+
+- 变量提升的本质其实是 js 引擎在编译的时候，就将所有的变量声明了，因此在执行的时候，所有的变量都已经完成声明。
+
+- 当有多个同名变量的时候，函数声明会覆盖其他的声明。如果有多个函数声明，则由最后一个函数声明覆盖之前的所有声明。
+
+## 为什么要设计成这样？
+
+- 解决变量声明优先级,让函数优先
+- 提前分配好内存（个人猜测）
+- 提前构造出函数，不用等到执行时再构造
+
+真实原因：
+
+JS 创造者 Brendan Eich 曾经说过（[在 Twitter 上](https://twitter.com/BrendanEich/status/522394590301933568)）：
+
+> “因此，var 提升是函数提升、没有块范围和 JS 作为 1995 年的紧急工作的 [an] 意外结果。”
+
+> var hoisting was thus unintended consequence of function hoisting, no block scope, JS as a 1995 rush job. ES6 'let' may help.
+
+## 暂时性死区
+
+在代码块内，使用 let、const 命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）。
+
+```js
+// 源代码
+{
+    a = 2;
+    let a ;
+    a = 3
+}
+
+// 加入TDZ后的代码
+{
+    // 变量提升，创建
+    let a ;
+    // TDZ 区开始---
+    a = 2；
+    a ;//此时等同于a 初始化为undefined
+    // TDZ 区结束---
+    // 此时可以访问a
+    a = 3
+}
+```

@@ -1,0 +1,249 @@
+---
+slug: other-alog
+title: 常见算法
+author: Favori
+date: 2021-03-20
+hero: ./hero.webp
+excerpt: 一些比较常见算法
+---
+
+![Alog](./hero.webp)
+
+
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+import Draw from "../../../../components/draw";
+
+## 有效的括号
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+
+```js
+const isValid = function (s) {
+  if (s.length % 2 === 1) {
+    return false;
+  }
+  const regObj = {
+    "{": "}",
+    "(": ")",
+    "[": "]",
+  };
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "{" || s[i] === "(" || s[i] === "[") {
+      stack.push(s[i]);
+    } else {
+      const cur = stack.pop();
+      if (s[i] !== regObj[cur]) {
+        return false;
+      }
+    }
+  }
+
+  if (stack.length) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+## 公共前缀
+
+编写一个函数来查找字符串数组中的最长公共前缀。
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1：
+
+输入：strs = ["flower","flow","flight"]
+输出："fl"
+
+示例 2：
+
+输入：strs = ["dog","racecar","car"]
+输出：""
+解释：输入不存在公共前缀。
+
+```js
+const longestCommonPrefix = function (strs) {
+  const str = strs[0];
+  let index = 0;
+  while (index < str.length) {
+    const strCur = str.slice(0, index + 1);
+    for (let i = 0; i < strs.length; i++) {
+      if (!strs[i] || !strs[i].startsWith(strCur)) {
+        return str.slice(0, index);
+      }
+    }
+    index++;
+  }
+  return str;
+};
+
+```
+
+## 无重复子串
+
+给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+
+
+示例 1:
+
+输入: s = "abcabcbb"
+输出: 3
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+
+示例 2:
+
+输入: s = "bbbbb"
+输出: 1
+解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+
+示例 3:
+
+输入: s = "pwwkew"
+输出: 3
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+
+示例 4:
+
+输入: s = ""
+输出: 0
+
+
+```js
+const lengthOfLongestSubstring = function (s) {
+  if (s.length === 0) {
+    return 0;
+  }
+
+  let left = 0;
+  let right = 1;
+  let max = 0;
+  while (right <= s.length) {
+    let lr = s.slice(left, right);
+    const index = lr.indexOf(s[right]);
+
+    if (index > -1) {
+      left = index + left + 1;
+    } else {
+      lr = s.slice(left, right + 1);
+      max = Math.max(max, lr.length);
+    }
+    right++;
+  }
+  return max;
+};
+
+```
+
+
+## 在制定数据源里面生成一个长度为 n 的不重复随机数组
+
+```js
+
+function getTenNum(testArray, n) {
+  const cloneArr = [...testArray];
+  let result = [];
+  for (let i = 0; i < n; ++i) {
+    const random = Math.floor(Math.random() * cloneArr.length);
+    const cur = cloneArr[random];
+    result.push(cur);
+    cloneArr.splice(random, 1);
+  }
+  return result;
+}
+const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const resArr = getTenNum(testArray, 14);
+
+```
+
+
+
+## 全排列
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+const permute = nums => {
+    if (!nums) return [];
+    const res = [];
+    // path是组合的数组
+    const backtrack = path => {
+        if (path.length === nums.length) {
+            // 长度满足条件，推入res数组
+            res.push(path);
+            return;
+        }
+        nums.forEach(n => {
+            // path中已经有n，放弃此轮
+            if (path.includes(n)) return;
+            // 将n加入path继续找
+            backtrack([...path, n]);
+        });
+    };
+    // 从空数组开始
+    backtrack([]);
+    return res;
+};
+
+
+```
+
+## 判断是否环形链表
+
+```js
+const hasCycle = function(head) {
+  if(head === null || head.next === null) {
+    return false;
+  }
+  let slow = head;
+  let fast = head.next;
+  while (slow) {
+    if(slow === fast) {
+      return true
+    }
+    slow = slow?.next || null;
+    fast = fast?.next?.next || null;
+  }
+  return false;
+};
+```
+
+## 区间调度
+
+![区间调度](./区间调度.png)
+
+```js
+// 有许多[start, end]的闭区间, 请设计一个算法, 算出这些区间中, 最多有几个互不相交的区间。
+// 比如intvs = [[1,3], [2,4], [3,6]]
+// 这些区间最多有两个区间互不相交, 即 [1,3], [3,6], intervalSchedule函数此时应该返回2
+
+function intervalSchedule(intvs) {
+    if (intvs.length === 0) {
+        return 0;
+    }
+
+    const sortArray = intvs.sort((a, b) => a[1] - b[1]);
+
+    let count = 1; // 最少有一个区间不相交
+    let xEnd = sortArray[0][1];
+
+    for (let item of intvs) {
+        const start = item[0];
+        // 这里是> 或者 >=取决于, [1,3][3,6], 3算不算相交
+        if (start >= xEnd) {
+            count++;
+            xEnd = item[1];
+        }
+    }
+    return count;
+}
+
+console.log(intervalSchedule([
+    [1, 3],
+    [2, 4],
+    [3, 6]
+]))
+```

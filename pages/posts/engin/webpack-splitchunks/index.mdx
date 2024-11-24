@@ -1,0 +1,117 @@
+---
+slug: engin-webpack-splitchunks
+title: Webpack Splitchunks 详解
+author: Favori
+date: 2022-02-15
+hero: ./hero.webp
+excerpt: webpack 优化
+---
+
+![Webpack Splitchunks](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Peter Tarka</div>
+
+import Draw from "../../../../components/draw";
+
+## 使用目的
+
+用 SplitChunks 插件来控制 Webpack 打包生成的 js 文件的内容的精髓就在于，防止模块被重复打包，拆分过大的 js 文件，合并零散的 js 文件。最终的目的就是减少请求资源的大小和请求次数。
+
+## SplitChunks 插件配置选项
+
+### chunks
+
+选项，决定要提取那些模块。
+
+默认是 async：只提取异步加载的模块出来打包到一个文件中。
+异步加载的模块：通过 import('xxx')或 require(['xxx'],() =>{})加载的模块。
+
+initial：提取同步加载和异步加载模块，如果 xxx 在项目中异步加载了，也同步加载了，那么 xxx 这个模块会被提取两次，分别打包到不同的文件中。
+同步加载的模块：通过 import xxx 或 require('xxx')加载的模块。
+
+all：不管异步加载还是同步加载的模块都提取出来，打包到一个文件中。
+
+如果设为"initial"，那么该缓存组只会分离应用初始加载需要的包。有时这是有必要的，因为设为一味设为"all"的话，打包出来的 js 都会在应用初始载入时加载，即使里面包含一些首页用不到的模块。
+
+### minSize
+
+规定被提取的模块在压缩前的大小最小值，单位为字节，默认为 30000，只有超过了 30000 字节才会被提取。
+
+### maxSize
+
+把提取出来的模块打包生成的文件大小不能超过 maxSize 值，如果超过了，要对其进行分割并打包生成新的文件。单位为字节，默认为 0，表示不限制大小。
+
+### minChunks
+
+表示要被提取的模块最小被引用次数，引用次数超过或等于 minChunks 值，才能被提取。
+
+### maxAsyncRequests
+
+最大的按需(异步)加载次数，默认为 6。
+
+### maxInitialRequests
+
+打包后的入口文件加载时，还能同时加载 js 文件的数量（包括入口文件），默认为 4。
+
+先说一下优先级 maxInitialRequests / maxAsyncRequests < maxSize < minSize。
+
+### automaticNameDelimiter
+
+打包生成的 js 文件名的分割符，默认为~。
+
+### name
+
+打包生成 js 文件的名称。
+
+### cacheGroups
+
+核心重点，配置提取模块的方案。里面每一项代表一个提取模块的方案。下面是 cacheGroups 每项中特有的选项，其余选项和外面一致，若 cacheGroups 每项中有，就按配置的，没有就使用外面配置的。
+
+test 选项：用来匹配要提取的模块的资源路径或名称。值是正则或函数。
+
+priority 选项：方案的优先级，值越大表示提取模块时优先采用此方案。默认值为 0。
+
+reuseExistingChunk 选项：true/false。为 true 时，如果当前要提取的模块，在已经在打包生成的 js 文件中存在，则将重用该模块，而不是把当前要提取的模块打包生成新的 js 文件。
+
+enforce 选项：true/false。为 true 时，忽略 minSize，minChunks，maxAsyncRequests 和 maxInitialRequests 外面选项
+
+## 示例
+
+```js
+const config = {
+  //...
+  optimization: {
+    runtimeChunk: 'single',
+    minimizer: [new OptimizeCSSAssetsPlugin({})],
+    splitChunks: { 
+      chunks: 'all',  //处理的 chunk 类型
+      minSize: 20000, // 允许新拆出 chunk 的最小体积
+      minRemainingSize: 0, //最小剩余尺寸
+      minChunks: 1,  //拆分前被 chunk 公用的最小次数
+      maxAsyncRequests: 30, //每个异步加载模块最多能被拆分的数量
+      maxInitialRequests: 30, //每个入口和它的同步依赖最多能被拆分的数量
+      enforceSizeThreshold: 50000, //强制执行拆分的体积阈值并忽略其他限制
+      cacheGroups: {
+        react: {
+          // name: "react",
+          filename: 'react.js',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](react)[\\/]/,
+          priority: -1,
+          reuseExistingChunk: true, // 复用已被拆出的依赖模块，而不是继续包含在该组一起生成
+        },
+        'react-dom': {
+          // name: "react-dom",
+          filename: 'react-dom.js',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](react-dom)[\\/]/,
+          priority: -1,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
+}
+```

@@ -1,0 +1,197 @@
+---
+slug: react-virtuallist
+title: react virtualList 虚拟列表无限滚动实现
+author: Favori
+date: 2021-09-16
+hero: ./hero.webp
+excerpt: 用react实现虚拟滚动
+---
+
+![Virtuallist](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：Mako Tsereteli</div>
+
+import Draw from "../../../../components/draw";
+
+## 分析
+
+为了提升性能，不能一次性把大量数据直接渲染到页面上，所以就需要一个机制来实现一个虚拟的列表，只渲染用户可视区域看到内容
+
+1. 下拉到底，继续加载数据并拼接
+2. 渲染的数据只是用户看到的内容
+
+## 虚拟列表
+
+虚拟列表的实现，实际上就是在首屏加载的时候，只加载可视区域内需要的列表项，当滚动发生时，动态通过计算获得可视区域内的列表项，并将非可视区域内存在的列表项删除。
+
+如下图所示
+
+<div className="art-container">
+  <Draw name="virtuallist" />
+</div>
+
+## 核心变量
+
+0. 通过容器高度和每一条的高度计算视口应该渲染的可以看到的条数（visibleCount）
+1. 计算当前可视区域起始索引位置（start）
+2. 计算当前可视区域结束索引位置（end）
+3. 计算当前可视区域的数据，并渲染到页面中 （visibleData）
+4. 计算 startIndex 对应的数据在整个列表中的偏移位置 startOffset 并设置到列表上 （offset）
+
+```js
+const visibleCount = Math.ceil(containerHeight / itemHeight);
+
+const start = Math.floor(scrollTop / itemHeight);
+
+const end = start + visibleCount;
+
+const visibleData = data.slice(start, Math.min(end, data.length));
+
+const offset = scrollTop - (scrollTop % itemHeight);
+```
+
+## 无限滚动
+
+滚动时要设置数据的视口，即通过设置 star 的方式间接地设置数据的滑动窗口
+当滚动后，由于渲染区域相对于可视区域已经发生了偏移，此时我需要获取一个偏移量 offset，通过样式控制将渲染区域偏移至可视区域中。
+
+## 实现
+
+```tsx
+import "./styles.css";
+import Faker from "faker";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+
+const itemHeight = 100;
+const total = 1000000;
+
+export default function App() {
+  const ref = useRef();
+
+  // 可视区域高度
+  const containerHeight = document.body.clientHeight;
+  // 可显示的列表项数
+  const visibleCount = Math.ceil(containerHeight / itemHeight);
+
+  const [listData, setListData] = useState([]);
+  // 偏移量
+  const [startOffset, setStartOffset] = useState(0);
+  // 起始索引
+  const [start, setStart] = useState(0);
+  // 结束索引
+  const end = start + visibleCount;
+
+  // 列表总高度
+  const listHeight = useMemo(() => {
+    return listData.length * itemHeight;
+  }, [listData]);
+
+  // 获取真实显示列表数据
+  const visibleData = useMemo(() => {
+    return listData.slice(start, Math.min(end, listData.length));
+  }, [listData, start, end]);
+
+  //加载随机数据
+  const getTenListData = useCallback(() => {
+    if (listData.length >= total) {
+      return [];
+    }
+    return new Array(10).fill({}).map((item) => ({
+      id: Faker.random.uuid(),
+      avatar: Faker.image.avatar(),
+      title: Faker.name.firstName(),
+      content: Faker.company.companyName(),
+    }));
+  }, [listData]);
+
+  useEffect(() => {
+    const data = getTenListData();
+    setListData(data);
+  }, []);
+
+  const scrollToTop = () => {
+    ref.current.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollEvent = useCallback(
+    (e) => {
+      // 当前滚动位置
+      const scrollTop = ref.current.scrollTop;
+      // 此时的开始索引
+      const start = Math.floor(scrollTop / itemHeight);
+      const end = start + visibleCount;
+      setStart(start);
+      if (end >= listData.length) {
+        const data = listData.concat(getTenListData());
+        setListData(data);
+      }
+      // 此时的偏移量
+      const offset = scrollTop;
+      setStartOffset(offset);
+    },
+    [listData, getTenListData, visibleCount]
+  );
+
+  useEffect(() => {
+    let dom = ref.current;
+    scrollEvent();
+    if (dom) {
+      dom.addEventListener("scroll", scrollEvent);
+    }
+    return () => {
+      if (dom) {
+        dom.removeEventListener("scroll", scrollEvent);
+      }
+    };
+  }, [scrollEvent]);
+
+  return (
+    <div className="infinite-list-container" ref={ref}>
+      <div className="scrollTopBtn" onClick={scrollToTop}>
+        ∧
+      </div>
+
+      <div
+        className="infinite-list-phantom"
+        style={{ height: Math.max(listHeight, containerHeight + 1) }}
+      />
+      <div
+        className="infinite-list"
+        style={{ transform: `translate3d(0,${startOffset}px,0)` }}
+      >
+        {visibleData.map((item) => (
+          <div
+            className="infinite-list-item"
+            key={item.id}
+            style={{ height: itemHeight }}
+          >
+            <div
+              className="left-section"
+              style={{ backgroundImage: `url(${item.avatar})` }}
+            ></div>
+            <div className="right-section">
+              <div className="title">{item.title}</div>
+              <div className="desc">{item.content}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+<div className="art-container">
+  <a
+    href="https://codesandbox.io/s/react-virtuallist-qury0"
+    target='_blank'
+  >
+    <img src='https://codesandbox.io/static/img/play-codesandbox.svg' />
+  </a>
+</div>

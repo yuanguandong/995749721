@@ -1,0 +1,183 @@
+---
+slug: react-redux
+title: 手写Mini Redux实现
+author: Favori
+date: 2021-09-04
+hero: ./hero.webp
+excerpt: 手写一个简易版的redux实现，包含了核心逻辑
+---
+
+![Redux](./hero.webp)
+
+
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+
+## 实现
+我们用2个文件来实现store和connect的逻辑，用2个文件来做测试用例
+目录结构如下：
+
+```js
+.
+├── connect.js //connect实现
+├── index.jsx  //测试用例
+├── reducer.js //测试用例的reducer
+└── store.js  //store实现
+```
+
+## store实现 store.js
+主要实现全局数据仓库，getStore,dispatch,subscribe方法
+```js
+// 迷你版redux实现,全局数据仓库构造函数
+function createStore(reducers) {
+  var state = {};
+  var listeners = [];
+  var getState = () => state;
+  var dispatch = (actionObj) => {
+    let [model, action] = actionObj.type.split("/"); 
+    state = reducers[model](state, action);
+    listeners.forEach((l) => l());
+  };
+  var subscribe = (listener) => {
+    listeners.push(listener);
+    return () => {
+      listeners = listeners.filter((l) => l !== listener);
+    };
+  };
+  return {
+    getState,
+    dispatch,
+    subscribe,
+  };
+}
+export default createStore;
+```
+
+## connect实现, connect.js
+connect实现主要使用了高阶组件HOC
+
+```js
+import React, { useState, useMemo, useReducer } from "react";
+import createStore from "./store";
+import reducers from "./reducer";
+
+function baseReducer(state, action) {
+  return {
+    ...state,
+    ...action.payload,
+  };
+}
+
+//迷你简易版redux-react实现
+const ConnectAdvanced = ({ WrappedComponent, actualChildProps }) => {
+  const renderedWrappedComponent = useMemo(
+    () => <WrappedComponent {...actualChildProps} />,
+    [WrappedComponent, actualChildProps]
+  );
+  return <>{renderedWrappedComponent}</>;
+};
+
+const ConnectFunction = (props) => {
+  const { store, mapStateToProps, dispatch, state, component } = props;
+  // let [actualProps, setActualProps] = useState(state);
+  let [actualProps,dispatchBase] = useReducer(baseReducer,state)
+  store.subscribe(function () {
+    const storeData = store.getState();
+    let state = mapStateToProps(storeData);
+    // setActualProps(state);
+    dispatchBase({
+      type:'save',
+      payload:state
+    })
+  });
+  return (
+    <ConnectAdvanced
+      WrappedComponent={component}
+      actualChildProps={{ ...actualProps, dispatch }}
+    />
+  );
+};
+
+const connect = (mapStateToProps) => {
+  var store = window.store
+    ? window.store
+    : (window.store = createStore(reducers));
+  const storeData = store.getState();
+  let state = mapStateToProps(storeData);
+  let dispatch = store.dispatch;
+  return (component) => {
+    return () => {
+      return (
+        <ConnectFunction
+          component={component}
+          store={store}
+          mapStateToProps={mapStateToProps}
+          dispatch={dispatch}
+          state={state}
+        />
+      );
+    };
+  };
+};
+
+export default connect;
+```
+
+
+## reducer实现, reducer.js
+全局reducers
+```js
+//数据处理器，纯函数
+var countReducer = (state = {}, action) => {
+  if (!action) return state;
+  const { count = 0 } = state;
+  console.log(action);
+  switch (action) {
+    case "INCREMENT":
+      return { ...state, count: count + 1 };
+    case "DECREMENT":
+      return { ...state, count: count - 1 };
+    default:
+      return { ...state, count };
+  }
+};
+export default {countReducer}
+```
+
+
+## 测试用例 index.js
+
+```js
+import React from "react";
+import connect from "./connect";
+
+const Page = function (props) {
+  const { count = 0, dispatch = () => {} } = props;
+  console.log("count", count);
+  return (
+    <>
+      <div id="counter">count:{count}</div>
+      <button
+        id="addBtn"
+        onClick={() => {
+          dispatch({ type: "countReducer/INCREMENT" });
+        }}
+      >
+        addBtn
+      </button>
+      <button
+        id="minusBtn"
+        onClick={() => {
+          dispatch({ type: "countReducer/DECREMENT" });
+        }}
+      >
+        minusBtn
+      </button>
+    </>
+  );
+};
+
+const connectedPage = connect(({ count }) => ({ count }))(Page);
+export default connectedPage;
+
+```

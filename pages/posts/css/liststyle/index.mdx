@@ -1,0 +1,107 @@
+---
+slug: css-liststyle
+title: CSS联合选择器区分列表元素个数不同所要求的不同样式
+author: Favori
+date: 2019-04-30
+hero: ./hero.webp
+excerpt: 对于列表，在有些时候针对于不同个数的item会有不同的显示，比如col份数，用js固然可以，是否可以用css更简便的实现呢？
+---
+
+![Liststyle](./hero.webp)
+
+
+<div className={'img-desc'}>图：Nguyen Nhut</div>
+
+对于列表，在有些时候针对于不同个数的item会有不同的显示，比如col份数，用js固然可以，是否可以用css更简便的实现呢？
+
+## 实现
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>css3</title>
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+    }
+
+    ul {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 0;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+      vertical-align: top;
+      font-size: 13px;
+      border: 1px solid rgba(128, 128, 128, 0.5);
+      margin-bottom: 10px;
+      height: 100px;
+      text-align: center;
+      font-weight: bold;
+      line-height: 100px;
+      color:#fff;
+    }
+
+    /*ul只有一个子元素的样式*/
+    li:nth-last-child(1):first-child {
+      width: 100%;
+      background: #000;
+    }
+
+    /*ul有2个子元素的样式*/
+    /*li:nth-last-child(2):first-child,  是倒数第二个元素，又是第一个元素，说明li的父元素ul有2个子元素（起到了 判断某父元素下有几个子元素 的作用）*/
+    li:nth-last-child(2):first-child,
+    /* ~ 选择位于li:nth-last-child(2):first-child 即 第一个子元素之后的元素*/
+    li:nth-last-child(2):first-child~li {
+      width: calc(100% / 2);
+      background: #202020;
+    }
+
+    /*ul有3个子元素的样式*/
+    /*第一个元素宽度为1/3，字体颜色为蓝色*/
+    ul>*:nth-last-child(3):first-child {
+      width: calc(100% / 3);
+      background: #222;
+    }
+
+    /*第一个元素之后的第一个元素（即 有3个子元素的ul 的 第 2 个元素）*/
+    ul>*:nth-last-child(3):first-child~li:nth-last-child(2) {
+      width: calc(100% / 3);
+      background: #333;
+    }
+
+    /*第一个元素之后的第一个元素（即 有3个子元素的ul 的 第 3 个元素）*/
+    ul>*:nth-last-child(3):first-child~li:nth-last-child(1) {
+      width: calc(100% / 3);
+      background: #444;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="list">
+    <li>one</li>
+  </ul>
+  <ul class="list">
+    <li>two</li>
+    <li>two</li>
+  </ul>
+  <ul class="list">
+    <li>three</li>
+    <li>three</li>
+    <li>three</li>
+  </ul>
+</body>
+
+</html>
+
+```
+
+## CodePen示例
+<iframe class="art-container" height='400' data-testid="ne-thirdparty-reader-iframe" src="https://codepen.io/favori/embed/BaRYEBg" frameborder="0" allowfullscreen=""></iframe>

@@ -1,0 +1,194 @@
+---
+slug: other-docker
+title: Docker 常用命令
+author: Favori
+date: 2022-11-06
+hero: ./hero.webp
+excerpt: 精简 Docker 常用命令
+---
+
+![Docker](./hero.webp)
+
+
+
+<div className={"img-desc"}>图：network</div>
+
+## Docker
+
+Docker 是一个应用打包、分发、部署的工具,你也可以把它理解为一个轻量的虚拟机是运行环境和应用的集合
+
+## 编写 dockerfile
+
+```dockerfile
+FROM node:16
+LABEL maintainer="favori"
+
+# 复制代码
+ADD . /app
+
+# 设置容器启动后的默认运行目录
+WORKDIR /app
+
+# 运行命令，安装依赖
+# RUN 命令可以有多个，但是可以用 && 连接多个命令来减少层级。
+# 例如 RUN npm install && cd /app && mkdir logs
+RUN npm install
+
+# CMD 指令只能一个，是容器启动后执行的命令，算是程序的入口。
+# 如果还需要运行其他命令可以用 && 连接，也可以写成一个shell脚本去执行。
+# 例如 CMD cd /app && ./start.sh
+CMD npm run start
+```
+
+## 打包镜像
+
+```bash
+docker build -t test:v2 .
+```
+
+参数说明：
+
+https://docs.docker.com/engine/reference/commandline/build/
+
+## 启动镜像(实例化为容器)
+
+```bash
+docker run -p 8080:8080 --name test test:v2
+```
+
+```bash
+docker run -p 8080:8080 --name test test:v2 -d
+```
+
+```bash
+docker run --name repo alpine/git clone https://github.com/docker/getting-started.git
+```
+
+## 停止容器
+
+停止某一个容器
+
+```bash
+docker stop test
+```
+
+停止所有容器运行：
+
+```bash
+docker stop $(docker ps -a -q)
+```
+
+删除所有停止运行的容器：
+
+```bash
+docker rm $(docker ps -a -q)
+```
+
+## 目录挂载
+
+```bash
+docker run -p 9090:8080 --name test-volumes -v /Users/yuanguandong/Desktop/github/code/docker/demoweb:/app -d test:v2
+
+```
+
+## Docker-compose
+
+通过 docker-compose.yml 拉起多个 docker 容器
+
+要把项目依赖的多个服务集合到一起，我们需要编写一个 docker-compose.yml 文件，描述依赖哪些服务
+
+参考文档：https://docs.docker.com/compose/
+
+```yml
+version: "3.7"
+
+services:
+  app:
+    build: ./
+    ports:
+      - 80:8080
+    volumes:
+      - ./:/app
+    environment:
+      - TZ=Asia/Shanghai
+  redis:
+    image: redis:5.0.13
+    volumes:
+      - redis:/data
+    environment:
+      - TZ=Asia/Shanghai
+
+volumes:
+  redis:
+```
+
+在 docker-compose.yml 文件所在目录，执行：
+
+```
+docker-compose up
+```
+
+就可以跑起来了。
+
+命令参考：https://docs.docker.com/compose/reference/up/
+
+在后台运行只需要加一个 -d 参数
+
+```
+docker-compose up -d
+```
+
+查看运行状态：
+
+```
+docker-compose ps
+```
+
+停止运行：
+
+```
+docker-compose stop
+```
+
+重启：
+
+```
+docker-compose restart
+
+```
+
+重启单个服务：
+
+```
+docker-compose restart service-name
+```
+
+进入容器命令行：
+
+```
+docker-compose exec service-name sh
+```
+
+查看容器运行
+
+```
+log：docker-compose logs [service-name]
+```
+
+## 进入容器终端
+
+```
+docker exec -it test-v bash
+```
+
+## 复制文件到容器
+
+```
+docker cp fromPath container:targetPath
+```
+
+## 常见参数
+
+-i : 让容器的标准输入保持打开
+
+-t : 让 docker 分配一个伪终端并绑定到容器的标准输入上
