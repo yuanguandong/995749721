@@ -1,0 +1,467 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><meta name="title" content="前端安全" data-next-head=""/><meta name="author" content="Favori" data-next-head=""/><link rel="icon" type="image/png" sizes="70x70" href="/favicon-70x70.png" data-next-head=""/><title data-next-head="">前端安全</title><style data-next-head="">:root{--nextra-bg:250,250,250;}.dark{--nextra-bg:17,17,17;}</style><link rel="preload" href="/_next/static/css/552cfd626c7d3395.css" as="style"/><link rel="stylesheet" href="/_next/static/css/552cfd626c7d3395.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_next/static/chunks/webpack-7aa77703737d139f.js" defer=""></script><script src="/_next/static/chunks/framework-4e48f2cc6a39465a.js" defer=""></script><script src="/_next/static/chunks/main-d7c2d8830adc2477.js" defer=""></script><script src="/_next/static/chunks/pages/_app-b735a2408b00229b.js" defer=""></script><script src="/_next/static/chunks/2195-a5c3dde35c1c11c2.js" defer=""></script><script src="/_next/static/chunks/pages/posts/other/security-d44b349a02a64be2.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_buildManifest.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_ssgManifest.js" defer=""></script></head><body><div id="__next"><script>((e,t,r,n,o,a,i,s)=>{let l=document.documentElement,u=["light","dark"];function c(t){(Array.isArray(e)?e:[e]).forEach(e=>{let r="class"===e,n=r&&a?o.map(e=>a[e]||e):o;r?(l.classList.remove(...n),l.classList.add(t)):l.setAttribute(e,t)}),s&&u.includes(t)&&(l.style.colorScheme=t)}if(n)c(n);else try{let e=localStorage.getItem(t)||r,n=i&&"system"===e?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":e;c(n)}catch(e){}})("class","theme","system",null,["light","dark"],null,true,true)</script><div class="Layout_container__o59WT"><header class="Header_header__aO32P"><div class="Header_headerInner__np1cA"><div class="Header_search__c61pn"></div><div class="Header_rightNav__NG1Lv"><button class="Header_themeButton__zM4Kv" aria-label="Toggle theme"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg></button><a href="https://github.com/yuanguandong" target="_blank" rel="noopener noreferrer" class="Header_navLink__Kg8GB"><svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span class="hidden md:inline ml-1">GitHub</span></a></div></div></header><main class="Layout_main__5FFfL"><article class="_container _prose max-md:_prose-sm dark:_prose-invert" dir="ltr"><h1>前端安全</h1><div class="_mb-8 _flex _gap-3 _items-center"><div class="_not-prose _grow dark:_text-gray-400 _text-gray-600"><div class="_flex _flex-wrap _items-center _gap-1">Favori<!-- -->,<time dateTime="2021-09-25T00:00:00.000Z">Sat Sep 25 2021</time></div></div><div class="_flex _items-center _gap-3 print:_hidden"></div></div><p><img alt="Security" loading="lazy" width="1200" height="900" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 240&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoIAAYAAkA4JbACdLoAArd1SkBgAP7qXyYL7vfEHts/e12JMbepL+q19vDXSBlAcWobKTuLYmnDJLI9jfpK1n2EklWGgRx//M5IEh73ptT9FQDS60AAAA==&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/hero.3907e468.webp"/></p>
+<div class="img-desc">图：Mako Tsereteli</div>
+<!-- -->
+<h2 id="总览" class="subheading-h2">总览<a href="#总览" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>浏览器相关：</p>
+<ol>
+<li>XSS</li>
+<li>CSRF</li>
+<li>HTTPS</li>
+<li>CSP (内容安全策略, 可以禁止加载外域代码, 禁止外域提交等等)</li>
+<li>HSTS (强制客户端使用HTTPS与服务端建立连接)</li>
+<li>X-Frame-Options (控制当前页面是否可以被嵌入到Ifrmae中)</li>
+<li>SRI (subresource intergrity 子资源完整性, 前端可以用webpack-subresource-integrity插件, 在每个script上添加hash值, 校验加载的资源是否和当时打包生成的一致)</li>
+<li>Referrer-Policy (控制referer的携带策略)</li>
+</ol>
+<p>Node(服务端)相关</p>
+<ol>
+<li>本地文件操作相关：路径拼接导致的文件泄露</li>
+<li>ReDOS</li>
+<li>时序攻击</li>
+<li>ip origin referrer等request headers的校验(在做爬虫应用的时候对此会有深刻的体会)</li>
+</ol>
+<h2 id="xss" class="subheading-h2">XSS<a href="#xss" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>Cross-site scripting, 跨站脚本, 通常简称为XSS. </p>
+<p><code class="nextra-code" dir="ltr">为什么简写为XSS而不是CSS? 因为CSS被广泛应用于样式的称呼里, 而Cross意味交叉, X字母正好是符合交叉的含义, 所以简称为XSS。</code></p>
+<p>说白了就是攻击者想尽一切办法将可执行代码注入到网页中, 而恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。</p>
+<h3 id="外在表现上-都有哪些攻击场景" class="subheading-h3">外在表现上, 都有哪些攻击场景?<a href="#外在表现上-都有哪些攻击场景" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<ol>
+<li>评论区植入js代码(即可输入的地方植入js代码)</li>
+<li>url上拼接js代码</li>
+</ol>
+<ul>
+<li>TIPS: 有点同学可能觉得在这种场景下, 用户能输入的代码长度有限, 根本构不成什么威胁?
+然而攻击者是可以通过引入外部脚本来实现复杂攻击的.</li>
+</ul>
+<h3 id="具体从技术角度上分析-都有哪些xss攻击的类型呢" class="subheading-h3">具体从技术角度上分析, 都有哪些xss攻击的类型呢?<a href="#具体从技术角度上分析-都有哪些xss攻击的类型呢" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>1、 存储型 Server</p>
+<ul>
+<li>场景：常见于带有用户保存数据的网站功能，攻击者通过可输入区域来注入恶意代码, 如论坛发帖、商品评论、用户私信等。</li>
+<li>攻击步骤：<!-- -->
+<ol>
+<li>攻击者将恶意代码提交到目标网站的数据库中</li>
+<li>用户打开目标网站时，服务端将恶意代码从数据库中取出来，拼接在HTML中返回给浏览器(因为用户之间是可以相互看到帖子、评论等的)</li>
+<li>用户浏览器在收到响应后解析执行，混在其中的恶意代码也同时被执行</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户行为，调用目标网站的接口执行攻击者指定的操作。</li>
+</ol>
+</li>
+</ul>
+<p>2、 反射型 Server</p>
+<p>与存储型的区别在于，存储型的恶意代码通过可输入区域, 存储在数据库中，而反射型的恶意代码拼接在URL上。
+由于需要用户主动打开恶意的 URL 才能生效，攻击者往往会结合多种手段诱导用户点击。</p>
+<ul>
+<li>场景：通过 URL 传递参数的功能，如网站搜索、跳转等。</li>
+<li>攻击步骤：<!-- -->
+<ol>
+<li>攻击者构造出特殊的 URL，其中包含恶意代码。</li>
+<li>用户打开带有恶意代码的 URL 时，网站服务端将恶意代码从 URL 中取出，拼接在 HTML 中返回给浏览器。</li>
+<li>用户浏览器接收到响应后解析执行，混在其中的恶意代码也被执行。</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站的接口执行攻击者指定的操作。</li>
+</ol>
+</li>
+</ul>
+<p>3、 Dom型 Browser</p>
+<p>DOM 型 XSS 攻击中，取出和执行恶意代码由浏览器端完成，属于前端 JavaScript 自身的安全漏洞，而其他两种 XSS 都属于服务端的安全漏洞。</p>
+<ul>
+<li>场景：通过 URL 传递参数的功能，如网站搜索、跳转等。</li>
+<li>攻击步骤：<!-- -->
+<ol>
+<li>攻击者构造出特殊的 URL，其中包含恶意代码。</li>
+<li>用户打开带有恶意代码的 URL。</li>
+<li>用户浏览器接收到响应后解析执行，前端 JavaScript 取出 URL 中的恶意代码并执行。</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站的接口执行攻击者指定的操作。</li>
+</ol>
+</li>
+</ul>
+<h3 id="简单模拟一下dom型xss攻击" class="subheading-h3">简单模拟一下Dom型XSS攻击?<a href="#简单模拟一下dom型xss攻击" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<ol>
+<li>index.html</li>
+</ol>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;!</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">DOCTYPE</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> html</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">html</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> lang</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;zh&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">head</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> charset</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;UTF-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> http-equiv</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;X-UA-Compatible&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> content</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;IE=edge&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">            name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;viewport&quot;</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">            content</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no&quot;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">title</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;XSS&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">title</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">head</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">body</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;跳转到新地址&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">body</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> src</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;type-dom.js&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">html</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="2">
+<li>type-dom.js</li>
+</ol>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> a</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getElementsByTagName</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;a&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> queryObject</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {};</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> search</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> window.location.search;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">search.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">replace</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">[</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">^</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">&amp;=?]</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">)=(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">[</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">^</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">&amp;]</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">)</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">g</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">m</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">$1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">$2</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (queryObject[$1] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> decodeURIComponent</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">($2)));</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">a.href </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> queryObject.redirectUrl;</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="3">
+<li>打开当前index.html, 添加参数redirectUrl访问</li>
+</ol>
+<p>比如</p>
+<p><code class="nextra-code" dir="ltr">redirectUrl=javascript:alert(&#x27;哈哈哈笨蛋!!&#x27;)</code></p>
+<ol start="4">
+<li>
+<p>点击a链接发现已经被xss攻击了.</p>
+</li>
+<li>
+<p>长度有限制</p>
+</li>
+</ol>
+<p>比如我们写这样一段脚本, 目的是创建一个script标签并且引入remote.js文件, 将这一串代码作为redirectUrl的值访问链接.</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">var</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> script </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">createElement</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;script&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">script.type </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> &#x27;text/javascript&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">script.async </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">script.src </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> &#x27;remote.js&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">var</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getElementsByTagName</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;script&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">s.parentNode.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">insertBefore</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(script, s);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>新建remote.js文件, 来尝试耗性能的代码.</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> count </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(window.navigator.userAgent);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">while</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(count</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">++</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 100</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;我要通过巨量运算把你搞崩溃&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="6">
+<li>而如果我们网站的cookie里有重要的用户信息, 那么攻击者是否就可以通过document.cookie获取到了?\</li>
+</ol>
+<p>比如我们在原来的网站脚本type-dom.js里设置一下cookie, 然后在攻击脚本remote.js里获取.</p>
+<p><code class="nextra-code" dir="ltr">document.cookie=&quot;name=john12313&quot;;</code></p>
+<p><code class="nextra-code" dir="ltr">console.log(document.cookie);</code></p>
+<p>但是聪明的同学应该也想到了, 只要我们给重要的cookie设置了http-only, 就算被dom xss攻击了, 攻击者也造不成大的影响.</p>
+<ol start="7">
+<li>再来试试访问url就直接出发的xss攻击.</li>
+</ol>
+<p>type-dom.js</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">write</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(queryObject.name)</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>添加参数访问url,
+<code class="nextra-code" dir="ltr">name=&lt;script&gt;window.alert(1)&lt;/script&gt;</code></p>
+<ol start="8">
+<li>可以试一下这个网站, <a href="https://alf.nu/alert1" target="_blank" rel="noreferrer">https://alf.nu/alert1</a></li>
+</ol>
+<h3 id="如何防范xss攻击呢" class="subheading-h3">如何防范XSS攻击呢?<a href="#如何防范xss攻击呢" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>主旨：防止攻击者提交恶意代码，防止浏览器执行恶意代码</p>
+<ol>
+<li>
+<p>对数据进行严格的输出编码：如HTML元素的编码，JS编码，CSS编码，URL编码等等</p>
+<ul>
+<li>避免拼接 HTML；Vue/React 技术栈，避免使用 v-html / dangerouslySetInnerHTML</li>
+</ul>
+</li>
+<li>
+<p>CSP HTTP Header，即 Content-Security-Policy（不支持CSP的旧版浏览器可以设置X-XSS-Protection）</p>
+<ul>
+<li>增加攻击难度，配置CSP(本质是建立白名单，由浏览器进行拦截)</li>
+<li>Content-Security-Policy: default-src ‘self’ -所有内容均来自站点的同一个源（不包括其子域名）</li>
+<li>Content-Security-Policy: default-src ‘self’ *.trusted.com -允许内容来自信任的域名及其子域名 (域名不必须与CSP设置所在的域名相同)</li>
+<li>Content-Security-Policy: default-src <a href="https://john.com" target="_blank" rel="noreferrer">https://john.com</a> -该服务器仅允许通过HTTPS方式并仅从john.com域名来访问文档</li>
+</ul>
+<p>可以做到很多事情，比如：
+禁止加载外域代码，防止复杂的攻击逻辑。
+禁止外域提交，网站被攻击后，用户的数据不会泄露到外域。</p>
+</li>
+<li>
+<p>输入验证：比如一些常见的数字、URL、电话号码、邮箱地址等等做校验判断</p>
+</li>
+<li>
+<p>开启浏览器XSS防御：Http Only cookie，禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。</p>
+</li>
+<li>
+<p>验证码</p>
+</li>
+</ol>
+<h2 id="csrf" class="subheading-h2">CSRF<a href="#csrf" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>Cross-site request forgery, 跨站请求伪造.</p>
+<p>攻击者诱导受害者进入恶意网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的。</p>
+<h3 id="攻击步骤" class="subheading-h3">攻击步骤<a href="#攻击步骤" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<ol>
+<li>受害者登录 a.com，并保留了登录凭证（Cookie）</li>
+<li>攻击者引诱受害者访问了b.com</li>
+<li>b.com 向 a.com 发送了一个请求：a.com/act=xx浏览器会默认携带a.com的Cookie</li>
+<li>a.com接收到请求后，对请求进行验证，并确认是受害者的凭证，误以为是受害者自己发送的请求</li>
+<li>a.com以受害者的名义执行了act=xx</li>
+<li>攻击完成，攻击者在受害者不知情的情况下，冒充受害者，让a.com执行了自己定义的操作</li>
+</ol>
+<h3 id="攻击类型" class="subheading-h3">攻击类型<a href="#攻击类型" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<ul>
+<li>GET型：如在页面的某个 img 中发起一个 get 请求</li>
+</ul>
+<p><code class="nextra-code" dir="ltr">![](http://bank.example/withdraw?name=xxx&amp;amount=xxxx)</code></p>
+<ul>
+<li>POST型：通过自动提交表单到恶意网站</li>
+</ul>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">form</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> action</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;http://bank.example/withdraw&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> method</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">POST</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">input</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hidden&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;account&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;john&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">input</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hidden&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;amount&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;10000&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">input</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hidden&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;for&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> value</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hacker&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">form</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt; document.forms[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">].</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">submit</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(); &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt; </span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ul>
+<li>链接型：需要诱导用户点击链接</li>
+</ul>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> href</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;http://bank.example/withdraw?name=xxx&amp;amount=xxxx&quot;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> taget</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;_blank&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">错过再等一年！！！快来看看</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">a</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<h3 id="如何防范csrf的攻击呢" class="subheading-h3">如何防范CSRF的攻击呢?<a href="#如何防范csrf的攻击呢" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>首先咱们通过上面的举例可以知道, CSRF一般都是发生在第三方域名, 攻击者也无法获取到Cookie信息, 只是可以利用浏览器机制去使用Cookie.</p>
+<p>所以咱们可以针对这两点来看防范策略：</p>
+<h4 id="阻止第三方域名的访问" class="subheading-h4">阻止第三方域名的访问<a href="#阻止第三方域名的访问" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h4>
+<ol>
+<li>Cookie SameSite</li>
+</ol>
+<p>SameSite有3个值： Strict, Lax和None</p>
+<ul>
+<li>Strict：浏览器会完全禁止第三方cookie。比如a.com的页面中访问 b.com 的资源，那么a.com中的cookie不会被发送到 b.com服务器，只有从b.com的站点去请求b.com的资源，才会带上这些Cookie</li>
+<li>Lax：在跨站点的情况下，从第三方站点链接打开和从第三方站点提交 Get方式的表单这两种方式都会携带Cookie。但如果在第三方站点中使用POST方法或者通过 img、Iframe等标签加载的URL，这些场景都不会携带Cookie</li>
+<li>None：任何情况下都会发送 Cookie数据</li>
+</ul>
+<ol start="2">
+<li>同源检测</li>
+</ol>
+<p>通过检测request header中的origin referer等, 来确定发送请求的站点是否是自己期望中站点.</p>
+<p>比如referer, 我们可以在服务端去判断referer是否来自可信域, 同样也可以做一些referer发送时的设置：</p>
+<p>对于同源的链接和引用，会发送Referer，referer值为Host不带Path；跨域访问则不携带Referer。例如：aaa.com引用bbb.com的资源，不会发送Referer(服务端在接收到没有referer的请求时就不做响应)</p>
+<p>这就提到了Referrer-Policy这个请求头. <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy" target="_blank" rel="noreferrer">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referrer-Policy</a>, 控制什么情况下应该携带/不携带referer</p>
+<h4 id="提交请求时附加额外信息" class="subheading-h4">提交请求时附加额外信息<a href="#提交请求时附加额外信息" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h4>
+<p>因为攻击者无法通过csrf来获取本域下的cookie等信息, 所以可以利用这一点来做防范.</p>
+<ol>
+<li>CSRF Token</li>
+</ol>
+<ul>
+<li>用户打开页面的时候, 服务器利用加密算法给当前用户生成一个ToKen</li>
+<li>每次页面加载时, 前端把获取到的Token加到所有的能发请求的html元素上, 比如form, a</li>
+<li>每次前端发起请求, 都携带Token参数</li>
+<li>服务端每次接收请求, 都校验Token的有效性.</li>
+</ul>
+<ol start="2">
+<li>双重Cookie</li>
+</ol>
+<ul>
+<li>用户访问网站的时候, 服务器向浏览器注入一个额外的cookie, 内容随便, 比如csrfcookie=johnxzxfasdfasfew</li>
+<li>每次前端发起请求, 都在请求上拼接上csrfcookie这个参数, 参数值就从cookie里获取</li>
+<li>服务端每次收到请求, 就去校验请求参数里的值和cookie里的值是否一致</li>
+</ul>
+<p>但是这种方式安全性不如CSRF Token. 咱们来看一下原因：</p>
+<ol>
+<li>如果前端域名和服务端域名不一样, 比如前端 fe.a.com, 后端 rd.a.com, 那如果服务端希望前端能拿到csrfcookie, 就只能把这个cookie设置到a.com域下, 并且不能设置为http-only</li>
+<li>那么a.com的每个子域名就都可以获取到这个cookie</li>
+<li>一旦某个子域名遭到xss攻击, cookie就很容易被窃取或者被篡改.</li>
+<li>攻击者利用篡改或者窃取的csrfcookie, 就可以攻击fe.a.com了</li>
+</ol>
+<h2 id="node服务端相关的安全问题" class="subheading-h2">Node(服务端)相关的安全问题<a href="#node服务端相关的安全问题" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<h3 id="本地文件操作" class="subheading-h3">本地文件操作<a href="#本地文件操作" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>比如我们提供一个静态服务, 通过请求的参数url来返回给用户或者前端想要的资源.</p>
+<ol>
+<li>新建文件node/static-sever-dangerous.js</li>
+</ol>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> fs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;fs&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> http</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;http&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> path</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;path&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">http</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">createServer</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">req</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">res</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> file</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> path.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">join</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(__dirname, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;static&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, req.url);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">readFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(file, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">err</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">data</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (err) {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeHead</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">404</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, { </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;Content-Type&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;text/plain;charset=utf-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">end</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;找不到对应的资源&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">        return</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeHead</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, { </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;Content-Type&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;text/plain;charset=utf-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">end</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(data);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  })</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">listen</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8080</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;server listening on port 8080&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="2">
+<li>新建文件夹static, 里面随便放点文件, 提供给外界请求</li>
+</ol>
+<p>比如 test.json</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    &quot;name&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;john&quot;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="3">
+<li>启动服务, 本地请求url</li>
+</ol>
+<p><a href="http://localhost:8080/test.json" target="_blank" rel="noreferrer">http://localhost:8080/test.json</a></p>
+<p><a href="http://localhost:8080/test1.json" target="_blank" rel="noreferrer">http://localhost:8080/test1.json</a></p>
+<p>没有任何问题对吧? 存在的资源正常返回了, 不存在的资源返回404了.</p>
+<ol start="4">
+<li>请求一个不一样的url</li>
+</ol>
+<ul>
+<li>
+<p><a href="http://localhost:8080/?/../../../questions.md" target="_blank" rel="noreferrer">http://localhost:8080/?/../../../questions.md</a></p>
+</li>
+<li>
+<p><a href="http://localhost:8080/?/../../../private.js" target="_blank" rel="noreferrer">http://localhost:8080/?/../../../private.js</a></p>
+</li>
+</ul>
+<p>同级新建一个private.js, 里面写上一些私密信息</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 这是一个私密文件</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>可以看到, 攻击者可以通过拼接相对路径, 一次次猜你项目的结构, 并且可以访问到你服务器上的各种资源！</p>
+<ol start="5">
+<li>怎么解决这个问题?</li>
+</ol>
+<p>很多node框架都自带插件来屏蔽这个问题的发生</p>
+<p>比如express.static, koa-static, 当然也有第三方包支持(resolve-path)</p>
+<p>咱们用resove-path来解决一下这个问题.</p>
+<ul>
+<li>npm init</li>
+<li>yarn add resolve-path —registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noreferrer">https://registry.npm.taobao.org</a></li>
+<li>新建 static-sever-secure.js 文件</li>
+</ul>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> fs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;fs&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> http</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;http&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> path</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;path&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 引入resolve-path</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> resolvePath</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;resolve-path&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">http</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">createServer</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">req</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">res</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    try</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        // 先获取rootDir</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">        const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> rootDir</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> path.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">join</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(__dirname, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;static&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        // 调用resolvePath</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">        const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> file</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> resolvePath</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(rootDir, req.url);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">readFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(file, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">err</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">data</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">          if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (err) {</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">            // 把错误抛出去</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">            throw</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> err;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">          }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">          res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeHead</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, { </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;Content-Type&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;text/plain;charset=utf-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">          res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">end</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(data);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">catch</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(e) {</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        // catch住错误, 防止服务直接挂掉</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(e);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeHead</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">404</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, { </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;Content-Type&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;text/plain;charset=utf-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        res.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">end</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;找不到对应的资源&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  })</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">listen</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8081</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">); </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 改成8081端口</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;server listening on port 8081&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol>
+<li>可以看到resolve-path的源码对path做了严格的限制.</li>
+</ol>
+<h3 id="截图服务" class="subheading-h3">截图服务<a href="#截图服务" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>比如咱们来实现一个简单的截图服务</p>
+<ol>
+<li>安装好必要的npm包</li>
+</ol>
+<p><code class="nextra-code" dir="ltr">yarn add puppeteer-chromium-resolver koa --registry=https://registry.npm.taobao.org</code></p>
+<ol start="2">
+<li>新建 screen-shot.js</li>
+</ol>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">async</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> () </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> PCR</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;puppeteer-chromium-resolver&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> stats</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> PCR</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> browser</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> stats.puppeteer</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">launch</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        headless: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        args: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;--no-sandbox&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">],</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        executablePath: stats.executablePath,</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      })</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      .</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">catch</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">error</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(error);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> Koa</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> require</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;koa&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> app</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> Koa</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    app.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">use</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">async</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70"> ctx</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      const</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">url</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ctx.query;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">      // 这里演示不合理的Url校验</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">url) {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        ctx.body </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> &#x27;Invalid url&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">        return</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      ctx.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">set</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;Content-Type&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;image/png&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> page</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> browser.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">newPage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> page.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">goto</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(url, { waitUntil: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;networkidle2&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      ctx.body </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> page.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">screenshot</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({ encoding: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;binary&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, type: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;png&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">      await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> page.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">close</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    });</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    app.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">listen</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8083</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  </span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;server listening on port 8083&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  })();</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ol start="3">
+<li>访问url</li>
+</ol>
+<ul>
+<li><a href="http://localhost:8083/?url=http://localhost:8080/test.json" target="_blank" rel="noreferrer">http://localhost:8083/?url=http://localhost:8080/test.json</a></li>
+</ul>
+<p>这里咱们传入url为之前启动的不安全的静态服务. 可以看到我们直接截图了对应的资源</p>
+<ul>
+<li><a href="http://localhost:8083/x?url=file:///etc/zshrc" target="_blank" rel="noreferrer">http://localhost:8083/x?url=file:///etc/zshrc</a></li>
+</ul>
+<p>这里咱们传入url为文件系统的zshrc, 可以发现我们直接截图了系统文件的内容.</p>
+<h3 id="redos" class="subheading-h3">ReDOS<a href="#redos" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>新建redos.js, 分别看一下这三个例子的执行时间</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">time</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-1&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 能够匹配成功</span></span>
+<span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">A(B</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">C</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">D</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">test</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">timeEnd</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-1&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">time</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-2&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 不能匹配成功</span></span>
+<span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">A(B</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">C</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">D</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">test</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">timeEnd</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-2&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">time</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-3&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 不能匹配成功</span></span>
+<span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">A(B</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">C</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#DBEDFF">D</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">test</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`A${&#x27;C&#x27;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">repeat</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">)</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}X`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">timeEnd</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&#x27;case-3&#x27;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>可以看到, 当不能匹配成功的时候, 每多一个字符, 所消耗是时间都是指数增长的.</p>
+<p>因为咱们服务器经常会有正则去匹配一些传入的参数, 所以攻击者就可以利用正在表达式的这个特性, 来一直占用服务器运算资源, 造成服务器宕机.</p>
+<p>具体原理可以看这篇文章：<a href="https://snyk.io/node-js/connect" target="_blank" rel="noreferrer">https://snyk.io/node-js/connect</a></p>
+<p>正则表达式一般情况下会去匹配第一种可能性, 比如一个正确的字符串 ACCCD, 那么直接匹配到最后发现成功了, 耗时就很短.</p>
+<p>而比如ACCCX这样一个字符, 每当一次匹配不成功, 就会尝试回溯到上一个字符, 看看能不能有其他的组合来匹配到这个字符串.</p>
+<p>比如刚才说的ACCCX这样一个字符串, 会去尝试匹配四种不同的”C”字母组合来与其他字母组合, 看是否符合条件.</p>
+<ol>
+<li>CCC</li>
+<li>CC+C</li>
+<li>C+CC</li>
+<li>C+C+C.</li>
+</ol>
+<p>可以在写完正则后去这个网址测试一下 <a href="https://regex.rip/" target="_blank" rel="noreferrer">https://regex.rip/</a>? 测试是否会遭到reDos.</p>
+<h3 id="时序攻击" class="subheading-h3">时序攻击<a href="#时序攻击" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>这种攻击方式在咱们编码过程中可能很少见, 看下面这个例子</p>
+<p>比如咱们要匹配接收的数组和咱们定义好的数组是否完全一致, 如果一致才可以进行之后的操作.</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> compareArray</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">realArray</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">userInputArrary</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&lt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> realArray.</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">length</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; i</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">++</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">        if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (realArray[i] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">!==</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> userInputArray[i]) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">            return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>这样写有没有什么问题? 逻辑上没有任何问题, 但是有安全问题.</p>
+<p>因为我们如果判断到一个字符不相等, 就提前返回了！！</p>
+<p>这给攻击者提供了一种方式, 就是根据服务器的响应时间来碰撞出realArray的值.</p>
+<p>比如realArray = [2,3,6,1]</p>
+<p>攻击者开始尝试
+inputArray = [1,2]
+inputArray = [1,3]</p>
+<p>发现这两种的响应时间几乎一致, 则可以认为第一个数字不是1</p>
+<p>inputArray = [2, 2]</p>
+<p>发现响应时间延长了, 则可以认为第一个数字是2.</p>
+<p>长而久之, 就可以碰撞出真实的realArray了.</p></article></main><footer class="Footer_footer__hibhg"><div class="Footer_footerInner___6PzH"><div class="Footer_footerContent__7ET_v"><div class="Footer_footerLeft__6YSJc"><div class="Footer_footerMotto__hGlND"><p class="Footer_mottoContent__DZtOp"></p><p class="Footer_mottoAuthor__CLOkJ">—— </p></div></div><div class="Footer_footerRight__gZmlM"><div class="Footer_footerLinks__nX7_m"><a href="https://github.com/yuanguandong" class="Footer_footerLink__PHLXX">GitHub</a></div><div class="Footer_footerCopyright__v5EO_">© <!-- -->2024<!-- --> 重剑的博客 All rights reserved.</div><div class="Footer_footerICP__U9ArL"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="Footer_footerLink__PHLXX">蜀ICP备2024070350号-3</a></div></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/posts/other/security","query":{},"buildId":"rsL7KsAc9Qt_1PtcEy7yH","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>

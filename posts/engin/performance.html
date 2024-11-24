@@ -1,0 +1,336 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><meta name="title" content="Web 前端性能优化" data-next-head=""/><meta name="author" content="Favori" data-next-head=""/><link rel="icon" type="image/png" sizes="70x70" href="/favicon-70x70.png" data-next-head=""/><title data-next-head="">Web 前端性能优化</title><style data-next-head="">:root{--nextra-bg:250,250,250;}.dark{--nextra-bg:17,17,17;}</style><link rel="preload" href="/_next/static/css/552cfd626c7d3395.css" as="style"/><link rel="stylesheet" href="/_next/static/css/552cfd626c7d3395.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_next/static/chunks/webpack-7aa77703737d139f.js" defer=""></script><script src="/_next/static/chunks/framework-4e48f2cc6a39465a.js" defer=""></script><script src="/_next/static/chunks/main-d7c2d8830adc2477.js" defer=""></script><script src="/_next/static/chunks/pages/_app-b735a2408b00229b.js" defer=""></script><script src="/_next/static/chunks/2195-a5c3dde35c1c11c2.js" defer=""></script><script src="/_next/static/chunks/pages/posts/engin/performance-21a143c29c2c2d45.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_buildManifest.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_ssgManifest.js" defer=""></script></head><body><div id="__next"><script>((e,t,r,n,o,a,i,s)=>{let l=document.documentElement,u=["light","dark"];function c(t){(Array.isArray(e)?e:[e]).forEach(e=>{let r="class"===e,n=r&&a?o.map(e=>a[e]||e):o;r?(l.classList.remove(...n),l.classList.add(t)):l.setAttribute(e,t)}),s&&u.includes(t)&&(l.style.colorScheme=t)}if(n)c(n);else try{let e=localStorage.getItem(t)||r,n=i&&"system"===e?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":e;c(n)}catch(e){}})("class","theme","system",null,["light","dark"],null,true,true)</script><div class="Layout_container__o59WT"><header class="Header_header__aO32P"><div class="Header_headerInner__np1cA"><div class="Header_search__c61pn"></div><div class="Header_rightNav__NG1Lv"><button class="Header_themeButton__zM4Kv" aria-label="Toggle theme"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg></button><a href="https://github.com/yuanguandong" target="_blank" rel="noopener noreferrer" class="Header_navLink__Kg8GB"><svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span class="hidden md:inline ml-1">GitHub</span></a></div></div></header><main class="Layout_main__5FFfL"><article class="_container _prose max-md:_prose-sm dark:_prose-invert" dir="ltr"><h1>Web 前端性能优化</h1><div class="_mb-8 _flex _gap-3 _items-center"><div class="_not-prose _grow dark:_text-gray-400 _text-gray-600"><div class="_flex _flex-wrap _items-center _gap-1">Favori<!-- -->,<time dateTime="2023-03-19T00:00:00.000Z">Sun Mar 19 2023</time></div></div><div class="_flex _items-center _gap-3 print:_hidden"></div></div><p><img alt="Performance" loading="lazy" width="1600" height="1200" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 240&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoIAAYAAkA4JbACdLoAAU8KKAAA/P/UHuP4IENDOD+Too224hKVg7s8e582xRcyXdPG3/zNOzWcD7A/gL0P/8DZeDXF3BhSAAA=&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/hero.65268223.webp"/></p>
+<div class="img-desc">图：Amrit Pal Singh</div>
+<!-- -->
+<h2 id="前端页面生命周期" class="subheading-h2">前端页面生命周期<a href="#前端页面生命周期" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p><img loading="lazy" width="960" height="500" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 160&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAMAAACEE47CAAAAElBMVEX+/v75+fj59erx8vHl6u7v7OFx8dWPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIUlEQVR4nB3GwQ0AAAiDQIq6/8pGyT0AEjg6VoeM/lB8CwNjAC/PTi/fAAAAAElFTkSuQmCC&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/web.f0a68ee9.png"/></p>
+<p>1、用户在浏览器中输入 url 地址</p>
+<p>2、浏览器解析域名得到服务器 ip 地址</p>
+<p>浏览器会首先从缓存中找是否存在域名，如果存在就直接取出对应的 ip 地址，如果没有就开启一个 DNS 域名解
+析器。DNS 域名解析器会首先访问顶级域名服务器，将对应的 ip 发给客户端；然后访问根域名解析器，将对应的
+ip 发给客户端；最后访问本地域名服务器，得到最终的 ip 地址。</p>
+<p>3、TCP 三次握手建立客户端和服务器的连接</p>
+<p>因为 HTTP 是基于 TCP 的可靠传输，所以在发送 http 数据报之前，需要先进行 TCP 的三次握手建立连接。三次
+握手过程如下：</p>
+<p>第一次握手：客户端---&gt;服务端 ack=1,seq=x（x 随机生成）</p>
+<p>第二次握手：服务端---&gt;客户端 ACK=1,ack=x+1,seq=y（y 随机生成）</p>
+<p>第三次握手：客户端---&gt;服务端 ACK=1,ack=y+1,seq=x+1</p>
+<p>完成第三次握手时，实际上客户端已经与服务器建立了连接，所以第三次握手的报文已经可以携带数据了。</p>
+<p>4、客户端发送 HTTP 请求获取服务器端的静态资源</p>
+<p>5、服务器发送 HTTP 响应报文给客户端，客户端获取到页面静态资源</p>
+<p>6、TCP 四次挥手关闭客户端和服务器的连接</p>
+<p>数据传输完毕后，TCP 会进行四次挥手断开连接，释放资源。四次挥手过程如下：</p>
+<p>第一次挥手：客户端---&gt;服务器 FIN=1,ack=1,seq=u 客户端状态变为 FIN_WAIT_1</p>
+<p>第二次挥手：服务器---&gt;客户端 ACK=1,ack=u+1,seq=v 服务器状态变为 CLOSE_WAIT，TCP 进入半关闭状态</p>
+<p>第三次挥手：服务器---&gt;客户端 FIN=1,ACK=1,ack=u+1,seq=w 服务器状态变为 LAST_ACK</p>
+<p>第四次挥手：客户端---&gt;服务器 ACK=1,ack=w+1,seq=u+1 客户端状态变为 TIME_WAIT，此时 TCP 未释放，需要等
+待计时器计时完成后，客户端状态变为 CLOSED</p>
+<p>7、浏览器解析文档资源并渲染页面</p>
+<p>浏览器解析文档资源并渲染页面流程：</p>
+<p>（1）解析 html 资源，构建 DOM Tree</p>
+<p>（2）解析 css 资源，构建 CSS Rule Tree</p>
+<p>（3）JS 通过 DOM API 和 CSS OM API 来操作 DOM Tree 和 CSS Tree</p>
+<p>（4）解析完成后综合 DOM Tree 和 CSS Tree 会生成 Render Tree，计算每个元素的位置，这个过程就是回流
+（layout or reflow）</p>
+<p>（5）调用操作系统 Native GUI 的绘制</p>
+<p>（6）页面绘制完成</p>
+<h2 id="网络模型" class="subheading-h2">网络模型<a href="#网络模型" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<ul>
+<li>OSI （理论）</li>
+</ul>
+<p>模型武术忘传悔表赢</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span>应用层</span></span>
+<span><span>表示层</span></span>
+<span><span>会话层</span></span>
+<span><span>传输层</span></span>
+<span><span>网络层</span></span>
+<span><span>数据链路层</span></span>
+<span><span>物理层</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<ul>
+<li>TCP/IP （标准）</li>
+</ul>
+<p>模型鼠王传音</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span>应用层</span></span>
+<span><span>传输层</span></span>
+<span><span>网络层</span></span>
+<span><span>数据链路层</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<h2 id="http-头部" class="subheading-h2">http 头部<a href="#http-头部" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>http 协议主要组成部分：</p>
+<p>状态行 - General 请求头 - Request Headers 响应头 - Respones Headers 状态行</p>
+<p><img loading="lazy" width="620" height="266" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 120&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/jpeg;base64,/9j/2wBDAAoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/2wBDAQoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/wgARCAADAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAAhAX/AP/EABcQAAMBAAAAAAAAAAAAAAAAAAACMoH/2gAIAQEAAT8AeMP/xAAWEQEBAQAAAAAAAAAAAAAAAAABACH/2gAIAQIBAT8AA2//xAAYEQEBAAMAAAAAAAAAAAAAAAABAgARMv/aAAgBAwEBPwCqoJ0vOf/Z&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/1.b710dfa6.jpeg"/>
+在状态行中我们其实一般来说只需要关注Request Method和Status Code就可以了。</p>
+<p>请求头</p>
+<p><img loading="lazy" width="720" height="590" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 280&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/jpeg;base64,/9j/2wBDAAoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/2wBDAQoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/wgARCAAHAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAACAB//EABgQAAIDAAAAAAAAAAAAAAAAAAESAAIh/9oACAEBAAE/ALo2gz//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AH//2Q==&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/2.d9af6b69.jpeg"/>
+一般来说前端开发需要关注请求头数据大概如下：</p>
+<p>Accept - 客户端喜欢接受的数据类型 Accept-Encoding - 一般我们需要看的值就是 gzip，一般我们的资源都会
+进行 gzip Accept-Language - 客户端支持的语言，按顺序使用 Cache-Control - 浏览器请求资源的缓存设置
+，no-cache 会比较常用，意思就是在使用缓存资源的时候必须先请求服务器进行验证 Pragme - 中间服务器不返
+还资源标识，为兼容 http1.0 Connection - 开启持久链接，默认是 keep-alive(http1.1 才有哟) Cookie - 就
+是将你浏览器中符合 cookie 的 path 中的 cookie 字段组成字符串提交给服务器 Referer - 页面来源，就是跳
+转进当前页面的上一个页面路径 Content-Type - 告诉服务器提交的数据体是那种格式。响应头</p>
+<p><img loading="lazy" width="720" height="863" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 280 320&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/jpeg;base64,/9j/2wBDAAoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/2wBDAQoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/v/wgARCAAIAAcDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAVAQEBAAAAAAAAAAAAAAAAAAADBf/aAAwDAQACEAMQAAAAgwFL/8QAGhABAAEFAAAAAAAAAAAAAAAAAgEAESEiQf/aAAgBAQABPwBhq2wjHZr/xAAXEQADAQAAAAAAAAAAAAAAAAAAAQIR/9oACAECAQE/AHdaz//EABoRAAICAwAAAAAAAAAAAAAAAAECACEDBDH/2gAIAQMBAT8ATXxFEN2oPZ//2Q==&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/3.c1db270b.jpeg"/>
+响应头对于前端来说就十分重要了，无论是js或者css静态资源，或者是接口返回数据，里面的信息都十分重要。</p>
+<p>Access-Control-Allow-Credentials - 跨域允许提交 cookie Access-Control-Allow-Methods - 跨域允许提交方
+式 Access-Control-Allow-Origin - 跨域允许的域名路径（如果你的接口跨域可以检查一下这个哟，一般设置*
+即可） Cache-Control - http 缓存策略 Connection - 开启持久链接，默认是 keep-alive(http1.1 才有哟)
+Content-Encoding - 一般我们需要看的值就是 gzip，一般我们的资源都会进行 gzip Content-Type - 告诉浏览
+器以何种方式接收数据。 Set-Cookie - 服务器对浏览器设置 cookie 字段补充几个属性</p>
+<p>Expires - 缓存到期时间 X-Cache - CDN 标识，有时候我们看 CDN 资源是否回源了，可以通过这个标识知道是否
+命中到 CDN Content-Type 类型一般前端使用的 Content-Type 的类型有 3 种：</p>
+<p>application/x-www-form-urlencoded - 默认方式，原生 ajax，jquery 都默认使用这种方式提交，该方式会将请
+求的 json 数据格式序列化变成 key=value&amp;key=value。 multipart/form-data - 这种方式一般是 form 表单提
+交文件必须使用这种方式 application/json - 其实就是不进行序列化，直接以 JSON 方式提交，个人十分喜欢
+content-type 属性在 request 头中是代表以何种数据格式进行提交，response 头中是代表浏览器需要以何种方
+式接收数据以及解析数据。</p>
+<p>keep-alive(TCP 链接持久化) 在 HTTP/1.0 里，为了实现 client 到 web-server 能支持长连接，必须在 HTTP
+请求头里显示指定 Connection:keep-alive。</p>
+<p>在 HTTP/1.1 里，就默认是开启了 keep-alive，要关闭 keep-alive 需要在 HTTP 请求头里显示指定
+Connection:close。</p>
+<p>如果不开启 keep-alive 的情况下，那么每一次请求都会重复 3 次握手，如果开启了的话，在一定时间内（这个
+时间是服务器配置的）可以复用同一个 TCP。从而达到了性能的优化。</p>
+<h2 id="图像加载优化" class="subheading-h2">图像加载优化<a href="#图像加载优化" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>图像延迟加载图片延时加载，是真实项目中的一个非常重要的性能优化手段。如果不做图片的延时加载，那也页面
+渲染的时候，同时也要把图片资源请求回来，进行渲染，这样会阻碍页面的渲染进度，导致首次加载页面的速度很
+慢，延迟加载一方面可以提要页面的加载速度，另一方面可以减少没必要的网络消耗</p>
+<p>这里推荐使用 IntersectionObserver</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;!</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">DOCTYPE</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> html</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">html</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> lang</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;en&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">head</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> charset</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;UTF-8&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">      http-equiv</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;X-UA-Compatible&quot;</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">      content</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;IE=edge&quot;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">meta</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">      name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;viewport&quot;</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">      content</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;width=device-width, initial-scale=1.0&quot;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">title</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;Document&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">title</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">head</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">style</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">    *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      margin</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span> </span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    .imageLazyBox</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      width</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">236</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      height</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">420</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      background</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">url</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">./images/loading.gif</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">no-repeat</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> center</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> center</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> #eee</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      background-size</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">100</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 100</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      margin</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1000</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">px</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span> </span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    .imageLazyBox</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D"> img</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      width</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">100</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">%</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      height</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">100</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">%</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">      /* 开始图片隐藏：因为在ie 浏览器中，如果图片src 是空的，或者加载图片是错误的，图片不隐藏 ,会显示一个X </span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        效果，很难看，所以图片没有加载之前还是让他隐藏比较好</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        办法一: display:none;这种办法加载完成真实的图片后，还需让他display:blok;这样触发dom的回流重汇，性能消耗比较大</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        办法二 ：opacity:0 ;transition:opacity: .3s; -&gt;推荐方案，一方面加载真实图片后，我们只需要设置opacity:1;</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        这样一方面不会引发dom的回流重汇，一方面可以css3实现出渐现的效果</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">        */</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      opacity</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">      transition</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: opacity </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">s</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">      /* display: none; */</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">style</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">body</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> class</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;imageLazyBox&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">img</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">        src</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;&quot;</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">        alt</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;&quot;</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">        lazy-image</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;./images/img1.jpeg&quot;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      /&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">div</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">body</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">html</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  function</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> imageLazyFun</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">imageLazyBox</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> imageItem </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> imageLazyBox.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;img&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">),</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      lazy_image </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> imageItem.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">getAttribute</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;lazy-image&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    imageItem.src </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> lazy_image;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    imageItem.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">onload</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> function</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> () {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      imageItem.style.opacity </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    };</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    imageItem.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">removeAttribute</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;lazy-image&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    imageItem.isLoad </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span> </span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> imageLazyBox </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">querySelector</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;.imageLazyBox&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ob </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> IntersectionObserver</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">((</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">changes</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">    // 我们监听的dom元素与可视窗口的交叉信息</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> item </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> changes[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">];</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    target </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> item.target;</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">    // 符合条件:盒子已经完全出现在视口中</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (item.isIntersecting) {</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">      // 符合条件：盒子已经完全出现在视口中</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">      imageLazyFun</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(target);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">      // 处理过一次延迟加载，以后这个元素出现无需要再次监听处理</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">      ob.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">unobserve</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(target);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  });</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // 监听dom元素</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  ob.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">observe</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(imageLazyBox);</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // 解除监听</span></span>
+<span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">  // ob.unobserve(imageLazyBox)</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">script</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&gt;</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<h2 id="构建优化" class="subheading-h2">构建优化<a href="#构建优化" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>并行构建（thread-loader、happypack）</p>
+<p>构建缓存（cache-loader、hard-source-webpack-plugin）</p>
+<p>代码切割（splitChunks）：按需加载，分离基础库和公共代码库。通过分割打包，可以将公共代码或外包依赖项
+单独打包，并从客户端缓存中受益。在此过程中，整个的包体积没有变小，且需要执行的请求可能会变多，但缓存
+的好处可以弥补这一成本。</p>
+<p>Hash 缓存</p>
+<p>减少构建（external、DllPlugin）</p>
+<p>Tree Shaking</p>
+<p>预渲染</p>
+<p>分离样式：通过 css-loader、style-loader 等一系列 loader 打包好了的 css，如果是通过内联到 js 中，就会
+存在 css 无法缓存、增加了 js 文件体积和未样式化元素闪动（FOUC）问题。</p>
+<p>静态资源、图片内联： 使用 url-loader 内联资源，将小图像转换为 base64 形式的字符串，从而减少 http 请
+求。</p>
+<p>第三方库 external</p>
+<p>第三方库按需加载</p>
+<h2 id="渲染优化" class="subheading-h2">渲染优化<a href="#渲染优化" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<h3 id="减少不必要的回流" class="subheading-h3">减少不必要的回流<a href="#减少不必要的回流" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>js 处理 -&gt; 计算样式 -&gt; 页面布局 -&gt; 绘制 -&gt; 合成</p>
+<ul>
+<li>渲染过程</li>
+</ul>
+<ol>
+<li>
+<p>解析获取到的 HTML，生成 DOM 树，解析 CSS，生成 CSSOM 树</p>
+</li>
+<li>
+<p>将 DOM 树和 CSSOM 树进行结合，生成渲染树（render tree）</p>
+</li>
+</ol>
+<p>3.根据生成的渲染树，进行回流（Layout）,得到节点的几何信息（位置，大小）</p>
+<p>4.重绘（Painting）：根据渲染树以及回流得到的几何信息，得到节点的绝对像素（像素，背景色，外观等）</p>
+<p>5.Display 将像素发送给 GPU，展示在页面上。</p>
+<ul>
+<li>回流</li>
+</ul>
+<p>浏览器会把获取到的 HTML 代码解析成一个 DOM 树，html 中的每一个元素都是 DOM 树的一个节点，根节 点也就
+是我们说的 document 对象。在渲染树中的一部分（或者全部）因为元素的规模尺寸、布局 、显隐等改 变而需要
+重新构建，这就称为回流。每次页面至少会发生一次回流，就是在页面第一次渲染的时候。</p>
+<ul>
+<li>何时发生回流?</li>
+</ul>
+<p>添加或者删除可见的 DOM 元素元素的位置发生变化元素的尺寸发生变化（包括外边距、内边 距 、边框大小、高
+度和宽度等）内容发生变化，文本或者图片被另一个不同尺寸的图片所代替页面开始渲染的 时 候浏览器的窗口尺
+寸变化（回流是根据视口的大小来计算元素的位置和大小的）</p>
+<ul>
+<li>
+<p>重绘 在渲染树中的一些元素需要更新属性，而这些属性只是影响元素的外观、风格，不影响布局，就称为重绘
+。</p>
+</li>
+<li>
+<p>什么时候发生重绘？</p>
+</li>
+</ul>
+<p>背景色改变样式发生改变的时候</p>
+<ul>
+<li>区别</li>
+</ul>
+<p>回流必定会引起重绘，重绘一定不会引起回流</p>
+<p>回流会导致页面重排，影响性能</p>
+<h3 id="恰当的使用-web-worker" class="subheading-h3">恰当的使用 web worker<a href="#恰当的使用-web-worker" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>由于设计原因，长期以来浏览器中 JS 都是单线程工作的，我们通过 EventLoop 驱动异步事件完成工作。然而随
+着前端页面越来越复杂，有些应用不可避免的要在前端执行大量的计算，这种情况会较长一段时间占用主线程，用
+户会感觉到明显的页面卡顿。在这种场景下我们可以使用 WebWorker 来解决问题。</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// main.js</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> worker</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> Worker</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;./worker.js&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">worker.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">onmessage</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">e</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(e.data);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">};</span></span>
+<span> </span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">worker.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">postMessage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hello worker&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// worker.js</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">onmessage</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">e</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(e.data);</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  postMessage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hi from worker&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">};</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// worker.js</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">self.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">onmessage</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">e</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=&gt;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(e.data);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  self.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">postMessage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">&quot;hi from worker&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">};</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<h3 id="将一个大任务拆分成多个微任务" class="subheading-h3">将一个大任务拆分成多个微任务<a href="#将一个大任务拆分成多个微任务" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> taskList</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> splitTask</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(BigTask);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">function</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> processTaskList</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">taskStartTime</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  let</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> taskFinishTime;</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  do</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> nextTask</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> taskList.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pop</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    processTask</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(nextTask);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    taskFinishTime </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> window.performance.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">now</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">while</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (taskFinishTime </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> taskStartTime </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&lt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 3</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span> </span>
+<span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (taskList.</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">length</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &gt;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">    requestAnimationFrame</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(processTaskList);</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span> </span>
+<span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">requestAnimationFrame</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(processTaskList);</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<h2 id="缓存技术" class="subheading-h2">缓存技术<a href="#缓存技术" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<h3 id="强缓存" class="subheading-h3">强缓存<a href="#强缓存" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>浏览器不会像服务器发送任何请求，直接从本地缓存中读取文件并返回 Status Code: 200 OK</p>
+<p>200 form memory cache : 不访问服务器，一般已经加载过该资源且缓存在了内存当中，直接从内存中读取缓存。
+浏览器关闭后，数据将不存在（资源被释放掉了），再次打开相同的页面时，不会出现 from memory cache。</p>
+<p>200 from disk cache： 不访问服务器，已经在之前的某个时间加载过该资源，直接从硬盘中读取缓存，关闭浏览
+器后，数据依然存在，此资源不会随着该页面的关闭而释放掉下次打开仍然会是 from disk cache。</p>
+<p>优先访问 memory cache,其次是 disk cache，最后是请求网络资源</p>
+<p>Expires：</p>
+<p>过期时间，如果设置了时间，则浏览器会在设置的时间内直接读取缓存，不再请求 Cache-Control：当值设为
+max-age=300 时，则代表在这个请求正确返回时间（浏览器也会记录下来）的 5 分钟内再次加载资源，就会命中
+强缓存。 cache-control：除了该字段外，还有下面几个比较常用的设置值：</p>
+<div class="nextra-code _relative [&amp;:not(:first-child)]:_mt-6"><pre class="nextra-focus _overflow-x-auto _subpixel-antialiased _text-[.9em] _bg-white dark:_bg-black _py-4 _ring-1 _ring-inset _ring-gray-300 dark:_ring-neutral-700 contrast-more:_ring-gray-900 contrast-more:dark:_ring-gray-50 contrast-more:_contrast-150 _rounded-md _not-prose" tabindex="0"><code class="nextra-code" dir="ltr"><span><span>（1） max-age：用来设置资源（representations）可以被缓存多长时间，单位为秒；</span></span>
+<span><span></span></span>
+<span><span>（2） s-maxage：和</span></span>
+<span><span>max-age 是一样的，不过它只针对代理服务器缓存而言；</span></span>
+<span><span></span></span>
+<span><span>（3）public：指示响应可被任何缓存区缓存；</span></span>
+<span><span></span></span>
+<span><span>（4）private：只能针对个人用户，而不能被代理服务器缓存；</span></span>
+<span><span></span></span>
+<span><span>（5）no-cache：强制客户端直接向服务器发送请</span></span>
+<span><span>求,也就是说每次请求都必须向服务器发送。服务器接收到 请求，然后判断资源是否变更，是则返回新内容，否则</span></span>
+<span><span>返回 304，未变更。这个很容易让人产生误解，使人误 以为是响应不被缓存。实际上 Cache-Control: no-cache</span></span>
+<span><span></span></span>
+<span><span>是会被缓存的，只不过每次在向客户端（浏览器）提供响应数据时，缓存都要向服务器评估缓存响应的有效性。</span></span>
+<span><span></span></span>
+<span><span>（6）no-store：禁止一切缓存（这个才是响应不被缓存的意思）。</span></span></code></pre><div class="_opacity-0 _transition [div:hover&gt;&amp;]:_opacity-100 focus-within:_opacity-100 _flex _gap-1 _absolute _right-4 _top-2"><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5 md:_hidden" title="Toggle word wrap" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="currentColor" height="16"><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3l3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg></button><button class="_transition _border _border-gray-300 dark:_border-neutral-700 contrast-more:_border-gray-900 contrast-more:dark:_border-gray-50 _rounded-md _p-1.5" title="Copy code" type="button" data-headlessui-state=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" height="16" class="nextra-copy-icon"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5"></path></svg></button></div></div>
+<p>cache-control</p>
+<p>是 http1.1 的头字段，expires 是 http1.0 的头字段,如果 expires 和 cache-control 同时存</p>
+<p>在，cache-control 会覆盖 expires，建议两个都写。</p>
+<h3 id="协商缓存" class="subheading-h3">协商缓存<a href="#协商缓存" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>向服务器发送请求，服务器会根据这个请求的 request header 的一些参数来判断是否命中协商缓存，如果命中，
+则返回 304 状态码并带上新的 response header 通知浏览器从缓存中读取资源；</p>
+<p>Last-Modifed/If-Modified-Since 和 Etag/If-None-Match 是分别成对出现的，呈一一对应关系</p>
+<ul>
+<li>Etag/If-None-Match：</li>
+</ul>
+<p>Etag：</p>
+<p>Etag 是属于 HTTP 1.1 属性，它是由服务器（Apache 或者其他工具）生成返回给前端，用来帮助服务器控制 Web
+端的缓存验证。 Apache 中，ETag 的值，默认是对文件的索引节（INode），大小（Size）和最后修改时间
+（MTime）进行 Hash 后得到的。</p>
+<p>If-None-Match:</p>
+<p>当资源过期时，浏览器发现响应头里有 Etag,则再次像服务器请求时带上请求头 if-none-match(值是 Etag 的值
+)。服务器收到请求进行比对，决定返回 200 或 304</p>
+<ul>
+<li>Last-Modifed/If-Modified-Since：</li>
+</ul>
+<p>Last-Modified：</p>
+<p>浏览器向服务器发送资源最后的修改时间</p>
+<p>If-Modified-Since：</p>
+<p>当资源过期时（浏览器判断 Cache-Control 标识的 max-age 过期），发现响应头具有 Last-Modified 声明，则
+再次向服务器请求时带上头 if-modified-since，表示请求时间。服务器收到请求后发现有 if-modified-since
+则与被请求资源的最后修改时间进行对比（Last-Modified）,若最后修改时间较新（大），说明资源又被改过，则
+返回最新资源，HTTP 200 OK;若最后修改时间较旧（小），说明资源无新修改，响应 HTTP 304 走缓存。</p>
+<p>Last-Modifed/If-Modified-Since 的时间精度是秒，而 Etag 可以更精确。</p>
+<p>Etag 优先级是高于 Last-Modifed 的，所以服务器会优先验证 Etag</p>
+<p>Last-Modifed/If-Modified-Since 是 http1.0 的头字段</p>
+<h2 id="性能检测" class="subheading-h2">性能检测<a href="#性能检测" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>Performance 是 Chrome 浏览器自带的性能监测工具。根据我的使用，简单理解就是我们可以通过它录制一段时间
+的浏览器活动，通过活动的数据去分析页面是否存在提升的空间。想要获取页面的活动数据，那我们的第一步便是
+录制浏览器的活动。</p>
+<p>具体做法可参考 <a href="https://www.cnblogs.com/mushanya/p/16827522.html" target="_blank" rel="noreferrer">https://www.cnblogs.com/mushanya/p/16827522.html</a></p></article></main><footer class="Footer_footer__hibhg"><div class="Footer_footerInner___6PzH"><div class="Footer_footerContent__7ET_v"><div class="Footer_footerLeft__6YSJc"><div class="Footer_footerMotto__hGlND"><p class="Footer_mottoContent__DZtOp"></p><p class="Footer_mottoAuthor__CLOkJ">—— </p></div></div><div class="Footer_footerRight__gZmlM"><div class="Footer_footerLinks__nX7_m"><a href="https://github.com/yuanguandong" class="Footer_footerLink__PHLXX">GitHub</a></div><div class="Footer_footerCopyright__v5EO_">© <!-- -->2024<!-- --> 重剑的博客 All rights reserved.</div><div class="Footer_footerICP__U9ArL"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="Footer_footerLink__PHLXX">蜀ICP备2024070350号-3</a></div></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/posts/engin/performance","query":{},"buildId":"rsL7KsAc9Qt_1PtcEy7yH","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>

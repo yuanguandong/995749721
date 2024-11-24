@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><meta name="title" content="前端缓存" data-next-head=""/><meta name="author" content="Favori" data-next-head=""/><link rel="icon" type="image/png" sizes="70x70" href="/favicon-70x70.png" data-next-head=""/><title data-next-head="">前端缓存</title><style data-next-head="">:root{--nextra-bg:250,250,250;}.dark{--nextra-bg:17,17,17;}</style><link rel="preload" href="/_next/static/css/552cfd626c7d3395.css" as="style"/><link rel="stylesheet" href="/_next/static/css/552cfd626c7d3395.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_next/static/chunks/webpack-7aa77703737d139f.js" defer=""></script><script src="/_next/static/chunks/framework-4e48f2cc6a39465a.js" defer=""></script><script src="/_next/static/chunks/main-d7c2d8830adc2477.js" defer=""></script><script src="/_next/static/chunks/pages/_app-b735a2408b00229b.js" defer=""></script><script src="/_next/static/chunks/2195-a5c3dde35c1c11c2.js" defer=""></script><script src="/_next/static/chunks/pages/posts/other/cache-607ca24522333c30.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_buildManifest.js" defer=""></script><script src="/_next/static/rsL7KsAc9Qt_1PtcEy7yH/_ssgManifest.js" defer=""></script></head><body><div id="__next"><script>((e,t,r,n,o,a,i,s)=>{let l=document.documentElement,u=["light","dark"];function c(t){(Array.isArray(e)?e:[e]).forEach(e=>{let r="class"===e,n=r&&a?o.map(e=>a[e]||e):o;r?(l.classList.remove(...n),l.classList.add(t)):l.setAttribute(e,t)}),s&&u.includes(t)&&(l.style.colorScheme=t)}if(n)c(n);else try{let e=localStorage.getItem(t)||r,n=i&&"system"===e?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":e;c(n)}catch(e){}})("class","theme","system",null,["light","dark"],null,true,true)</script><div class="Layout_container__o59WT"><header class="Header_header__aO32P"><div class="Header_headerInner__np1cA"><div class="Header_search__c61pn"></div><div class="Header_rightNav__NG1Lv"><button class="Header_themeButton__zM4Kv" aria-label="Toggle theme"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg></button><a href="https://github.com/yuanguandong" target="_blank" rel="noopener noreferrer" class="Header_navLink__Kg8GB"><svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span class="hidden md:inline ml-1">GitHub</span></a></div></div></header><main class="Layout_main__5FFfL"><article class="_container _prose max-md:_prose-sm dark:_prose-invert" dir="ltr"><h1>前端缓存</h1><div class="_mb-8 _flex _gap-3 _items-center"><div class="_not-prose _grow dark:_text-gray-400 _text-gray-600"><div class="_flex _flex-wrap _items-center _gap-1">Favori<!-- -->,<time dateTime="2021-02-28T00:00:00.000Z">Sun Feb 28 2021</time></div></div><div class="_flex _items-center _gap-3 print:_hidden"></div></div><p><img alt="Cache" loading="lazy" width="1600" height="1200" decoding="async" data-nimg="1" style="color:transparent;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-image:url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 320 240&#x27;%3E%3Cfilter id=&#x27;b&#x27; color-interpolation-filters=&#x27;sRGB&#x27;%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3CfeColorMatrix values=&#x27;1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -1&#x27; result=&#x27;s&#x27;/%3E%3CfeFlood x=&#x27;0&#x27; y=&#x27;0&#x27; width=&#x27;100%25&#x27; height=&#x27;100%25&#x27;/%3E%3CfeComposite operator=&#x27;out&#x27; in=&#x27;s&#x27;/%3E%3CfeComposite in2=&#x27;SourceGraphic&#x27;/%3E%3CfeGaussianBlur stdDeviation=&#x27;20&#x27;/%3E%3C/filter%3E%3Cimage width=&#x27;100%25&#x27; height=&#x27;100%25&#x27; x=&#x27;0&#x27; y=&#x27;0&#x27; preserveAspectRatio=&#x27;none&#x27; style=&#x27;filter: url(%23b);&#x27; href=&#x27;data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoIAAYAAkA4JbACdAD0j1FkF8AA/vBKKWa6m1OEYcg3AIQfK4FrxEdqO6I4OC2DkUA/9kqvz63v7x6+1v7999QgAAA=&#x27;/%3E%3C/svg%3E&quot;)" src="/_next/static/media/hero.c4d7c07e.webp"/></p>
+<div class="img-desc">图：Vivivian</div>
+<!-- -->
+<h2 id="缓存好处" class="subheading-h2">缓存好处<a href="#缓存好处" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<ul>
+<li>缓解服务器压力，不用每次都去请求数据</li>
+<li>提升性能，打开本地资源肯定比服务器快</li>
+<li>减少带宽消耗</li>
+</ul>
+<h2 id="缓存种类" class="subheading-h2">缓存种类<a href="#缓存种类" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<table class="_not-prose _block _overflow-x-auto _not-prose"><thead><tr class="_m-0 _border-t _border-gray-300 _p-0 dark:_border-gray-600 even:_bg-gray-100 even:dark:_bg-gray-600/20"><th class="_m-0 _border _border-gray-300 _px-4 _py-2 _font-semibold dark:_border-gray-600">类型</th><th class="_m-0 _border _border-gray-300 _px-4 _py-2 _font-semibold dark:_border-gray-600">描述</th></tr></thead><tbody><tr class="_m-0 _border-t _border-gray-300 _p-0 dark:_border-gray-600 even:_bg-gray-100 even:dark:_bg-gray-600/20"><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">数据库缓存</td><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">当 web 应用关系复杂，数据表往上增长时，可以将查询后的数据放到内存中进行缓存，下次再查询时，就直接从内存中获取，从而提高响应速度</td></tr><tr class="_m-0 _border-t _border-gray-300 _p-0 dark:_border-gray-600 even:_bg-gray-100 even:dark:_bg-gray-600/20"><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">CDN 缓存</td><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">当我们发送一个 web 请求时，CDN 会帮我们计算去哪得到这些内容的路径短且快，这个是从网站管理员部署的，所以他们也可以将大家经常访问的内容放在 CDN 里，从而加快响应</td></tr><tr class="_m-0 _border-t _border-gray-300 _p-0 dark:_border-gray-600 even:_bg-gray-100 even:dark:_bg-gray-600/20"><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">代理服务器缓存</td><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">代理服务器缓存，根浏览器缓存性质类似，但是代理服务器缓存面向的群体更广，规模更大，它不只是一个用户服务，一般为大量用户提供服务，同一个副本会被重用多次，因此在减少响应时间方面很有效</td></tr><tr class="_m-0 _border-t _border-gray-300 _p-0 dark:_border-gray-600 even:_bg-gray-100 even:dark:_bg-gray-600/20"><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">浏览器缓存</td><td class="_m-0 _border _border-gray-300 _px-4 _py-2 dark:_border-gray-600">每个浏览器都实现了 HTTP 缓存，我们通过浏览器使用 HTTP 协议与服务器交互的时候，浏览器就会根据一套与服务器约定的规则进行缓冲工作，当我们在浏览器中点击前进和后退时，利用的就是浏览器的缓存机制</td></tr></tbody></table>
+<p>所谓浏览器缓存其实就是指在本地使用的计算机中开辟一个内存区，同时也开辟一个硬盘区作为数据传输的缓冲区，然后用这个缓冲区来暂时保存用户以前访问过的信息。</p>
+<p>浏览器缓存过程： 强缓存，协商缓存。</p>
+<p>浏览器缓存位置一般分为四类： Service Worker—&gt;Memory Cache—&gt;Disk Cache—&gt;Push Cache。</p>
+<h2 id="强缓存" class="subheading-h2">强缓存<a href="#强缓存" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>强缓存是当我们访问 URL 的时候，不会向服务器发送请求，直接从缓存中读取资源，但是会返回 200 的状态码。</p>
+<h3 id="如何设置强缓存" class="subheading-h3">如何设置强缓存？<a href="#如何设置强缓存" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>我们第一次进入页面，请求服务器，然后服务器进行应答，浏览器会根据 response Header 来判断是否对资源进行缓存，如果响应头中 expires、pragma 或者 cache-control 字段，代表这是强缓存，浏览器就会把资源缓存在 memory cache 或 disk cache 中。</p>
+<p>第二次请求时，浏览器判断请求参数，如果符合强缓存条件就直接返回状态码 200，从本地缓存中拿数据。否则把响应参数存在 request header 请求头中，看是否符合协商缓存，符合则返回状态码 304，不符合则服务器会返回全新资源。</p>
+<h2 id="expires" class="subheading-h2">expires<a href="#expires" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>是 HTTP1.0 控制网页缓存的字段，值为一个时间戳，准确来讲是格林尼治时间，服务器返回该请求结果缓存的到期时间，意思是，再次发送请求时，如果未超过过期时间，直接使用该缓存，如果过期了则重新请求。
+有个缺点，就是它判断是否过期是用本地时间来判断的，本地时间是可以自己修改的。</p>
+<h2 id="cache-control" class="subheading-h2">Cache-Control<a href="#cache-control" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>是 HTTP1.1 中控制网页缓存的字段，当 Cache-Control 都存在时，Cache-Control 优先级更高，主要取值为：
+public：资源客户端和服务器都可以缓存。
+privite：资源只有客户端可以缓存。
+no-cache：客户端缓存资源，但是是否缓存需要经过协商缓存来验证。
+no-store：不使用缓存。
+max-age：缓存保质期。</p>
+<p>Cache-Control 使用了 max-age 相对时间，解决了 expires 的问题。</p>
+<h2 id="缓存位置" class="subheading-h2">缓存位置<a href="#缓存位置" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>上面我们说，强缓存我们会把资源房放到 memory cache 和 disk cache 中，那什么资源放在 memory cache，什么资源放在 disk cache 中？</p>
+<p>存存储图像和网页等资源主要缓存在 disk cache，操作系统缓存文件等资源大部分都会缓存在 memory cache 中。具体操作浏览器自动分配，看谁的资源利用率不高就分给谁。</p>
+<p>查找浏览器缓存时会按顺序查找: Service Worker—&gt;Memory Cache—&gt;Disk Cache—&gt;Push Cache。</p>
+<h3 id="service-worker" class="subheading-h3">Service Worker<a href="#service-worker" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>是运行在浏览器背后的独立线程，一般可以用来实现缓存功能。使用 Service Worker 的话，传输协议必须为 HTTPS。因为 Service Worker 中涉及到请求拦截，所以必须使用 HTTPS 协议来保障安全。Service Worker 的缓存与浏览器其他内建的缓存机制不同，它可以让我们自由控制缓存哪些文件、如何匹配缓存、如何读取缓存，并且缓存是持续性的。</p>
+<h3 id="memory-cache" class="subheading-h3">Memory Cache<a href="#memory-cache" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>内存中的缓存，主要包含的是当前中页面中已经抓取到的资源，例如页面上已经下载的样式、脚本、图片等。读取内存中的数据肯定比磁盘快，内存缓存虽然读取高效，可是缓存持续性很短，会随着进程的释放而释放。一旦我们关闭 Tab 页面，内存中的缓存也就被释放了。</p>
+<h3 id="disk-cache" class="subheading-h3">Disk Cache<a href="#disk-cache" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>存储在硬盘中的缓存，读取速度慢点，但是什么都能存储到磁盘中，比之 Memory Cache 胜在容量和存储时效性上。
+在所有浏览器缓存中，Disk Cache 覆盖面基本是最大的。它会根据 HTTP Herder 中的字段判断哪些资源需要缓存，哪些资源可以不请求直接使用，哪些资源已经过期需要重新请求。并且即使在跨站点的情况下，相同地址的资源一旦被硬盘缓存下来，就不会再次去请求数据。绝大部分的缓存都来自 Disk Cache。
+memory cache 要比 disk cache 快的多。举个例子：从远程 web 服务器直接提取访问文件可能需要 500 毫秒(半秒)，那么磁盘访问可能需要 10-20 毫秒，而内存访问只需要 100 纳秒，更高级的还有 L1 缓存访问(最快和最小的 CPU 缓存)只需要 0.5 纳秒。</p>
+<h2 id="协商缓存" class="subheading-h2">协商缓存<a href="#协商缓存" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>协商缓存就是强缓存失效后，浏览器携带缓存标识向服务器发送请求，由服务器根据缓存标识来决定是否使用缓存的过程。</p>
+<p>主要有以下两种情况：</p>
+<p>协商缓存生效，返回 304</p>
+<p>协商缓存失效，返回 200 和请求结果</p>
+<p>如何设置协商缓存？</p>
+<h3 id="last-modified--if-modified-since" class="subheading-h3">Last-Modified / If-Modified-Since<a href="#last-modified--if-modified-since" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>Last-Modified 是服务器响应请求时，返回该资源文件在服务器最后被修改的时间。</p>
+<p>If-Modified-Since 则是客户端再次发起该请求时，携带上次请求返回的 Last-Modified 值，通过此字段值告诉服务器该资源上次请求返回的最后被修改时间。服务器收到该请求，发现请求头含有 If-Modified-Since 字段，则会根据 If-Modified-Since 的字段值与该资源在服务器的最后被修改时间做对比，若服务器的资源最后被修改时间大于 If-Modified-Since 的字段值，则重新返回资源，状态码为 200；否则则返回 304，代表资源无更新，可继续使用缓存文件。</p>
+<h3 id="etag--if-none-match" class="subheading-h3">Etag / If-None-Match<a href="#etag--if-none-match" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h3>
+<p>Etag 是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)。</p>
+<p>If-None-Match 是客户端再次发起该请求时，携带上次请求返回的唯一标识 Etag 值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。服务器收到该请求后，发现该请求头中含有 If-None-Match，则会根据 If-None-Match 的字段值与该资源在服务器的 Etag 值做对比，一致则返回 304，代表资源无更新，继续使用缓存文件；不一致则重新返回资源文件，状态码为 200。</p>
+<blockquote>
+<p>Etag / If-None-Match 优先级高于 Last-Modified / If-Modified-Since，同时存在则只有 Etag / If-None-Match 生效。</p>
+</blockquote>
+<h2 id="缓存方案" class="subheading-h2">缓存方案<a href="#缓存方案" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<p>目前的项目大多使用这种缓存方案的：</p>
+<p>HTML: 协商缓存；</p>
+<p>css、js、图片：强缓存，文件名带上 hash。</p>
+<h2 id="强缓存与协商缓存的区别" class="subheading-h2">强缓存与协商缓存的区别<a href="#强缓存与协商缓存的区别" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<ol>
+<li>
+<p>强缓存不发请求到服务器，所以有时候资源更新了浏览器还不知道，但是协商缓存会发请求到服务器，所以资源是否更新，服务器肯定知道。</p>
+</li>
+<li>
+<p>大部分 web 服务器都默认开启协商缓存。</p>
+</li>
+</ol>
+<h2 id="刷新对于强缓存和协商缓存的影响" class="subheading-h2">刷新对于强缓存和协商缓存的影响<a href="#刷新对于强缓存和协商缓存的影响" class="_not-prose subheading-anchor" aria-label="Permalink for this section"></a></h2>
+<ol>
+<li>
+<p>当 ctrl+f5 强制刷新网页时，直接从服务器加载，跳过强缓存和协商缓存。</p>
+</li>
+<li>
+<p>当 f5 刷新网页时，跳过强缓存，但是会检查协商缓存。</p>
+</li>
+<li>
+<p>浏览器地址栏中写入 URL，回车 浏览器发现缓存中有这个文件了，不用继续请求了，直接去缓存拿。（最快）</p>
+</li>
+</ol></article></main><footer class="Footer_footer__hibhg"><div class="Footer_footerInner___6PzH"><div class="Footer_footerContent__7ET_v"><div class="Footer_footerLeft__6YSJc"><div class="Footer_footerMotto__hGlND"><p class="Footer_mottoContent__DZtOp"></p><p class="Footer_mottoAuthor__CLOkJ">—— </p></div></div><div class="Footer_footerRight__gZmlM"><div class="Footer_footerLinks__nX7_m"><a href="https://github.com/yuanguandong" class="Footer_footerLink__PHLXX">GitHub</a></div><div class="Footer_footerCopyright__v5EO_">© <!-- -->2024<!-- --> 重剑的博客 All rights reserved.</div><div class="Footer_footerICP__U9ArL"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="Footer_footerLink__PHLXX">蜀ICP备2024070350号-3</a></div></div></div></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/posts/other/cache","query":{},"buildId":"rsL7KsAc9Qt_1PtcEy7yH","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>

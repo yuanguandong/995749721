@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[9651],{98453:(_,e,s)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/posts/react/fiber/_meta",function(){return s(62270)}])},62270:(_,e,s)=>{"use strict";s.r(e),s.d(e,{__N_SSG:()=>t,default:()=>u});var t=!0;let u=()=>null}},_=>{var e=e=>_(_.s=e);_.O(0,[636,6593,8792],()=>e(98453)),_N_E=_.O()}]);

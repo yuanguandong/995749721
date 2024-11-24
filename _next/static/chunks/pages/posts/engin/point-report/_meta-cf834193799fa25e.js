@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7352],{27007:(_,e,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/posts/engin/point-report/_meta",function(){return n(12171)}])},12171:(_,e,n)=>{"use strict";n.r(e),n.d(e,{__N_SSG:()=>t,default:()=>s});var t=!0;let s=()=>null}},_=>{var e=e=>_(_.s=e);_.O(0,[636,6593,8792],()=>e(27007)),_N_E=_.O()}]);

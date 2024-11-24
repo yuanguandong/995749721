@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7276],{21867:(_,e,t)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/posts/react/mini-react-1/_meta",function(){return t(11103)}])},11103:(_,e,t)=>{"use strict";t.r(e),t.d(e,{__N_SSG:()=>n,default:()=>s});var n=!0;let s=()=>null}},_=>{var e=e=>_(_.s=e);_.O(0,[636,6593,8792],()=>e(21867)),_N_E=_.O()}]);
